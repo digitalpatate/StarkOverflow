@@ -27,7 +27,7 @@ jobs:
     - run: |
         cd e2e
         npm install 
-        npx codeceptjs run --override '{"helpers": {"Puppeteer": {"show": false}}}' --steps
+        npm run codeceptjs
         
       env:
         CI: true  
