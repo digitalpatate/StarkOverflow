@@ -24,6 +24,6 @@ public class HomePageServlet extends HttpServlet {
         questions.add(Question.builder().title("Ma question 2").content("mon contenu 2").build());
         request.setAttribute("questions", questions);
 
-        request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
     }
 }
