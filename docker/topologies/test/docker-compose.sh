@@ -6,6 +6,12 @@
 # 
 #
 
+
+# paths
+PATH_WAR_FILE="../../../target/StarkOverflow.war"
+PATH_IMAGE_DIRECTORY="../../images/wildfly/"
+
+
 # building war file
 cd ../../../
 mvn clean install
@@ -13,13 +19,9 @@ if [[ $? -ne 0 ]]; then
     echo "Error during maven clean install, $0"
     exit 1
 else
-    echo "run successful, bye !"
+    echo "deployment archive ready"
 fi
 cd docker/topologies/test/
-
-# paths
-#PATH_WAR_FILE="../../../src/main/target/starkOverFlow.war"                     # to be completed
-PATH_IMAGE_DIRECTORY="../../images/wildfly/"
 
 
 # Copy the war files in the docker image directory

@@ -9,4 +9,4 @@ RUN /opt/jboss/wildfly/bin/add-user.sh admin admin --silent
 CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
 
 WORKDIR /opt/jboss/wildfly/standalone/deployments
-#COPY  war-file-name .                                             # to be completed
+COPY  StarkOverflow.war .                                             
