@@ -7,8 +7,8 @@
 <body>
     <h1>StarkOverflow</h1>
 
-    <div id="login">
-        <form action="/login.do" method="post">
+    <div id="register">
+        <form action="/register.do" method="post">
             <label for="email">Email:</label> <input id="email" name="email" type="text">
             <label for="password">Password:</label> <input id="password" name="password" type="password">
         </form>
