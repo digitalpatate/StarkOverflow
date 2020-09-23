@@ -23,6 +23,7 @@ jobs:
           path: target/StarkOverflow.war
   build-docker:
     runs-on: ubuntu-latest
+    needs: [build-maven]
     steps:
       - name: Download builded war
         uses: actions/download-artifact@v2
