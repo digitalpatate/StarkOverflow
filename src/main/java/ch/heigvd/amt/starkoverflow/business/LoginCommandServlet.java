@@ -25,7 +25,7 @@ public class LoginCommandServlet extends HttpServlet {
                 .password(request.getAttribute("password").toString())
                 .build();
 
-        PersonDTO loggedInUser = null;// = RegisterPageServlet.users.get(command.email);
+        PersonDTO loggedInUser = null;
         try {
             loggedInUser = serviceRegistry.getIdentityFacade().login(command);
             request.getSession().setAttribute("currentUser", loggedInUser);
