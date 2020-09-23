@@ -52,6 +52,3 @@ jobs:
         with:
           push: true
           tags: docker.pkg.github.com/digitalpatate/starkoverflow/app:latest
-      -
-        name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
