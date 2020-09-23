@@ -32,23 +32,8 @@ jobs:
         with:
           name: war
           path: target/
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Login to REGISTRY
-        uses: docker/login-action@v1
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      -
-        name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: docker.pkg.github.com/digitalpatate/starkoverflow/app:latest
+      - name: Build Docker image
+        run: |
+          echo ${{ secrets.REGISTRY_TOKEN }} | docker login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+          docker build -t ghcr.io/digitalpatate/starkoverflow .
+          docker push ghcr.io/digitalpatate/starkoverflow
