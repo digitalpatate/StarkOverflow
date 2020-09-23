@@ -16,9 +16,9 @@ public class RegisterPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PersonDTO user = new PersonDTO();
-        user.email = request.getAttribute("email").toString();
-        user.password = request.getAttribute("password").toString();
+        PersonDTO user = PersonDTO.builder()
+                .email(request.getAttribute("email").toString())
+                .password(request.getAttribute("password").toString()).build();
 
         users.put(user.email, user);
         response.sendRedirect("/login");

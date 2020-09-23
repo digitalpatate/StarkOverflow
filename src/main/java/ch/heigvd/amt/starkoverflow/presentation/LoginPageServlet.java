@@ -22,11 +22,11 @@ public class LoginPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LoginCommand command = new LoginCommand();
-        command.email = request.getParameter("email").toString();
-        command.password = request.getParameter("password").toString();
+        LoginCommand command = LoginCommand.builder()
+                .email(request.getAttribute("email").toString())
+                .password(request.getAttribute("password").toString()).build();
 
-        PersonDTO user = RegisterPageServlet.users.get(command.email);
+        PersonDTO user = null;// = RegisterPageServlet.users.get(command.email);
         if(user != null){
 
         } else {
