@@ -6,6 +6,7 @@ on:
 
 jobs:
   build-maven:
+    runs-on: ubuntu-latest
     name: Build the project with maven
     steps:
       - uses: actions/checkout@v2
