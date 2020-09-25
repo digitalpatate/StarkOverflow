@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: master
+    branches: e2e-testing-in-action
 
 jobs:
   build-maven:
@@ -36,4 +36,5 @@ jobs:
         run: |
           echo ${{ secrets.REGISTRY_TOKEN }} | docker login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
           docker build -t ghcr.io/digitalpatate/starkoverflow .
+          docker run -d -p 8080:8080 ghcr.io/digitalpatate/starkoverflow
           docker push ghcr.io/digitalpatate/starkoverflow
