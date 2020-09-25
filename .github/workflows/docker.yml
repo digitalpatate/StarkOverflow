@@ -1,8 +1,7 @@
-name: ci
-
+name: Main workflow
 on:
   push:
-    branches: e2e-testing-in-action
+    branches: master
 
 jobs:
   unit-test:
