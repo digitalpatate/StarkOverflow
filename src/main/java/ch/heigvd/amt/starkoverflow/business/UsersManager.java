@@ -1,14 +1,17 @@
-package ch.heigvd.amt.starkoverflow.model;
+package ch.heigvd.amt.starkoverflow.business;
+
+import ch.heigvd.amt.starkoverflow.model.LoginCommand;
+import ch.heigvd.amt.starkoverflow.model.PersonDTO;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Users {
-    public static final Users INSTANCE = new Users();
+public class UsersManager {
+    public static final UsersManager INSTANCE = new UsersManager();
 
     private HashMap<String, PersonDTO> users = new HashMap<>();
 
-    private Users() {
+    private UsersManager() {
 
     }
 
