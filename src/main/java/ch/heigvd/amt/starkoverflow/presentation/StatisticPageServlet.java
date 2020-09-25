@@ -1,6 +1,5 @@
 package ch.heigvd.amt.starkoverflow.presentation;
 
-import ch.heigvd.amt.starkoverflow.model.Question;
 import ch.heigvd.amt.starkoverflow.model.Statistic;
 
 import javax.servlet.ServletException;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "StatisticPageServlet")
+@WebServlet(name = "StatisticPageServlet", urlPatterns = "/Statistic")
 public class StatisticPageServlet extends HttpServlet {
 
     @Override

@@ -8,16 +8,8 @@
     <servlet-name>HomePageServlet</servlet-name>
     <servlet-class>ch.heigvd.amt.starkoverflow.presentation.HomePageServlet</servlet-class>
   </servlet>
-  <servlet>
-    <servlet-name>StatisticPageServlet</servlet-name>
-    <servlet-class>ch.heigvd.amt.starkoverflow.presentation.StatisticPageServlet</servlet-class>
-  </servlet>
   <servlet-mapping>
     <servlet-name>HomePageServlet</servlet-name>
     <url-pattern></url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>StatisticPageServlet</servlet-name>
-    <url-pattern>/Statistic</url-pattern>
   </servlet-mapping>
 </web-app>
