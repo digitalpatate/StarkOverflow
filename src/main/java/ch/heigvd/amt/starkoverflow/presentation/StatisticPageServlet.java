@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "StatisticPageServlet", urlPatterns = "/Statistic")
+@WebServlet(name = "StatisticPageServlet", urlPatterns = "/statistic")
 public class StatisticPageServlet extends HttpServlet {
 
     @Override
