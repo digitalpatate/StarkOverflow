@@ -27,8 +27,10 @@ public class RegisterCommandServlet extends HttpServlet {
         if(Users.INSTANCE.addUser(user)){
             request.setAttribute("errors", "Email already taken");
             request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+        }else{
+            Users.INSTANCE.dump();
+            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
-        Users.INSTANCE.dump();
-        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+
     }
 }
