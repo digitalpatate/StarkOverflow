@@ -2,7 +2,7 @@ package ch.heigvd.amt.starkoverflow.business;
 
 import ch.heigvd.amt.starkoverflow.model.LoginCommand;
 import ch.heigvd.amt.starkoverflow.model.PersonDTO;
-import com.sun.tools.javac.util.List;
+import ch.heigvd.amt.starkoverflow.model.Users;
 
 import javax.imageio.spi.ServiceRegistry;
 import javax.inject.Inject;
@@ -27,13 +27,13 @@ public class LoginCommandServlet extends HttpServlet {
 
         PersonDTO loggedInUser = null;
         try {
-            loggedInUser = serviceRegistry.getIdentityFacade().login(command);
+            loggedInUser = Users.INSTANCE.login(command);
             request.getSession().setAttribute("currentUser", loggedInUser);
             String targetUrl = (String) request.getSession().getAttribute("targetUrl");
             targetUrl = (targetUrl != null) ? targetUrl : "/questions";
             response.sendRedirect(targetUrl);
         } catch (Exception e) {
-            request.setAttribute("arrors", List.of("Invalid login"));
+            //request.setAttribute("errors", List.of("Invalid login"));
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
     }

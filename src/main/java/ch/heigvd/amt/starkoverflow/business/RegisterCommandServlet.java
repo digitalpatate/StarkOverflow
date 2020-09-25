@@ -1,6 +1,7 @@
 package ch.heigvd.amt.starkoverflow.business;
 
 import ch.heigvd.amt.starkoverflow.model.PersonDTO;
+import ch.heigvd.amt.starkoverflow.model.Users;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,7 @@ public class RegisterCommandServlet extends HttpServlet {
                 .password(request.getAttribute("password").toString())
                 .build();
 
-        response.sendRedirect("/login");
+        Users.INSTANCE.addUser(user);
+        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 }
