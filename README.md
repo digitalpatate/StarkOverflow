@@ -58,3 +58,7 @@ Bruno Legrand
 
 - Pointer on question or answer
 - Pointer on user
+
+## Demarrer le projet
+
+Dans le dossier `docker/topologies/test` lancer le script `docker-compose.sh`
