@@ -31,7 +31,7 @@ public class LoginCommandServlet extends HttpServlet {
             loggedInUser = Users.INSTANCE.login(command);
             request.getSession().setAttribute("currentUser", loggedInUser);
             String targetUrl = (String) request.getSession().getAttribute("targetUrl");
-            targetUrl = (targetUrl != null) ? targetUrl : "questions";
+            targetUrl = (targetUrl != null) ? targetUrl : "home";
             response.sendRedirect(targetUrl);
         } catch (Exception e) {
             request.setAttribute("errors", "Invalid login");
