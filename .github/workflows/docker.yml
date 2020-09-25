@@ -5,9 +5,21 @@ on:
     branches: e2e-testing-in-action
 
 jobs:
-  build-maven:
+  unit-test:
     runs-on: ubuntu-latest
-    name: Build the project with maven
+    name: Run unit tests
+    septs:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - run: mvn clean install
+      - run: mvn test
+  build-war:
+    needs: [ unit-test ]
+    runs-on: ubuntu-latest
+    name: Build the project the war
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -21,7 +33,7 @@ jobs:
         with:
           name: war
           path: target/StarkOverflow.war
-  build-docker:
+  build-docker-image:
     runs-on: ubuntu-latest
     needs: [build-maven]
     steps:
@@ -36,8 +48,17 @@ jobs:
         run: |
           echo ${{ secrets.REGISTRY_TOKEN }} | docker login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
           docker build -t ghcr.io/digitalpatate/starkoverflow .
-          docker run -d -p 8080:8080 ghcr.io/digitalpatate/starkoverflow
-          sleep 15
+          docker push ghcr.io/digitalpatate/starkoverflow
+  e2e-test:
+    needs: [build-docker-image]
+    runs-on: ubuntu-lastest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run e2e tests
+        run: |
           cd e2e
+          echo ${{ secrets.REGISTRY_TOKEN }} | docker login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+          docker-compose up -d
           npm install
-          npm run codeceptjs
+          npm run e2e-test
