@@ -17,8 +17,8 @@ public class RegisterCommandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PersonDTO user = PersonDTO.builder()
-                .email(request.getAttribute("email").toString())
-                .password(request.getAttribute("password").toString())
+                .email(request.getParameter("email").toString())
+                .password(request.getParameter("password").toString())
                 .build();
 
         Users.INSTANCE.addUser(user);

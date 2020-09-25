@@ -41,7 +41,7 @@ public class AuthorizationFilter implements Filter {
     }
 
     private boolean isPublicResource(String requestURI) {
-        if(requestURI.startsWith("/assets")){
+        /*if(requestURI.startsWith("/assets")){
             return true;
         }
         if(requestURI.startsWith("/login")){
@@ -53,7 +53,8 @@ public class AuthorizationFilter implements Filter {
         if(requestURI.startsWith("/register")){
             return true;
         }
-        return false;
+        return false;*/
+        return true;
     }
 
     public void destroy() {

@@ -21,8 +21,8 @@ public class LoginCommandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LoginCommand command = LoginCommand.builder()
-                .email(request.getAttribute("email").toString())
-                .password(request.getAttribute("password").toString())
+                .email(request.getParameter("email"))
+                .password(request.getParameter("password"))
                 .build();
 
         PersonDTO loggedInUser = null;
@@ -30,7 +30,7 @@ public class LoginCommandServlet extends HttpServlet {
             loggedInUser = Users.INSTANCE.login(command);
             request.getSession().setAttribute("currentUser", loggedInUser);
             String targetUrl = (String) request.getSession().getAttribute("targetUrl");
-            targetUrl = (targetUrl != null) ? targetUrl : "/questions";
+            targetUrl = (targetUrl != null) ? targetUrl : "questions";
             response.sendRedirect(targetUrl);
         } catch (Exception e) {
             //request.setAttribute("errors", List.of("Invalid login"));
