@@ -1,6 +1,7 @@
 package ch.heigvd.amt.starkoverflow.model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Users {
     public static final Users INSTANCE = new Users();
@@ -37,11 +38,25 @@ public class Users {
         return false;
     }
 
-    public PersonDTO login(LoginCommand cmd){
+    public PersonDTO login(LoginCommand cmd) throws Exception {
         if(users.containsKey(cmd.email)){
-            return users.get(cmd.email);
+            PersonDTO user = users.get(cmd.email);
+            if(cmd.password.equals(user.password)) {
+                return users.get(cmd.email);
+            }
         }
 
-        return null;
+        throw new Exception("No user found");
+    }
+
+    public void dump(){
+        for(Map.Entry<String, PersonDTO> entry : users.entrySet()){
+            System.out.println(entry.getKey() + "->"
+                    + "\nemail: " + entry.getValue().email
+                    + "\nprofilePicture: " + entry.getValue().profilePicture
+                    + "\nname: " + entry.getValue().name
+                    + "\nsurname: " + entry.getValue().surname
+                    + "\npassword: " + entry.getValue().password);
+        }
     }
 }

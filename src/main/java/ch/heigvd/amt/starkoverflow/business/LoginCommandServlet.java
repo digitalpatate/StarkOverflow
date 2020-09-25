@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "LoginCommandServlet", urlPatterns = "/login.do")
 public class LoginCommandServlet extends HttpServlet {
@@ -33,7 +34,7 @@ public class LoginCommandServlet extends HttpServlet {
             targetUrl = (targetUrl != null) ? targetUrl : "questions";
             response.sendRedirect(targetUrl);
         } catch (Exception e) {
-            //request.setAttribute("errors", List.of("Invalid login"));
+            request.setAttribute("errors", "Invalid login");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
     }

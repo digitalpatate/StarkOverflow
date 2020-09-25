@@ -9,8 +9,11 @@
 
     <div id="register">
         <form action="register.do" method="post">
-            <label for="email">Email:</label> <input id="email" name="email" type="text">
-            <label for="password">Password:</label> <input id="password" name="password" type="password">
+            <label for="email">Email:</label> <input id="email" name="email" type="email"><br>
+            <label for="profilePicture">Profile Picture URL:</label> <input id="profilePicture" name="profilePicture" type="url"><br>
+            <label for="name">Name:</label> <input id="name" name="name" type="text">
+            <label for="surname">Surname:</label> <input id="surname" name="surname" type="text"><br>
+            <label for="password">Password:</label> <input id="password" name="password" type="password"><br>
             <input type="submit" value="Register">
         </form>
     </div>

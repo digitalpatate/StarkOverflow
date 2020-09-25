@@ -17,11 +17,18 @@ public class RegisterCommandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PersonDTO user = PersonDTO.builder()
-                .email(request.getParameter("email").toString())
-                .password(request.getParameter("password").toString())
+                .email(request.getParameter("email"))
+                .profilePicture(request.getParameter("profilePicture"))
+                .name(request.getParameter("name"))
+                .surname(request.getParameter("surname"))
+                .password(request.getParameter("password"))
                 .build();
 
-        Users.INSTANCE.addUser(user);
+        if(Users.INSTANCE.addUser(user)){
+            request.setAttribute("errors", "Email already taken");
+            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+        }
+        Users.INSTANCE.dump();
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 }
