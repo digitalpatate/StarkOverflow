@@ -37,4 +37,7 @@ jobs:
           echo ${{ secrets.REGISTRY_TOKEN }} | docker login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
           docker build -t ghcr.io/digitalpatate/starkoverflow .
           docker run -d -p 8080:8080 ghcr.io/digitalpatate/starkoverflow
-          docker push ghcr.io/digitalpatate/starkoverflow
+          sleep 15
+          cd e2e
+          npm install
+          npm run codeceptjs
