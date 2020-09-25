@@ -24,13 +24,13 @@ public class RegisterCommandServlet extends HttpServlet {
                 .password(request.getParameter("password"))
                 .build();
 
-        if(Users.INSTANCE.addUser(user)){
+        if(!Users.INSTANCE.addUser(user)){
             request.setAttribute("errors", "Email already taken");
             request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
-        }else{
-            Users.INSTANCE.dump();
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+            return;
         }
 
+        Users.INSTANCE.dump();
+        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 }
