@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/*")
+@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/patate")
 public class AuthorizationFilter implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {

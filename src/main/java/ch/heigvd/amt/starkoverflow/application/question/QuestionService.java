@@ -9,18 +9,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//Service ?
-public class QuestionFacade {
+public class QuestionService {
 
     private IQuestionRepository questionRepository;
 
-    public QuestionFacade(IQuestionRepository questionRepository) {
+    public QuestionService(IQuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
 
     public void createQuestion(CreateQuestionCommand command){
-        Question question = Question.builder().build();
-
+        Question question = command.createEntity();
         questionRepository.save(question);
     }
 
