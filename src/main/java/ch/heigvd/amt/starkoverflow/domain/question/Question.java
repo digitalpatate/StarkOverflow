@@ -16,6 +16,13 @@ public class Question implements IEntity {
     private String content;
     private Date creationDate;
 
+/*    public Question(String title, String content) {
+        this.id = new QuestionId();
+        this.title = title;
+        this.content = content;
+        this.creationDate = new Date();
+    }*/
+
     //private Collection<Tag> tags;
     // private User author;
 

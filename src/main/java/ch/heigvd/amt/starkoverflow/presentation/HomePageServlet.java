@@ -1,6 +1,6 @@
 package ch.heigvd.amt.starkoverflow.presentation;
 
-import ch.heigvd.amt.starkoverflow.model.Question;
+import ch.heigvd.amt.starkoverflow.domain.question.Question;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
