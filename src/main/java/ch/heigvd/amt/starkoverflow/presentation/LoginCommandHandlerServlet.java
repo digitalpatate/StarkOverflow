@@ -1,8 +1,8 @@
-package ch.heigvd.amt.starkoverflow.business;
+package ch.heigvd.amt.starkoverflow.presentation;
 
 import ch.heigvd.amt.starkoverflow.model.LoginCommand;
 import ch.heigvd.amt.starkoverflow.model.PersonDTO;
-import ch.heigvd.amt.starkoverflow.model.Users;
+import ch.heigvd.amt.starkoverflow.business.UsersManager;
 
 import javax.imageio.spi.ServiceRegistry;
 import javax.inject.Inject;
@@ -12,10 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "LoginCommandServlet", urlPatterns = "/login.do")
-public class LoginCommandServlet extends HttpServlet {
+public class LoginCommandHandlerServlet extends HttpServlet {
     @Inject
     ServiceRegistry serviceRegistry;
 
@@ -28,10 +27,10 @@ public class LoginCommandServlet extends HttpServlet {
 
         PersonDTO loggedInUser = null;
         try {
-            loggedInUser = Users.INSTANCE.login(command);
+            loggedInUser = UsersManager.INSTANCE.login(command);
             request.getSession().setAttribute("currentUser", loggedInUser);
             String targetUrl = (String) request.getSession().getAttribute("targetUrl");
-            targetUrl = (targetUrl != null) ? targetUrl : "questions";
+            targetUrl = (targetUrl != null) ? targetUrl : "";
             response.sendRedirect(targetUrl);
         } catch (Exception e) {
             request.setAttribute("errors", "Invalid login");

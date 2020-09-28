@@ -9,6 +9,9 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/profile">Mon Profile</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/statistic">statistics</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/login">login</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/register">Register</a>
                 </li>
             </ul>
         </div>

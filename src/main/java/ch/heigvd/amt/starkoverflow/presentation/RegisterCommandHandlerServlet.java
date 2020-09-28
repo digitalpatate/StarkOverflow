@@ -1,7 +1,7 @@
-package ch.heigvd.amt.starkoverflow.business;
+package ch.heigvd.amt.starkoverflow.presentation;
 
 import ch.heigvd.amt.starkoverflow.model.PersonDTO;
-import ch.heigvd.amt.starkoverflow.model.Users;
+import ch.heigvd.amt.starkoverflow.business.UsersManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 
 @WebServlet(name = "RegisterCommandServlet", urlPatterns = "/register.do")
-public class RegisterCommandServlet extends HttpServlet {
+public class RegisterCommandHandlerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,11 +24,13 @@ public class RegisterCommandServlet extends HttpServlet {
                 .password(request.getParameter("password"))
                 .build();
 
-        if(Users.INSTANCE.addUser(user)){
+        if(!UsersManager.INSTANCE.addUser(user)){
             request.setAttribute("errors", "Email already taken");
             request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+            return;
         }
-        Users.INSTANCE.dump();
+
+        UsersManager.INSTANCE.dump();
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 }

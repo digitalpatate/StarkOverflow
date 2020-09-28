@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags" %>
 <template:defaultLayout title="Home">
-    <div class="container">
+<%--    <div class="container">
         <div class="question-list">
             <c:forEach items="${questions}" var="question">
                 <a href="${pageContext.request.contextPath}/">
@@ -13,5 +13,5 @@
                 </a>
             </c:forEach>
         </div>
-    </div>
+    </div>--%>
 </template:defaultLayout>
