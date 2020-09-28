@@ -9,7 +9,6 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@Builder(toBuilder = true)
 public class Answer implements IEntity {
 
     private AnswerId id;
@@ -20,4 +19,12 @@ public class Answer implements IEntity {
     private Question question;
     private boolean approved;
 
+
+    public Answer(String content) {
+        this.content = content;
+        this.creationDate = new Date();
+        this.id = new AnswerId();
+        // Is that a domain related or business ? Or is domain== business
+        this.approved = false;
+    }
 }

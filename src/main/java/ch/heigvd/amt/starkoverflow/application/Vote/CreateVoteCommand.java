@@ -17,7 +17,6 @@ public class CreateVoteCommand {
     private String content;
 
     public Vote createEntity() {
-        return Vote.builder()
-                .build();
+        return new Vote();
     }
 }

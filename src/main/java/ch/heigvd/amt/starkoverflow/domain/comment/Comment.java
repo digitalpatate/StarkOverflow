@@ -10,7 +10,6 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@Builder(toBuilder = true)
 public class Comment implements IEntity {
 
     private CommentId id;
@@ -20,5 +19,9 @@ public class Comment implements IEntity {
     private User author;
     private Commentable commentable;
 
-
+    public Comment(String content) {
+        this.content = content;
+        this.creationDate = new Date();
+        this.id = new CommentId();
+    }
 }

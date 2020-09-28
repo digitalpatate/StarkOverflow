@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Builder(toBuilder = true)
 public class Question implements IEntity {
 
     private QuestionId id;
@@ -23,18 +22,11 @@ public class Question implements IEntity {
     private List<Tag> tags;
     private User author;
 
-/*    public Question(String title, String content) {
+   public Question(String title, String content) {
         this.id = new QuestionId();
         this.title = title;
         this.content = content;
         this.creationDate = new Date();
-    }*/
-
-    //private Collection<Tag> tags;
-    // private User author;
-
-
-
-
+    }
 
 }

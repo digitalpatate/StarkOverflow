@@ -1,17 +1,33 @@
 package ch.heigvd.amt.starkoverflow.domain.user;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import ch.heigvd.amt.starkoverflow.domain.Votable;
-import ch.heigvd.amt.starkoverflow.domain.vote.VoteId;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
-@Builder(toBuilder = true)
 public class User implements IEntity {
-    public String email;
-    public String password;
-    public String profilePictureURL;
-    public String firstname;
-    public String lastname;
+
+    private UserId id;
+    private String email;
+    private String password;
+    private String profilePictureURL;
+    private String firstname;
+    private String lastname;
+
+    private Date registrationDate;
+
+
+
+    public User(String email, String password, String profilePictureURL, String firstname, String lastname) {
+        this.email = email;
+        this.password = password;
+        this.profilePictureURL = profilePictureURL;
+        this.firstname = firstname;
+        this.lastname = lastname;
+
+        this.id = new UserId();
+        this.registrationDate = new Date();
+    }
 }

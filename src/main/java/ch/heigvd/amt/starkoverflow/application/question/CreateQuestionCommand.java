@@ -18,11 +18,6 @@ public class CreateQuestionCommand {
     private String content;
 
     public Question createEntity() {
-        return Question.builder()
-                .id(new QuestionId())
-                .title(title)
-                .content(content)
-                .creationDate(new Date())
-                .build();
+        return new Question(title,content);
     }
 }
