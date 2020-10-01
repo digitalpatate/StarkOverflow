@@ -42,8 +42,8 @@ public class User implements IEntity {
     }*/
 
 
-    public static class PersonBuilder {
-        public PersonBuilder plainPassword(String plainPassword){
+    public static class UserBuilder {
+        public UserBuilder plainPassword(String plainPassword){
 
             if(plainPassword == null || plainPassword.isEmpty()){
                 throw new java.lang.IllegalArgumentException("mot de passe vide");
