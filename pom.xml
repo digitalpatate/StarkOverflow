@@ -57,7 +57,8 @@
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
                 <version>3.2</version>
-            <!-- uncomment this to generate an executable jar - but packaging a .war in a Docker image is faster -->
+
+                <!-- uncomment this to generate an executable jar - but packaging a .war in a Docker image is faster -->
                 <executions>
                     <execution>
                         <id>package-server</id>

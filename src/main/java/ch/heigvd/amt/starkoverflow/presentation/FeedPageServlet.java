@@ -20,7 +20,7 @@ public class FeedPageServlet extends HttpServlet {
 
         List<Question> questions = new LinkedList<>();
         // TODO: récupérer les questions devra se faire dans business
-        //questions.add(Question.builder().title("Ma question").content("mon contenu").build());
+        questions.add(Question.builder().title("Ma question").content("mon contenu").build());
         request.setAttribute("questions", questions);
 
         request.getRequestDispatcher("/WEB-INF/views/feed.jsp").forward(request, response);
