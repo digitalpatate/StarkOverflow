@@ -21,11 +21,11 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    public void createQuestion(CreateQuestionCommand command){
+    public Question createQuestion(CreateQuestionCommand command){
         Question question = command.createEntity();
         User author = userRepository.findById(command.getUserId()).orElseThrow(RuntimeException::new);
         question.setAuthor(author);
-        questionRepository.save(question);
+        return questionRepository.save(question);
     }
 
     public QuestionsDTO getQuestion(QuestionQuery query){

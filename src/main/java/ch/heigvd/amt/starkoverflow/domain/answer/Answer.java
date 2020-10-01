@@ -6,6 +6,8 @@ import ch.heigvd.amt.starkoverflow.domain.user.User;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.enterprise.context.NormalScope;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
