@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.presentation;
+package ch.heigvd.amt.starkoverflow.ui.web;
 
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-@WebServlet(name = "HomePageServlet")
+@WebServlet(name = "HomePageServlet", urlPatterns = "")
 public class HomePageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

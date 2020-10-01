@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.presentation;
+package ch.heigvd.amt.starkoverflow.ui.web;
 
 import ch.heigvd.amt.starkoverflow.model.PersonDTO;
 import ch.heigvd.amt.starkoverflow.business.UsersManager;

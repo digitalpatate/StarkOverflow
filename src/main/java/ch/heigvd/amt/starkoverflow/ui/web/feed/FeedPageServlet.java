@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.presentation;
+package ch.heigvd.amt.starkoverflow.ui.web.feed;
 
         import ch.heigvd.amt.starkoverflow.domain.question.Question;
         import javax.servlet.ServletException;

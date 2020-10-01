@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.presentation;
+package ch.heigvd.amt.starkoverflow.ui.web;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

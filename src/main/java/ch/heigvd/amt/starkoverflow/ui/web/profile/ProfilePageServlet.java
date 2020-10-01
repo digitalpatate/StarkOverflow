@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.presentation;
+package ch.heigvd.amt.starkoverflow.ui.web.profile;
 
 import ch.heigvd.amt.starkoverflow.model.Profile;
 
