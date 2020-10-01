@@ -5,6 +5,7 @@ import ch.heigvd.amt.starkoverflow.application.question.CreateQuestionCommand;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="QuestionCommandEndpoint",urlPatterns = "/questions.do")
-public class QuestionCommandEndpoint extends HttpServlet {
+@WebServlet(name="QuestionCommandHandler", urlPatterns = ".do")
+public class QuestionCommandHandler extends HttpServlet {
 
     private QuestionService questionService;
 
@@ -31,6 +32,7 @@ public class QuestionCommandEndpoint extends HttpServlet {
         CreateQuestionCommand createQuestionCommand = CreateQuestionCommand.builder()
                 .content(req.getParameter("content"))
                 .title(req.getParameter("title"))
+                .userId(new UserId())
                 .build();
 
         questionService.createQuestion(createQuestionCommand);

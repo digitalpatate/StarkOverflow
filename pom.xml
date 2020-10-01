@@ -43,10 +43,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.openliberty</groupId>
-            <artifactId>openliberty-runtime</artifactId>
-            <version>[20.0.0.10,)</version>
-            <type>zip</type>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

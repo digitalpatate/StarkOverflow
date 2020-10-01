@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="QuestionQueryEndpoint",urlPatterns = "/questions")
-public class QuestionQueryEndpoint extends HttpServlet {
+@WebServlet(name="QuestionQueryHandler", urlPatterns = "")
+public class QuestionQueryHandler extends HttpServlet {
 
     private QuestionService questionService;
 

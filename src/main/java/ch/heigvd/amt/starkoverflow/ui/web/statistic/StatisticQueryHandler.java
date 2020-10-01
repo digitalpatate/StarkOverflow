@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "StatisticQueryEndpoint", urlPatterns = "/statistic")
-public class StatisticQueryEndpoint extends HttpServlet {
+@WebServlet(name = "StatisticQueryHandler", urlPatterns = "/statistic")
+public class StatisticQueryHandler extends HttpServlet {
 
     private StatisticService statisticService;
 
