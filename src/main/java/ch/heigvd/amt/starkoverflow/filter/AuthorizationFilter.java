@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.filter;
 
 import ch.heigvd.amt.starkoverflow.model.PersonDTO;
 
+import javax.ejb.EJB;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;

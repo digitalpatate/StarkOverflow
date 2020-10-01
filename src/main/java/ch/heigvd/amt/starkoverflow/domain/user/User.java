@@ -1,7 +1,7 @@
 package ch.heigvd.amt.starkoverflow.domain.user;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import lombok.Builder;
+import javax.validation.constraints.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +9,10 @@ import java.util.Date;
 @Data
 public class User implements IEntity {
 
+
     private UserId id;
+
+    @NotNull
     private String email;
     private String password;
     private String profilePictureURL;
