@@ -2,9 +2,7 @@ package ch.heigvd.amt.starkoverflow.domain.user;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import javax.validation.constraints.*;
-
 import lombok.*;
-
 import java.util.Date;
 
 
@@ -12,7 +10,7 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
-public class User implements IEntity {
+public class User implements IEntity<User, UserId> {
 
 
     private UserId id;
@@ -28,7 +26,10 @@ public class User implements IEntity {
 
     private Date registrationDate;
 
-
+    @Override
+    public User deepClone(){
+        return this.toBuilder().id(new UserId(id.asString())).build();
+    }
 
     /*public User(String email, String password, String profilePictureURL, String firstname, String lastname) {
         this.email = email;
@@ -55,7 +56,7 @@ public class User implements IEntity {
         }
 
         public User build(){
-            User newUser = new User(id, email, firstname, lastname, profilePictureURL, encryptedPassword);
+            User newUser = new User(id, email, firstname, lastname, profilePictureURL, encryptedPassword, registrationDate);
             return newUser;
         }
     }

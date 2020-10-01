@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.domain.comment;
 
 import ch.heigvd.amt.starkoverflow.domain.Commentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
+import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class Comment implements IEntity {
+public class Comment implements IEntity<Comment,CommentId> {
 
     private CommentId id;
 
@@ -23,5 +24,11 @@ public class Comment implements IEntity {
         this.content = content;
         this.creationDate = new Date();
         this.id = new CommentId();
+    }
+
+    //TODO complèter la fonction
+    @Override
+    public Comment deepClone(){
+        return null;
     }
 }

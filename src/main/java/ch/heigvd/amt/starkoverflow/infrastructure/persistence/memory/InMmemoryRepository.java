@@ -18,7 +18,7 @@ public class InMmemoryRepository<T extends IEntity,U extends Id> {
     private Map<U, T> store = new ConcurrentHashMap<>();
 
     public T save(T entity) {
-        store.put(entity.getId(),entity);
+        store.put((U) entity.getId(),entity);
 
         return entity;
     }

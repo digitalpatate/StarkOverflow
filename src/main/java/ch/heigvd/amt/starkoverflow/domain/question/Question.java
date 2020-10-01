@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.domain.question;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.Votable;
+import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class Question implements IEntity {
+public class Question implements IEntity<Question,QuestionId> {
 
     private QuestionId id;
 
@@ -29,4 +30,10 @@ public class Question implements IEntity {
         this.creationDate = new Date();
     }
 
+
+    //TODO complèter la fonction
+    @Override
+    public Question deepClone(){
+        return null;
+    }
 }
