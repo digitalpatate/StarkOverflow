@@ -1,8 +1,5 @@
 package ch.heigvd.amt.starkoverflow.application.question;
 
-
-import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
-import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import lombok.Builder;

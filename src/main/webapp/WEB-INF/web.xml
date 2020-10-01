@@ -6,7 +6,7 @@
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>HomePageServlet</servlet-name>
-    <servlet-class>ch.heigvd.amt.starkoverflow.ui.web.HomePageServlet</servlet-class>
+    <servlet-class>ch.heigvd.amt.starkoverflow.ui.web.HomeQueryEndpoint</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>HomePageServlet</servlet-name>

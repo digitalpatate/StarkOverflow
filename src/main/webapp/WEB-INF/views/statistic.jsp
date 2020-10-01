@@ -4,6 +4,8 @@
 <template:defaultLayout title="Statistics">
     <h2>Statistics Page</h2>
     <div class="statistic">
-        <p class="statistic-content">${statistic.data}</p>
+        <c:forEach items="${statistics}" var="statistic">
+            <p class="statistic-content">${statistic.data}</p>
+        </c:forEach>
     </div>
 </template:defaultLayout>

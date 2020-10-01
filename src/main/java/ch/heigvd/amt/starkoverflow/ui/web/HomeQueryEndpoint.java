@@ -12,10 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @WebServlet(name = "HomePageServlet", urlPatterns = "")
-public class HomePageServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
+public class HomeQueryEndpoint extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Question> questions = new LinkedList<>();
