@@ -14,6 +14,7 @@ public class User implements IEntity {
 
     @NotNull
     private String email;
+
     private String password;
     private String profilePictureURL;
     private String firstname;

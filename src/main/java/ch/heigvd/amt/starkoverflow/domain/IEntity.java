@@ -5,5 +5,5 @@ import lombok.Builder;
 import java.security.cert.CertPathBuilder;
 
 public interface IEntity {
-    public Id getId();
+    <U extends Id> U getId();
 }
