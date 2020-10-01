@@ -18,7 +18,7 @@ jobs:
   build-war:
     needs: [ unit-test ]
     runs-on: ubuntu-latest
-    name: Build the project the war
+    name: Build the jar file
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -27,11 +27,11 @@ jobs:
           java-version: 11
       - name: Build with Maven
         run: mvn clean package
-      - name: Upload builded war
+      - name: Upload builded jar
         uses: actions/upload-artifact@v2
         with:
-          name: war
-          path: target/StarkOverflow.war
+          name: starkOverflow.jar
+          path: target/starkOverflow.jar
   build-docker-image:
     runs-on: ubuntu-latest
     needs: [ build-war ]
@@ -39,10 +39,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Download builded war
+      - name: Download builded jar
         uses: actions/download-artifact@v2
         with:
-          name: war
+          name: starkOverflow.jar
           path: target/
       - name: Build Docker image
         run: |
