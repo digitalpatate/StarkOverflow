@@ -11,15 +11,13 @@ import lombok.Getter;
 public class CreateUserCommand {
 
     private String email;
-    private String password;
-
+    private String imageUrl;
     private String firstname;
     private String lastname;
+    private String password;
+    private String regDate;
 
-    private String imageUrl;
-
-    public User createEntity() {
-        return new User(email,password,firstname,lastname,imageUrl);
-
-    }
+    /*public User createEntity() {
+        return new User(email,imageUrl,firstname,lastname,password,regDate);
+    }*/
 }

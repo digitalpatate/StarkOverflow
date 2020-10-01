@@ -17,14 +17,22 @@ public class User implements IEntity<User, UserId> {
 
     @NotNull
     private String email;
+    @NotNull
     private String profilePictureURL;
+    @NotNull
     private String firstname;
+    @NotNull
     private String lastname;
 
     @EqualsAndHashCode.Exclude
     private String encryptedPassword;
 
     private Date registrationDate;
+
+    //TODO Replacer toUpperCase avec une vrai fonction de chiffrement
+    public boolean auth(String plainPassword){
+        return plainPassword.toUpperCase().equals(encryptedPassword);
+    }
 
     @Override
     public User deepClone(){
