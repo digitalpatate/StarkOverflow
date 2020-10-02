@@ -3,6 +3,4 @@ services:
   backend:
     image: ghcr.io/digitalpatate/starkoverflow
     ports:
-     - "8080:8080"
-    environment:
-      - HOST=*
+     - "8080:9080"
