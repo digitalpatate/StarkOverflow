@@ -30,13 +30,14 @@ public class RegisterCommandEndpoint extends HttpServlet {
             .lastname(request.getParameter("lastname"))
             .email(request.getParameter("email"))
             .build();
+
         try {
             identityManagementFacade.register(registerCommand);
             request.getRequestDispatcher("/login.do").forward(request, response);
             return;
         } catch (RegistrationFailedException e) {
-            request.getSession().setAttribute("errors", List.of(e.getMessage()));
-            response.sendRedirect("/login");
+            request.getSession().setAttribute("errors", e.getMessage());
+            response.sendRedirect("/starkOverflow/login");
             return;
         }
     }

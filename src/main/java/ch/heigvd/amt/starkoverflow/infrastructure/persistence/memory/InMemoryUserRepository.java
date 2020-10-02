@@ -4,14 +4,12 @@ import ch.heigvd.amt.starkoverflow.application.User.UserQuery;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
-
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class InMemoryUserRepository extends InMmemoryRepository<User,UserId> implements IUserRepository {
+public class InMemoryUserRepository extends InMemoryRepository<User,UserId> implements IUserRepository {
 
     @Override
     public User save(User entity) {

@@ -2,18 +2,13 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.Id;
-import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
-import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InMmemoryRepository<T extends IEntity,U extends Id> {
+public class InMemoryRepository<T extends IEntity,U extends Id> {
 
     private Map<U, T> store = new ConcurrentHashMap<>();
 
@@ -25,7 +20,6 @@ public class InMmemoryRepository<T extends IEntity,U extends Id> {
     }
     public void remove(U id) {
         store.remove(id);
-
     }
 
     public Optional<T> findById(U id) {

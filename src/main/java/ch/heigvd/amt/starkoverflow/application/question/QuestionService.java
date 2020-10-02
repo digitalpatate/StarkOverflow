@@ -21,10 +21,10 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    public Question createQuestion(CreateQuestionCommand command){
+    public Question createQuestion(CreateQuestionCommand command) {
         Question question = command.createEntity();
-        User author = userRepository.findById(command.getUserId()).orElseThrow(RuntimeException::new);
-        question.setAuthor(author);
+        //User author = userRepository.findById(command.getUserId()).orElseThrow(RuntimeException::new);
+        //question.setAuthor(author);
         return questionRepository.save(question);
     }
 
@@ -32,6 +32,21 @@ public class QuestionService {
         Collection<Question> questions = questionRepository.find(query);
 
         List<QuestionDTO> questionsDTO = questions.stream().map(question -> QuestionDTO.builder().build()).collect(Collectors.toList());
+
+        return QuestionsDTO.builder().questions(questionsDTO).build();
+    }
+
+    public QuestionsDTO getQuestions() {
+        Collection<Question> questions = questionRepository.findAll();
+
+        List<QuestionDTO> questionsDTO = questions
+                .stream()
+                .map(question -> QuestionDTO
+                        .builder()
+                        .title(question.getTitle())
+                        .content(question.getContent())
+                        .build())
+                .collect(Collectors.toList());
 
         return QuestionsDTO.builder().questions(questionsDTO).build();
     }
