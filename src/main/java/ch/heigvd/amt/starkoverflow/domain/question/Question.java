@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class Question implements IEntity<Question,QuestionId>, Commentable {
+public class Question implements IEntity<Question,QuestionId>, Commentable, Votable {
 
     private QuestionId id;
 
