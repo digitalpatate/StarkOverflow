@@ -2,3 +2,6 @@
 .idea
 *.iml
 target/
+
+# ignore unwanted e2e files
+e2e/output

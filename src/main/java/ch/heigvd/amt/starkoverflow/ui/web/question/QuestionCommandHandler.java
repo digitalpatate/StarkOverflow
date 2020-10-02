@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="QuestionCommandHandler", urlPatterns = ".do")
+@WebServlet(name="QuestionCommandHandler", urlPatterns = "/question.do")
 public class QuestionCommandHandler extends HttpServlet {
 
     private QuestionService questionService;
@@ -30,12 +30,12 @@ public class QuestionCommandHandler extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
         CreateQuestionCommand createQuestionCommand = CreateQuestionCommand.builder()
-                .content(req.getParameter("content"))
-                .title(req.getParameter("title"))
-                .userId(new UserId())
+                .content(req.getParameter("questionContent"))
+                .title(req.getParameter("questionTitle"))
+                //.userId(new UserId())
                 .build();
 
         questionService.createQuestion(createQuestionCommand);
-        res.sendRedirect("/questions");
+        res.sendRedirect("");
     }
 }

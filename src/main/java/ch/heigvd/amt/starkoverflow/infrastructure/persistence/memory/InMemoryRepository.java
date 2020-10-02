@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InMmemoryRepository<T extends IEntity,U extends Id> {
+public class InMemoryRepository<T extends IEntity,U extends Id> {
 
     private Map<U, T> store = new ConcurrentHashMap<>();
 
