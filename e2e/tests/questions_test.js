@@ -27,6 +27,7 @@ Scenario('Le champ contenu est obligatoire', (I, questionPage) => {
 });
 
 Scenario('Il est possible de poster une question', (I, questionPage) => {
+    // FIXME: s'authentifier avant de poser la question
     I.amOnPage('/');
     questionPage.sendQuestion('Ceci est une question de test','Et ceci est son contenu !');
     I.seeElement(
@@ -34,4 +35,10 @@ Scenario('Il est possible de poster une question', (I, questionPage) => {
             .withDescendant('.question-title')
             .withText('Ceci est une question de test')
     );
+});
+
+Scenario('Un utilisateur doit s\'authentifier pour pouvoir poser une question', (I, questionPage) => {
+    I.amOnPage('/');
+    questionPage.sendQuestion('Ceci est une question de test','Et ceci est son contenu !');
+    I.amOnPage('/login');
 });
