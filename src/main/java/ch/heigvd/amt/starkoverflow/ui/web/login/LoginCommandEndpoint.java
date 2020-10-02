@@ -40,7 +40,7 @@ public class LoginCommandEndpoint extends HttpServlet {
             return;
         } catch (AuthenticationFailedException e) {
             request.getSession().setAttribute("errors", List.of(e.getMessage()));
-            response.sendRedirect("/login");
+            response.sendRedirect("/starkOverflow/login");
             return;
         }
     }
