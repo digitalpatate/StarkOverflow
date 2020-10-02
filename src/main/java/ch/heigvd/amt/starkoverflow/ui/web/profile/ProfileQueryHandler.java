@@ -1,6 +1,10 @@
 package ch.heigvd.amt.starkoverflow.ui.web.profile;
 
-import ch.heigvd.amt.starkoverflow.model.Profile;
+import ch.heigvd.amt.starkoverflow.application.ServiceRegistry;
+import ch.heigvd.amt.starkoverflow.application.User.UserService;
+import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
+import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
+import ch.heigvd.amt.starkoverflow.domain.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,11 +16,19 @@ import java.io.IOException;
 @WebServlet("/profile")
 public class ProfileQueryHandler extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        Profile profile = new Profile("Bob");
-        req.setAttribute("profile", profile);  // FIXME: passer par le repository etc
-        req.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(req,res);
+    private UserService userService;
 
+    @Override
+    public void init() throws ServletException{
+        super.init();
+        ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
+        userService = serviceRegistry.getUserService();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UserDTO userDTO = (UserDTO) request.getSession().getAttribute("user");
+        request.setAttribute("currentUser", userDTO);
+        request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
     }
 }

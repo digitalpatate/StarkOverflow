@@ -40,7 +40,8 @@ public class User implements IEntity<User, UserId> {
         return this.toBuilder().id(new UserId(id.asString())).build();
     }
 
-    public User(String email, String password, String profilePictureURL, String firstname, String lastname) {
+    public User(String username, String email, String password, String profilePictureURL, String firstname, String lastname) {
+        this.username = username;
         this.email = email;
         this.encryptedPassword = password;
         this.profilePictureURL = profilePictureURL;
@@ -65,7 +66,7 @@ public class User implements IEntity<User, UserId> {
         }
 
         public User build(){
-            User newUser = new User(email, encryptedPassword, profilePictureURL, firstname, lastname);
+            User newUser = new User(username ,email, encryptedPassword, profilePictureURL, firstname, lastname);
             return newUser;
         }
     }

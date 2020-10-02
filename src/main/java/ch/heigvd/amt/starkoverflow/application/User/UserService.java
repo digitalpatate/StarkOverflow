@@ -6,10 +6,14 @@ import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagDTO;
 import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagsDTO;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UsersDTO;
+import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
+import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
+import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.tag.ITagRepository;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,16 +27,16 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void createTag(CreateUserCommand command){
-        User user = command.createEntity();
-        userRepository.save(user);
-    }
+    public UserDTO getUser(String id) {
+        User user = userRepository.findById(
+                new UserId(id)).orElseThrow(() -> new RuntimeException("User not found")
+        );
 
-    public UsersDTO getTag(UserQuery query){
-        Collection<User> users = userRepository.find(query);
-
-        List<UserDTO> userDTO = users.stream().map(user -> UserDTO.builder().build()).collect(Collectors.toList());
-
-        return UsersDTO.builder().users(userDTO).build();
+        return UserDTO.builder()
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .build();
     }
 }

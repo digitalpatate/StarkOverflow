@@ -1,8 +1,8 @@
 package ch.heigvd.amt.starkoverflow.application.identitymgmt;
 
+import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.AuthenticateCommand;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.AuthenticationFailedException;
-import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.CurrentUserDTO;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegisterCommand;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegistrationFailedException;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
@@ -17,13 +17,13 @@ public class IdentityManagementFacade {
     }
 
     public void register(RegisterCommand command) throws RegistrationFailedException {
-        User existingUserWithSameUsername = userRepository.findByUsername(command.getUsername()).orElse(null);
+        User existingUserWithSameEmail = userRepository.findByEmail(command.getEmail()).orElse(null);
 
-        if(existingUserWithSameUsername != null) {
+        if(existingUserWithSameEmail != null) {
             throw new RegistrationFailedException("Username is already used!");
         }
 
-        try{
+        //try{
             User newUser = User.builder()
                 .username(command.getUsername())
                 .email(command.email)
@@ -34,13 +34,14 @@ public class IdentityManagementFacade {
                 .build();
 
             userRepository.save(newUser);
-        } catch (Exception e) {
+        /*} catch (Exception e) {
+            System.out.println("FAIL : save failed");
             throw new RegistrationFailedException(e.getMessage());
-        }
+        }*/
     }
 
-    public CurrentUserDTO authenticate(AuthenticateCommand command) throws AuthenticationFailedException {
-        User user = userRepository.findByUsername(command.getUsername())
+    public UserDTO authenticate(AuthenticateCommand command) throws AuthenticationFailedException {
+        User user = userRepository.findByEmail(command.getEmail())
                 .orElseThrow(() -> new AuthenticationFailedException("Verification of credentials failed!"));
 
         boolean success = user.authenticate(command.getClearTextPassword());
@@ -48,12 +49,12 @@ public class IdentityManagementFacade {
             throw new AuthenticationFailedException("Verification of credentials failed!");
         }
 
-        CurrentUserDTO currentUser = CurrentUserDTO.builder()
-                .username(command.getUsername())
-                .email(command.getEmail())
-                .firstname(command.getFirstname())
-                .lastname(command.getLastname())
-                .profilePicture(command.getProfilePicture())
+        UserDTO currentUser = UserDTO.builder()
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .profilePicture(user.getProfilePictureURL())
                 .build();
 
         return currentUser;
