@@ -12,6 +12,10 @@
                         <input id="email" class="form-control" name="email" type="email">
                     </div>
                     <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input id="username" class="form-control" name="username" type="text">
+                    </div>
+                    <div class="form-group">
                         <label for="profilePicture">Profile Picture URL:</label>
                         <input id="profilePicture" class="form-control" name="profilePicture" type="url">
                     </div>

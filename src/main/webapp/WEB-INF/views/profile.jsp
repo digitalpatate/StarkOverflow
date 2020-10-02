@@ -4,8 +4,8 @@
 <template:defaultLayout title="Home">
     <div class="container">
         <div class="row">
-            <h2>Profile Page</h2>
             <div class="profile">
+                <h2>Profile Page</h2>
                 <p>${currentUser.username}</p>
             </div>
         </div>

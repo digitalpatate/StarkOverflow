@@ -1,7 +1,5 @@
 package ch.heigvd.amt.starkoverflow.ui.web.filter;
 
-import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.CurrentUserDTO;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;

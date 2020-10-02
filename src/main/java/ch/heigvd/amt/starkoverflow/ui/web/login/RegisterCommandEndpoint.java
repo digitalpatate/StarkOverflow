@@ -33,12 +33,10 @@ public class RegisterCommandEndpoint extends HttpServlet {
 
         try {
             identityManagementFacade.register(registerCommand);
-            request.getRequestDispatcher("/login.do").forward(request, response);
-            return;
+            response.sendRedirect("/starkOverflow/login");
         } catch (RegistrationFailedException e) {
             request.getSession().setAttribute("errors", e.getMessage());
-            response.sendRedirect("/starkOverflow/login");
-            return;
+            response.sendRedirect("/starkOverflow/register");
         }
     }
 }
