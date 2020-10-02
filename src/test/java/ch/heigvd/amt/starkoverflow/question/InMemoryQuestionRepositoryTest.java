@@ -17,7 +17,7 @@ public class InMemoryQuestionRepositoryTest {
 
     @BeforeEach
     public void setup(){
-        this.contextUser = new User("test@test.com","1234","sss","John", "Dow");
+        this.contextUser = new User("michel", "test@test.com","1234","sss","John", "Dow");
         this.questionRepository = new InMemoryQuestionRepository();
     }
 

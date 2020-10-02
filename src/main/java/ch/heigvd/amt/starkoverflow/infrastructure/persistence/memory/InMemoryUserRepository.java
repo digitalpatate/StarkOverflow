@@ -14,7 +14,7 @@ public class InMemoryUserRepository extends InMemoryRepository<User,UserId> impl
     @Override
     public User save(User entity) {
         synchronized (entity.getUsername()){
-            if(!findByUsername(entity.getUsername()).isEmpty()){
+            if(!findByEmail(entity.getUsername()).isEmpty()){
                 //throw new SQLIntegrityConstraintViolationException("");
             }
             super.save(entity);
@@ -23,9 +23,9 @@ public class InMemoryUserRepository extends InMemoryRepository<User,UserId> impl
     }
 
 
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> findByEmail(String email) {
         List<User> matchingEntities = findAll().stream()
-            .filter(p -> p.getUsername().equals(username))
+            .filter(p -> p.getEmail().equals(email))
             .collect(Collectors.toList());
 
         if(matchingEntities.size() < 1){
