@@ -14,28 +14,32 @@ p {
     margin-bottom: 0;
 }
 
+.question-list {
+    margin-top: 40px;
+}
+
+.question-list .question {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: -1px;
+    transition: .3s all;
+}
+
+.question-list .question:hover {
+    background-color: #eee;
+}
+
 .question-list a, .question-list a:hover {
     text-decoration: none;
     color: black;
 }
 
-.question {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 15px 5px;
-}
-
-.question:hover {
-    box-shadow: 5px 5px #eee;
-}
-
-.question-title {
-    text-align: center;
+.question-list .question-title {
     font-size: 1.3rem;
+    margin-bottom: 0;
 }
 
-.question-content {
+.question-list .question-content {
     height: 80px;
     max-height: 80px;
     text-overflow: ellipsis;

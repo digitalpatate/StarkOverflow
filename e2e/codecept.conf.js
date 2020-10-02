@@ -9,14 +9,15 @@ exports.config = {
   output: './output',
   helpers: {
     Puppeteer: {
-      url: 'http://localhost:8080',
+      url: 'http://192.168.0.119:9080/starkOverflow',
       show: true,
       windowSize: '1200x900'
     }
   },
   include: {
     I: './steps_file.js',
-    loginPage: "./pages/login.js"
+    loginPage: "./pages/login.js",
+    questionPage: "./pages/question.js"
   },
   bootstrap: null,
   mocha: {},

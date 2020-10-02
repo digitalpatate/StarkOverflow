@@ -27,11 +27,9 @@ public class QuestionQueryHandler extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        QuestionsDTO questionsDTO = questionService.getQuestions();
 
-        //Update query with string param
-        QuestionsDTO questionsDTO = questionService.getQuestion(QuestionQuery.builder().build());
-
-        req.setAttribute("questions",questionsDTO);
+        req.setAttribute("questions", questionsDTO);
 
         req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req,res);
 
