@@ -25,7 +25,7 @@ public class InMemoryCommentRepositoryTest {
         this.commentRepository = new InMemoryCommentRepository();
 
         //this.commentator = new User("commentator","test","test","test","test");
-        this.commentableOwner = new User("Commentable Owner","test","test","test","test");
+        this.commentableOwner = new User("michel", "answerer","test","test","test","test");
 
         this.aQuestion = new Question("Very Important question","content");
         ((Question)this.aQuestion).setAuthor(this.commentableOwner);

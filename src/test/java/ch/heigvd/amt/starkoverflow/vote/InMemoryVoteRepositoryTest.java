@@ -27,7 +27,7 @@ public class InMemoryVoteRepositoryTest {
         this.voteRepository = new InMemoryVoteRepository();
 
         //this.commentator = new User("commentator","test","test","test","test");
-        this.voteUser = new User("Commentable Owner","test","test","test","test");
+        this.voteUser = new User("michel", "answerer","test","test","test","test");
 
         this.aQuestion = new Question("Very Important question","content");
         ((Question)this.aQuestion).setAuthor(this.voteUser);
