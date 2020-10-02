@@ -5,6 +5,6 @@
     <h1>StarkOverflow</h1>
     <h2>Profile Page</h2>
     <div class="profile">
-        <p class="question-content">${profile.username}</p>
+        <p class="question-content">${currentUser.username}</p>
     </div>
 </template:defaultLayout>

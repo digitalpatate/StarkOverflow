@@ -3,6 +3,7 @@ package ch.heigvd.amt.starkoverflow.domain.answer;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
-public class Answer implements IEntity {
+public class Answer implements IEntity<Answer, AnswerId> {
 
     private AnswerId id;
 
@@ -28,5 +29,12 @@ public class Answer implements IEntity {
         this.id = new AnswerId();
         // Is that a domain related or business ? Or is domain== business
         this.approved = false;
+    }
+
+
+    //TODO complèter la fonction
+    @Override
+    public Answer deepClone(){
+        return null;
     }
 }

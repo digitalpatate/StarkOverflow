@@ -4,6 +4,7 @@ import lombok.Builder;
 
 import java.security.cert.CertPathBuilder;
 
-public interface IEntity {
-    <U extends Id> U getId();
+public interface IEntity <T extends IEntity, U extends Id>{
+     U getId();
+     T deepClone();
 }
