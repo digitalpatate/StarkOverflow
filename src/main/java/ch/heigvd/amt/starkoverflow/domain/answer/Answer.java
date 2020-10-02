@@ -1,5 +1,6 @@
 package ch.heigvd.amt.starkoverflow.domain.answer;
 
+import ch.heigvd.amt.starkoverflow.domain.Commentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
-public class Answer implements IEntity<Answer, AnswerId> {
+public class Answer implements IEntity<Answer, AnswerId>, Commentable {
 
     private AnswerId id;
 

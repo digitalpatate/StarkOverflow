@@ -1,5 +1,6 @@
 package ch.heigvd.amt.starkoverflow.domain.question;
 
+import ch.heigvd.amt.starkoverflow.domain.Commentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.Votable;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class Question implements IEntity<Question,QuestionId> {
+public class Question implements IEntity<Question,QuestionId>, Commentable {
 
     private QuestionId id;
 
