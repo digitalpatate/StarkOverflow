@@ -1,8 +1,7 @@
-package ch.heigvd.amt.starkoverflow.filter;
+package ch.heigvd.amt.starkoverflow.ui.web.filter;
 
-import ch.heigvd.amt.starkoverflow.model.PersonDTO;
+import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.CurrentUserDTO;
 
-import javax.ejb.EJB;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ public class AuthorizationFilter implements Filter {
             return;
         }
 
-        PersonDTO loggedInUser = (PersonDTO) request.getSession().getAttribute("currentUser");
+        CurrentUserDTO loggedInUser = (CurrentUserDTO) request.getSession().getAttribute("currentUser");
 
         if(loggedInUser == null){
             String targetUrl = request.getRequestURI();

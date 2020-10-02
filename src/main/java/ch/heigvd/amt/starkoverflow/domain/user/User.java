@@ -23,6 +23,8 @@ public class User implements IEntity<User, UserId> {
     private String firstname;
     @NotNull
     private String lastname;
+    @NotNull
+    private String username;
 
     @EqualsAndHashCode.Exclude
     private String encryptedPassword;
@@ -30,7 +32,7 @@ public class User implements IEntity<User, UserId> {
     private Date registrationDate;
 
     //TODO Replacer toUpperCase avec une vrai fonction de chiffrement
-    public boolean auth(String plainPassword){
+    public boolean authenticate(String plainPassword){
         return plainPassword.toUpperCase().equals(encryptedPassword);
     }
 
@@ -64,7 +66,7 @@ public class User implements IEntity<User, UserId> {
         }
 
         public User build(){
-            User newUser = new User(id, email, firstname, lastname, profilePictureURL, encryptedPassword, registrationDate);
+            User newUser = new User(id, email, profilePictureURL, firstname, lastname, username, encryptedPassword, registrationDate);
             return newUser;
         }
     }

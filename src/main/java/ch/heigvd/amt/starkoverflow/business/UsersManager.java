@@ -1,7 +1,7 @@
 package ch.heigvd.amt.starkoverflow.business;
 
 import ch.heigvd.amt.starkoverflow.model.LoginCommand;
-import ch.heigvd.amt.starkoverflow.model.PersonDTO;
+import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.CurrentUserDTO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,13 +9,13 @@ import java.util.Map;
 public class UsersManager {
     public static final UsersManager INSTANCE = new UsersManager();
 
-    private HashMap<String, PersonDTO> users = new HashMap<>();
+    private HashMap<String, CurrentUserDTO> users = new HashMap<>();
 
     private UsersManager() {
 
     }
 
-    public boolean addUser(PersonDTO user){
+    public boolean addUser(CurrentUserDTO user){
         if(exist(user)){
             return false;
         }
@@ -24,7 +24,7 @@ public class UsersManager {
         return true;
     }
 
-    public boolean deleteUser(PersonDTO user){
+    public boolean deleteUser(CurrentUserDTO user){
         if(exist(user)){
             users.remove(user.email);
             return true;
@@ -33,7 +33,7 @@ public class UsersManager {
         return false;
     }
 
-    public boolean exist(PersonDTO user){
+    public boolean exist(CurrentUserDTO user){
         if(users.containsValue(user)){
             return true;
         }
@@ -41,9 +41,9 @@ public class UsersManager {
         return false;
     }
 
-    public PersonDTO login(LoginCommand cmd) throws Exception {
+    public CurrentUserDTO login(LoginCommand cmd) throws Exception {
         if(users.containsKey(cmd.email)){
-            PersonDTO user = users.get(cmd.email);
+            CurrentUserDTO user = users.get(cmd.email);
             if(cmd.password.equals(user.password)) {
                 return users.get(cmd.email);
             }
@@ -53,12 +53,12 @@ public class UsersManager {
     }
 
     public void dump(){
-        for(Map.Entry<String, PersonDTO> entry : users.entrySet()){
+        for(Map.Entry<String, CurrentUserDTO> entry : users.entrySet()){
             System.out.println(entry.getKey() + "->"
                     + "\nemail: " + entry.getValue().email
                     + "\nprofilePicture: " + entry.getValue().profilePicture
-                    + "\nname: " + entry.getValue().name
-                    + "\nsurname: " + entry.getValue().surname
+                    + "\nname: " + entry.getValue().firstname
+                    + "\nsurname: " + entry.getValue().lastname
                     + "\npassword: " + entry.getValue().password);
         }
     }
