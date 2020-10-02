@@ -5,6 +5,7 @@ import ch.heigvd.amt.starkoverflow.application.Comment.CommentService;
 import ch.heigvd.amt.starkoverflow.application.Tag.TagService;
 import ch.heigvd.amt.starkoverflow.application.User.UserService;
 import ch.heigvd.amt.starkoverflow.application.Vote.VoteService;
+import ch.heigvd.amt.starkoverflow.application.identitymgmt.IdentityManagementFacade;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.statistic.StatisticService;
 import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.*;
@@ -19,6 +20,7 @@ public class ServiceRegistry {
     private static TagService tagService;
     private static UserService userService;
     private static VoteService voteService;
+    private static IdentityManagementFacade identityManagementFacade;
 
     public static ServiceRegistry getServiceRegistry(){
         if(instance == null){
@@ -44,6 +46,7 @@ public class ServiceRegistry {
         tagService=new TagService(inMemoryTagRepository);
         userService = new UserService(inMemoryUserRepository);
         voteService = new VoteService(inMemoryVoteRepository);
+        identityManagementFacade = new IdentityManagementFacade(inMemoryUserRepository);
     }
 
     public AnswerService getAnswerService() {
@@ -73,5 +76,7 @@ public class ServiceRegistry {
     public VoteService getVoteService() {
         return voteService;
     }
+
+    public IdentityManagementFacade getIdentityManagementFacade() { return identityManagementFacade; }
 
 }
