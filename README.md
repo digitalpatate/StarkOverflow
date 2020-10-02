@@ -15,10 +15,10 @@ The purpose of this project is to learn about multi tiered application by creati
 - Maven: 3.6.3
 - OpenJDK: 11
 
-We just need to run the `build-run.sh` script in the `docker/topologies/test` folder :
+We just need to run the `build-image.sh` and `run-image.sh` script :
 
 ```bash
-cd docker/topologies/test && ./build-run.sh
+./build-image.sh && ./run-image.sh
 ```
 
 ### Run with docker
@@ -26,7 +26,7 @@ cd docker/topologies/test && ./build-run.sh
 We can run the application just by executing the latest build:
 
 ```bash
-docker run -d -p 8080:8080 ghcr.io/digitalpatate/starkoverflow:latest
+docker run -d -p 8080:9080 ghcr.io/digitalpatate/starkoverflow:latest
 ```
 
 Or docker-compose : 
@@ -37,7 +37,7 @@ services:
   backend:
     image: ghcr.io/digitalpatate/starkoverflow
     ports:
-     - "8080:8080"
+     - "8080:9080"
 ```
 
 (!) For now there is only the _latest_ tag available for the image
