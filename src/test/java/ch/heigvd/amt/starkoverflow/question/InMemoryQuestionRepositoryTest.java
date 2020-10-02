@@ -7,12 +7,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.enterprise.inject.Stereotype;
-import javax.swing.text.html.Option;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

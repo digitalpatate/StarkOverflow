@@ -40,7 +40,7 @@ public class User implements IEntity<User, UserId> {
         return this.toBuilder().id(new UserId(id.asString())).build();
     }
 
-    /*public User(String email, String password, String profilePictureURL, String firstname, String lastname) {
+    public User(String email, String password, String profilePictureURL, String firstname, String lastname) {
         this.email = email;
         this.encryptedPassword = password;
         this.profilePictureURL = profilePictureURL;
@@ -49,7 +49,7 @@ public class User implements IEntity<User, UserId> {
 
         this.id = new UserId();
         this.registrationDate = new Date();
-    }*/
+    }
 
 
     public static class UserBuilder {
@@ -65,7 +65,7 @@ public class User implements IEntity<User, UserId> {
         }
 
         public User build(){
-            User newUser = new User(id, email, profilePictureURL, firstname, lastname, username, encryptedPassword, registrationDate);
+            User newUser = new User(email, encryptedPassword, profilePictureURL, firstname, lastname);
             return newUser;
         }
     }
