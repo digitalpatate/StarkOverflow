@@ -9,7 +9,7 @@ exports.config = {
   output: './output',
   helpers: {
     Puppeteer: {
-      url: 'localhost:8080/starkOverflow',
+      url: 'http://localhost:8080/starkOverflow',
       show: true,
       windowSize: '1200x900'
     }
