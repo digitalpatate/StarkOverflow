@@ -32,7 +32,7 @@ public class User implements IEntity<User, UserId> {
 
     //TODO Replacer toUpperCase avec une vrai fonction de chiffrement
     public boolean authenticate(String plainPassword){
-        return plainPassword.toUpperCase().equals(encryptedPassword);
+        return plainPassword.equals(encryptedPassword);
     }
 
     @Override

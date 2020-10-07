@@ -4,60 +4,49 @@ import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/patate")
+@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/*")
 public class AuthorizationFilter implements Filter {
 
-    public void init(FilterConfig filterConfig) throws ServletException {
+    List<Route> publicRoutes;
 
+    @Override
+    public void init(FilterConfig filterConfig) {
+
+        this.publicRoutes = new LinkedList<>();
+
+        this.publicRoutes.add(new Route("/questions","GET"));
+        this.publicRoutes.add(new Route("/login","GET","POST"));
+        this.publicRoutes.add(new Route("/register","GET","POST"));
+        this.publicRoutes.add(new Route("/logout","POST"));
+        this.publicRoutes.add(new Route("/assets","GET"));
     }
 
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
 
-        if(isPublicResource(request.getRequestURI())){
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
+
+        Optional<Route> oRoute = publicRoutes.stream().filter(route -> route.match(request)).collect(Collectors.toList()).stream().findFirst();
+
+
+        if(oRoute.isEmpty() && !userHasSession(request)){
+                ((HttpServletResponse) res).sendRedirect("/login");
+                return;
         }
+        chain.doFilter(req,res);
+    }
 
+    private boolean userHasSession(HttpServletRequest request){
         UserDTO loggedInUser = (UserDTO) request.getSession().getAttribute("currentUser");
-
-        if(loggedInUser == null){
-            String targetUrl = request.getRequestURI();
-            if(request.getQueryString() != null){
-                targetUrl = "/" + request.getQueryString();
-            }
-            request.getSession().setAttribute("targetUrl", targetUrl);
-
-            ((HttpServletResponse) servletResponse).sendRedirect("/login");
-            return;
-        }
-
-        filterChain.doFilter(servletRequest, servletResponse);
+        return loggedInUser != null;
     }
 
-    private boolean isPublicResource(String requestURI) {
-        /*if(requestURI.startsWith("/assets")){
-            return true;
-        }
-        if(requestURI.startsWith("/login")){
-            return true;
-        }
-        if(requestURI.startsWith("/logout")){
-            return true;
-        }
-        if(requestURI.startsWith("/register")){
-            return true;
-        }
-        return false;*/
-        return true;
-    }
-
-    public void destroy() {
-
-    }
 }

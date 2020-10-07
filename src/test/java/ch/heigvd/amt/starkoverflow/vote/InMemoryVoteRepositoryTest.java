@@ -11,6 +11,8 @@ import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryVot
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,8 +47,9 @@ public class InMemoryVoteRepositoryTest {
     @Test
     public void findByIdShouldReturnAnObject(){
         voteRepository.save(this.vote);
-        assertTrue(this.voteRepository.findById(vote.getId()).isPresent());
-
+        Optional<Vote> oVote = this.voteRepository.findById(vote.getId());
+        assertTrue(oVote.isPresent());
+        assertEquals(this.vote,oVote.get());
     }
 
     @Test
