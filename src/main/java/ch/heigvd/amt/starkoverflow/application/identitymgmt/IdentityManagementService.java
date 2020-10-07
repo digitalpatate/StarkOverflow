@@ -9,10 +9,10 @@ import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 
 
-public class IdentityManagementFacade {
+public class IdentityManagementService {
     private IUserRepository userRepository;
 
-    public IdentityManagementFacade(IUserRepository userRepository) {
+    public IdentityManagementService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -50,6 +50,7 @@ public class IdentityManagementFacade {
         }
 
         UserDTO currentUser = UserDTO.builder()
+                .id(user.getId().asString())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .firstname(user.getFirstname())
@@ -59,4 +60,5 @@ public class IdentityManagementFacade {
 
         return currentUser;
     }
+
 }

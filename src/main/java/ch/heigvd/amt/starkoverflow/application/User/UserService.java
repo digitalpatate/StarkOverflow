@@ -33,6 +33,7 @@ public class UserService {
         );
 
         return UserDTO.builder()
+                .id(user.getId().asString())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .email(user.getEmail())
