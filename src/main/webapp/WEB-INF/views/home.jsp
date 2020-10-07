@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col">
                 <h2>Postez votre question</h2>
-                <form action="${pageContext.request.contextPath}/question.do" method="post">
+                <form action="/question.do" method="post">
                     <div class="form-group">
                         <label for="questionTitle">Titre</label>
                         <input type="text" class="form-control" id="questionTitle" name="questionTitle" aria-describedby="question title" placeholder="titre"  required="true">
@@ -22,7 +22,7 @@
                 <h2>Dernières questions</h2>
                 <div class="question-list">
                     <c:forEach items="${questions.getQuestions()}" var="question">
-                        <a href="${pageContext.request.contextPath}/">
+                        <a href="/">
                             <div class="question">
                                 <h2 class="question-title">${question.title}</h2>
                             </div>
