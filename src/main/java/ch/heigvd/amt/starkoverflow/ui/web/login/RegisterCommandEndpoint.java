@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "RegisterCommandEndpoint", urlPatterns = "/register.do")
+@WebServlet(name = "RegisterCommandEndpoint", urlPatterns = "/register")
 public class RegisterCommandEndpoint extends HttpServlet {
 
     private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
@@ -39,4 +39,13 @@ public class RegisterCommandEndpoint extends HttpServlet {
             response.sendRedirect("/starkOverflow/register");
         }
     }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Object errors = request.getSession().getAttribute("errors");
+        request.setAttribute("errors", errors);
+        request.getSession().removeAttribute("errors");
+        request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+    }
 }
+

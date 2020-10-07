@@ -13,8 +13,9 @@ import java.util.Date;
 @Getter
 public class CreateVoteCommand {
 
-    private String title;
-    private String content;
+    private String userId;
+    private String votableId;
+    private String votableType;
 
     public Vote createEntity() {
         return new Vote();

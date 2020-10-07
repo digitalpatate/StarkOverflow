@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RegisterPageEndpoint", urlPatterns = "/register")
+@WebServlet(name = "RegisterPageEndpoint", urlPatterns = "/register.old")
 public class RegisterPageEndpoint extends HttpServlet {
 
     @Override

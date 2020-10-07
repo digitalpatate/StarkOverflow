@@ -10,11 +10,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryRepository<T extends IEntity,U extends Id> {
 
-    private Map<U, T> store = new ConcurrentHashMap<>();
-
+    private Map<Id, T> store = new ConcurrentHashMap<>();
     public T save(T entity) {
-        //TODO A vérifier, cast douteux
-        store.put((U) entity.getId(),entity);
+        store.put(entity.getId(),entity);
 
         return entity;
     }

@@ -42,6 +42,18 @@
             <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.3.3</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -104,6 +116,30 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.4</version>
+            <executions>
+                <execution>
+                    <id>start-agent</id>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>generate-report</id>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                    <configuration>
+                        <title>Coverage with JaCoCo</title>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
         </plugins>
     </build>
 </project>

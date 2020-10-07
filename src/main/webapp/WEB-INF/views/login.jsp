@@ -6,7 +6,7 @@
         <div class="row">
             <div id="login">
                 <h2>Login Page</h2>
-                <form action="login.do" method="post">
+                <form action="login" method="post">
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input id="email" class="form-control" name="email" type="email">

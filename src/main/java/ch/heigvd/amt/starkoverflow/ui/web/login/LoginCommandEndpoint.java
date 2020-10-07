@@ -14,11 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "LoginCommandEndpoint", urlPatterns = "/login.do")
+@WebServlet(name = "LoginCommandEndpoint", urlPatterns = "/login")
 public class LoginCommandEndpoint extends HttpServlet {
 
     private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
     private IdentityManagementFacade identityManagementFacade = serviceRegistry.getIdentityManagementFacade();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Object errors = request.getSession().getAttribute("errors");
+        request.setAttribute("errors", errors);
+        request.getSession().removeAttribute("errors");
+        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().removeAttribute("errors");
@@ -32,13 +40,10 @@ public class LoginCommandEndpoint extends HttpServlet {
         try {
             currentUser = identityManagementFacade.authenticate(authenticateCommand);
             request.getSession().setAttribute("currentUser", currentUser);
-            //String targetUrl = request.getSession().getAttribute("targetUrl").toString();
-            //targetUrl = (targetUrl != null) ? targetUrl : "/";
-            //response.sendRedirect(targetUrl);
-            response.sendRedirect("/starkOverflow/profile");
+            response.sendRedirect("/profile");
         } catch (AuthenticationFailedException e) {
             request.getSession().setAttribute("errors", List.of(e.getMessage()));
-            response.sendRedirect("/starkOverflow/login");
+            response.sendRedirect("/login");
         }
     }
 }

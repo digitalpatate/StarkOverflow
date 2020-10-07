@@ -45,7 +45,7 @@ public class ServiceRegistry {
         questionService = new QuestionService(inMemoryQuestionRepository);
         tagService=new TagService(inMemoryTagRepository);
         userService = new UserService(inMemoryUserRepository);
-        voteService = new VoteService(inMemoryVoteRepository);
+        voteService = new VoteService(inMemoryVoteRepository,inMemoryUserRepository,inMemoryQuestionRepository);
         identityManagementFacade = new IdentityManagementFacade(inMemoryUserRepository);
     }
 
