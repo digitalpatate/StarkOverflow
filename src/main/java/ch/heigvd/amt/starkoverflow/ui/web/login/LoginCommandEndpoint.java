@@ -28,14 +28,6 @@ public class LoginCommandEndpoint extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Object errors = request.getSession().getAttribute("errors");
-        request.setAttribute("errors", errors);
-        request.getSession().removeAttribute("errors");
-        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().removeAttribute("errors");
 
