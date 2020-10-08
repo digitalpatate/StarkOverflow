@@ -1,10 +1,11 @@
 package ch.heigvd.amt.starkoverflow.ui.web.login;
 
-import ch.heigvd.amt.starkoverflow.application.ServiceRegistry;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.IdentityManagementService;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegisterCommand;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegistrationFailedException;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +16,8 @@ import java.io.IOException;
 @WebServlet(name = "RegisterCommandEndpoint", urlPatterns = "/register")
 public class RegisterCommandEndpoint extends HttpServlet {
 
-    private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
-    private IdentityManagementService identityManagementService = serviceRegistry.getIdentityManagementFacade();
+    @Inject @Named("IdentityManagementService")
+    private IdentityManagementService identityManagementService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().removeAttribute("errors");

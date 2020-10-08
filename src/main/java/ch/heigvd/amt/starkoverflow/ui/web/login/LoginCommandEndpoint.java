@@ -1,11 +1,13 @@
 package ch.heigvd.amt.starkoverflow.ui.web.login;
 
-import ch.heigvd.amt.starkoverflow.application.ServiceRegistry;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.IdentityManagementService;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.AuthenticateCommand;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.AuthenticationFailedException;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +19,15 @@ import java.util.List;
 @WebServlet(name = "LoginCommandEndpoint", urlPatterns = "/login")
 public class LoginCommandEndpoint extends HttpServlet {
 
-    private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
-    private IdentityManagementService identityManagementService = serviceRegistry.getIdentityManagementFacade();
+    @Inject @Named("IdentityManagementService")
+    private IdentityManagementService identityManagementService;
+
+    @PostConstruct
+    public void init() {
+        if(identityManagementService == null)
+            throw new RuntimeException("C'EST NULL");
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

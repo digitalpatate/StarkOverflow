@@ -24,6 +24,10 @@ public class Route {
     }
 
     public boolean match(HttpServletRequest req){
+
+        if(req.getRequestURI().equals("/")){
+            return true;
+        }
         return req.getRequestURI().startsWith(path) && methods.contains(req.getMethod());
 
     }

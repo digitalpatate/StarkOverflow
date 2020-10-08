@@ -11,18 +11,22 @@ import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
 import ch.heigvd.amt.starkoverflow.exception.NotFoundException;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.inject.Inject;
+@NoArgsConstructor
+@AllArgsConstructor
 public class VoteService {
 
+    @Inject
     private IVoteRepository voteRepository;
+    @Inject
     private IUserRepository userRepository;
+    @Inject
     private IQuestionRepository questionRepository;
 
-    public VoteService(IVoteRepository voteRepository, IUserRepository userRepository, IQuestionRepository questionRepository) {
-        this.voteRepository = voteRepository;
-        this.userRepository = userRepository;
-        this.questionRepository = questionRepository;
-    }
+
 
     public Vote createVote(CreateVoteCommand command) throws NotFoundException {
         Vote vote = command.createEntity();
