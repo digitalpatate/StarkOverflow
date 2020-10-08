@@ -2,7 +2,7 @@ package ch.heigvd.amt.starkoverflow.ui.web.login;
 
 import ch.heigvd.amt.starkoverflow.application.ServiceRegistry;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
-import ch.heigvd.amt.starkoverflow.application.identitymgmt.IdentityManagementFacade;
+import ch.heigvd.amt.starkoverflow.application.identitymgmt.IdentityManagementService;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.AuthenticateCommand;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.AuthenticationFailedException;
 
@@ -18,7 +18,7 @@ import java.util.List;
 public class LoginCommandEndpoint extends HttpServlet {
 
     private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
-    private IdentityManagementFacade identityManagementFacade = serviceRegistry.getIdentityManagementFacade();
+    private IdentityManagementService identityManagementService = serviceRegistry.getIdentityManagementFacade();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class LoginCommandEndpoint extends HttpServlet {
                 .clearTextPassword(request.getParameter("password"))
                 .build();
         try {
-            currentUser = identityManagementFacade.authenticate(authenticateCommand);
+            currentUser = identityManagementService.authenticate(authenticateCommand);
             request.getSession().setAttribute("currentUser", currentUser);
             response.sendRedirect("/profile");
         } catch (AuthenticationFailedException e) {
