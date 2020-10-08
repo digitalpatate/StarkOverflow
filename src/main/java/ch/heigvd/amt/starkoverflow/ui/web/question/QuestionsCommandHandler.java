@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="QuestionCommandHandler", urlPatterns = "/question.do")
-public class QuestionCommandHandler extends HttpServlet {
+@WebServlet(name="QuestionsCommandHandler", urlPatterns = "/questions.do")
+public class QuestionsCommandHandler extends HttpServlet {
 
     private QuestionService questionService;
 
