@@ -1,0 +1,2 @@
+CREATE DATABASE stark_db;
+GRANT ALL PRIVILEGES ON DATABASE stark_db TO admin;
