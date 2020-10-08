@@ -4,7 +4,9 @@ import ch.heigvd.amt.starkoverflow.application.ServiceRegistry;
 import ch.heigvd.amt.starkoverflow.application.question.CreateQuestionCommand;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
+import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
+import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,9 +31,16 @@ public class QuestionQueryHandler extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         QuestionsDTO questionsDTO = questionService.getQuestions();
 
-        req.setAttribute("questions", questionsDTO);
+        String[] urlParts = req.getPathInfo().split("/");
 
-        req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req,res);
+        QuestionId id = new QuestionId(urlParts[1]);
+        QuestionDTO questionDTO = questionService.getQuestion(id);
 
+        if(questionDTO != null) {
+            req.setAttribute("question", questionDTO);
+            req.getRequestDispatcher("/WEB-INF/views/question.jsp").forward(req,res);
+        } else {
+            res.sendRedirect("/");
+        }
     }
 }
