@@ -1,8 +1,11 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence;
 
+import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.jdbc.DataSourceFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.postgresql.ds.PGSimpleDataSource;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -20,10 +23,7 @@ public class testDbConnection {
 
     @BeforeEach
     public void setup() throws SQLException{
-        this.ds = new PGSimpleDataSource() ;
-        this.ds.setDatabaseName( "stark_db" );
-        this.ds.setUser( "admin" );
-        this.ds.setPassword( "secret" );
+        this.ds = (PGSimpleDataSource) DataSourceFactory.getPGDataSource();
         this.connection = this.ds.getConnection();
     }
 

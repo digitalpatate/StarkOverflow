@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory;
+package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.jdbc;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
