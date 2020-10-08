@@ -8,12 +8,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/statistic">statistics</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile">Mon Profile</a>
-                </li>
 
                 <c:choose>
                     <c:when test="${currentUser != null}">
@@ -22,15 +16,19 @@
                                 ${currentUser.username}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/profile">Mon Profile</a>
                                 <form class="dropdown-item" action="/logout" method="POST">
-                                    <button type="submit">Logout</button>
+                                    <button type="submit" class="btn btn-link nav-link">Logout</button>
                                 </form>
                             </div>
                         </li>
                     </c:when>
                     <c:otherwise>
                         <li class="nav-item">
-                            <a class="nav-link" href="/login">login</a>
+                            <a class="nav-link" href="/register">register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">login</a
                         </li>
                     </c:otherwise>
                 </c:choose>
