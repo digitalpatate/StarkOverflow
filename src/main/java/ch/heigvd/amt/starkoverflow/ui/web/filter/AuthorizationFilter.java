@@ -36,7 +36,6 @@ public class AuthorizationFilter implements Filter {
 
         Optional<Route> oRoute = publicRoutes.stream().filter(route -> route.match(request)).collect(Collectors.toList()).stream().findFirst();
 
-
         if(oRoute.isEmpty() && !userHasSession(request)){
                 ((HttpServletResponse) res).sendRedirect("/login");
                 return;
