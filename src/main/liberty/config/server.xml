@@ -2,8 +2,6 @@
 
     <featureManager>
         <feature>webProfile-8.0</feature>
-        <feature>appSecurity-3.0</feature>
-        <feature>restConnector-2.0</feature>
         <feature>jdbc-4.2</feature>
     </featureManager>
 
@@ -15,14 +13,11 @@
                   httpsPort="9443" />
 
 
-    <!-- Any security mechanism can be used, <quickStartSecurity> is the simplest -->
-    <quickStartSecurity userName="admin" userPassword="admin"/>
-
     <dataSource id="DefaultDataSource" jndiName="jdbc/postgresql">
         <jdbcDriver libraryRef="postgresql-library"/>
         <properties.postgresql serverName="localhost"
                                portNumber="5432"
-                               databaseName="stark-db"
+                               databaseName="stark_db"
                                user="${env.POSTGRES_USER}"
                                password="${env.POSTGRES_PASSWORD}"/>
     </dataSource>
