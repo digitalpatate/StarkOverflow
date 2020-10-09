@@ -10,11 +10,15 @@ import ch.heigvd.amt.starkoverflow.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+<<<<<<< HEAD
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+=======
+import java.text.SimpleDateFormat;
+>>>>>>> master
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
