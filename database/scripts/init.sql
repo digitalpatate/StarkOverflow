@@ -9,31 +9,37 @@ GRANT ALL PRIVILEGES ON DATABASE stark_db TO admin;
 -- connect to stark_db
 \c stark_db
 
+-- set timezone to UTC+2
+set time zone 'Europe/Zurich';
+
 CREATE TABLE users(
    id              TEXT PRIMARY KEY    NOT NULL,
    email           TEXT    NOT NULL,
-   username         TEXT     NOT NULL,
-   picture_url          INT,
+   profilePictureURL         TEXT    NOT NULL,
    firstname           TEXT    NOT NULL,
    lastname         TEXT    NOT NULL,
-   creation_date   TIMESTAMP    
+   username         TEXT     NOT NULL,
+   registrationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)  
 );
 
 CREATE TABLE commentables_votalbes(
    id              TEXT PRIMARY KEY    NOT NULL,
    content         TEXT     NOT NULL,
-   CONSTRAINT     fk_user
-      FOREIGN KEY(id)
-         REFERENCES users(id),
-   creation_date   TIMESTAMP
+   creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)  
 );
 
 
 CREATE TABLE questions(
+   CONSTRAINT     fk_user
+      FOREIGN KEY(id)
+         REFERENCES users(id),
    title           TEXT    NOT NULL
    ) INHERITS(commentables_votalbes);
 
-CREATE TABLE answers(  
+CREATE TABLE answers(
+   CONSTRAINT     fk_user
+      FOREIGN KEY(id)
+         REFERENCES users(id),
    approuval_state BOOLEAN NOT NULL
 ) INHERITS(commentables_votalbes);
 
@@ -47,7 +53,7 @@ CREATE TABLE comments(
    CONSTRAINT     fk_commentable
       FOREIGN KEY(id)
          REFERENCES commentables_votalbes(id),
-   creation_date    TIMESTAMP    
+   creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)     
 );
 
 
@@ -73,5 +79,5 @@ CREATE TABLE votes(
    CONSTRAINT     fk_votable
       FOREIGN KEY(id)
          REFERENCES commentables_votalbes(id),
-   DATE TIMESTAMP NOT NULL
+   creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)     
 );
