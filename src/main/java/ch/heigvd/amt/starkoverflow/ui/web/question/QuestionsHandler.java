@@ -1,8 +1,10 @@
 package ch.heigvd.amt.starkoverflow.ui.web.question;
 
+import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.CreateQuestionCommand;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,11 +38,12 @@ public class QuestionsHandler extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        UserDTO userDTO = (UserDTO) req.getSession().getAttribute("currentUser");
 
         CreateQuestionCommand createQuestionCommand = CreateQuestionCommand.builder()
                 .content(req.getParameter("questionContent"))
                 .title(req.getParameter("questionTitle"))
-                //.userId(new UserId())
+                .userId(new UserId(userDTO.getId()))
                 .build();
 
         questionService.createQuestion(createQuestionCommand);

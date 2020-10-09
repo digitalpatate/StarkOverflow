@@ -5,8 +5,8 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h2>Postez votre question</h2>
-                <form action="/questions.do" method="post">
+                <h2>Post your question</h2>
+                <form action="/questions" method="post">
                     <div class="form-group">
                         <label for="questionTitle">Title</label>
                         <input type="text" class="form-control" id="questionTitle" name="questionTitle" aria-describedby="question title" placeholder="title"  required="true">

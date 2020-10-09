@@ -5,8 +5,6 @@ import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Date;
-
 @Builder(toBuilder = true)
 @Getter
 public class CreateQuestionCommand {
@@ -16,6 +14,6 @@ public class CreateQuestionCommand {
     private UserId userId;
 
     public Question createEntity() {
-        return new Question(title, content);
+        return new Question(title, content, userId);
     }
 }

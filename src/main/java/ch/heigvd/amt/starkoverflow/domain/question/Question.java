@@ -25,12 +25,13 @@ public class Question implements IEntity<Question,QuestionId>, Commentable, Vota
     private List<Tag> tags;
     private UserId author;
 
-   public Question(String title, String content) {
-        this.id = new QuestionId();
-        this.title = title;
-        this.content = content;
-        this.creationDate = new Date();
-    }
+   public Question(String title, String content, UserId userId) {
+       this.id = new QuestionId();
+       this.title = title;
+       this.content = content;
+       this.author = userId;
+       this.creationDate = new Date();
+   }
 
     public Question(QuestionId id, String title, String content, Date creationDate, UserId author) {
         this.id = id;

@@ -43,12 +43,13 @@ public class JdbcQuestionRepository implements IQuestionRepository {
         PreparedStatement statement = null;
         try {
             statement = dataSource.getConnection().prepareStatement(
-                    "INSERT INTO questions(id, title, content)" +
-                            "VALUES(?,?,?)");
+                    "INSERT INTO questions(id, title, content, author)" +
+                            "VALUES(?,?,?,?)");
 
             statement.setString(1, entity.getId().asString());
             statement.setString(2, entity.getTitle());
             statement.setString(3, entity.getContent());
+            statement.setString(4, entity.getAuthor().asString());
 
 
             statement.execute();
