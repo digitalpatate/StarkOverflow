@@ -7,14 +7,22 @@ import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegisterComman
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegistrationFailedException;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@ApplicationScoped
+@Named("IdentityManagementFacade")
 public class IdentityManagementFacade {
+
+    @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
 
-    public IdentityManagementFacade(IUserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public void register(RegisterCommand command) throws RegistrationFailedException {
         User existingUserWithSameEmail = userRepository.findByEmail(command.getEmail()).orElse(null);

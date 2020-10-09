@@ -14,15 +14,10 @@ public class User implements IEntity<User, UserId> {
 
     private UserId id;
 
-    @NotNull
     private String email;
-    @NotNull
     private String profilePictureURL;
-    @NotNull
     private String firstname;
-    @NotNull
     private String lastname;
-    @NotNull
     private String username;
 
     @EqualsAndHashCode.Exclude

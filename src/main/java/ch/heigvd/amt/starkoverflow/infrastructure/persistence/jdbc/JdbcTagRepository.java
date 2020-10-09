@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.jdbc;
+package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
@@ -6,7 +6,7 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 
 @ApplicationScoped
-@Named("JdbcAnswerRepository")
+@Named("JdbcTagRepository")
 public class JdbcTagRepository {
     @Resource(lookup = "jdbc/postgresql")
     DataSource dataSource;

@@ -8,6 +8,7 @@ import ch.heigvd.amt.starkoverflow.application.Vote.VoteService;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.IdentityManagementFacade;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.statistic.StatisticService;
+import ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc.JdbcUserRepository;
 import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.*;
 
 public class ServiceRegistry {
@@ -37,16 +38,17 @@ public class ServiceRegistry {
         InMemoryCommentRepository inMemoryCommentRepository = new InMemoryCommentRepository();
         InMemoryQuestionRepository inMemoryQuestionRepository = new InMemoryQuestionRepository();
         InMemoryTagRepository inMemoryTagRepository = new InMemoryTagRepository();
-        InMemoryUserRepository inMemoryUserRepository = new InMemoryUserRepository();
+        //InMemoryUserRepository inMemoryUserRepository = new InMemoryUserRepository();
         InMemoryVoteRepository inMemoryVoteRepository = new InMemoryVoteRepository();
+        JdbcUserRepository jdbcUserRepository = new JdbcUserRepository();
         statisticService = new StatisticService(inMemoryStatisticRepository);
         answerService = new AnswerService(inMemoryAnswerRepository);
         commentService = new CommentService(inMemoryCommentRepository);
         questionService = new QuestionService(inMemoryQuestionRepository);
         tagService=new TagService(inMemoryTagRepository);
-        userService = new UserService(inMemoryUserRepository);
-        voteService = new VoteService(inMemoryVoteRepository,inMemoryUserRepository,inMemoryQuestionRepository);
-        identityManagementFacade = new IdentityManagementFacade(inMemoryUserRepository);
+        userService = new UserService(jdbcUserRepository);
+        voteService = new VoteService(inMemoryVoteRepository,jdbcUserRepository,inMemoryQuestionRepository);
+        identityManagementFacade = new IdentityManagementFacade(jdbcUserRepository);
     }
 
     public AnswerService getAnswerService() {

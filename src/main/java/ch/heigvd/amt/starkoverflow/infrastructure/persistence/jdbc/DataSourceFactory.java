@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.jdbc;
+package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import org.postgresql.ds.PGSimpleDataSource;
 

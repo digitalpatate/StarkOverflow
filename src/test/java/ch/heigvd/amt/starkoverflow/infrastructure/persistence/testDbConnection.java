@@ -1,11 +1,10 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence;
 
-import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.jdbc.DataSourceFactory;
+import ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc.DataSourceFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.postgresql.ds.PGSimpleDataSource;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -14,8 +13,6 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class testDbConnection {
-
-
 
     private Connection connection;
     private PGSimpleDataSource ds;
@@ -28,10 +25,10 @@ public class testDbConnection {
     }
 
 
-        @Test
+    @Test
     public void oneShouldBeAbleToConnectTheDB() throws SQLException {
-                assertNotNull(this.connection);
-        }
+        assertNotNull(this.connection);
+    }
 
 
     @Test

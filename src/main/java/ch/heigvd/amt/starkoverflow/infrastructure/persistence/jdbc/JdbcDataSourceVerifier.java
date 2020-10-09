@@ -1,15 +1,16 @@
-package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.jdbc;
+package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @ApplicationScoped
 public class JdbcDataSourceVerifier {
-
     @Resource(lookup = "jdbc/postgresql")
     private DataSource dataSource;
 

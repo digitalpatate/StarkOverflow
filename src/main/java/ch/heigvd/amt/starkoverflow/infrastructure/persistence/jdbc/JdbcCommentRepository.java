@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.jdbc;
+package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
@@ -6,16 +6,16 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 
 @ApplicationScoped
-@Named("JdbcAnswerRepository")
-public class JdbcUserRepository {
+@Named("JdbcCommentRepository")
+public class JdbcCommentRepository {
     @Resource(lookup = "jdbc/postgresql")
     DataSource dataSource;
 
-    public JdbcUserRepository(){
+    public JdbcCommentRepository(){
 
     }
 
-    public JdbcUserRepository(DataSource dataSource){
+    public JdbcCommentRepository(DataSource dataSource){
         this.dataSource = dataSource;
     }
 
