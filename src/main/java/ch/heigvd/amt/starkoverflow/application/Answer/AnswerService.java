@@ -6,17 +6,19 @@ import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.inject.Inject;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class AnswerService {
+    @Inject
     private IAnswerRepository answerRepository;
-
-    public AnswerService(IAnswerRepository answerRepository) {
-        this.answerRepository = answerRepository;
-    }
 
     public void createAnswer(CreateAnswerCommand command){
         Answer answer = command.createEntity();

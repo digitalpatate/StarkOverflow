@@ -5,8 +5,12 @@ import ch.heigvd.amt.starkoverflow.domain.comment.ICommentRepository;
 import ch.heigvd.amt.starkoverflow.domain.comment.Comment;
 import ch.heigvd.amt.starkoverflow.domain.comment.CommentId;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import java.util.Collection;
 
+@ApplicationScoped
+@Named("InMemoryCommentRepository")
 public class InMemoryCommentRepository extends InMemoryRepository<Comment,CommentId> implements ICommentRepository {
 
 

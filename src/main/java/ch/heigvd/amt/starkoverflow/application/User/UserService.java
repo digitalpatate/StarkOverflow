@@ -14,18 +14,25 @@ import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.ejb.ApplicationException;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@NoArgsConstructor
+@AllArgsConstructor
+@ApplicationScoped
+@Named("UserService")
 public class UserService {
 
+    @Inject @Named("InMemoryUserRepository")
     private IUserRepository userRepository;
 
-    public UserService(IUserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public UserDTO getUser(String id) {
         User user = userRepository.findById(
@@ -33,6 +40,7 @@ public class UserService {
         );
 
         return UserDTO.builder()
+                .id(user.getId().asString())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .email(user.getEmail())

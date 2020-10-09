@@ -7,18 +7,21 @@ import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.tag.ITagRepository;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.inject.Inject;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class TagService {
 
+    @Inject
     private ITagRepository tagRepository;
 
-    public TagService(ITagRepository tagRepository) {
-        this.tagRepository = tagRepository;
-    }
 
     public void createTag(CreateTagCommand command){
         Tag tag = command.createEntity();

@@ -6,20 +6,27 @@ import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Named("QuestionService")
+@ApplicationScoped
 public class QuestionService {
 
+    @Inject
     private IQuestionRepository questionRepository;
-    private IUserRepository userRepository;
-
-    public QuestionService(IQuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
-    }
 
     public Question createQuestion(CreateQuestionCommand command) {
         Question question = command.createEntity();

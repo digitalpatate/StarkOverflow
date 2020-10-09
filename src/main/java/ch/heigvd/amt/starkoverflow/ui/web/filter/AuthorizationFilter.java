@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/*")
+@WebFilter(filterName = "AuthorizationFilter", urlPatterns = "/nope")
 public class AuthorizationFilter implements Filter {
 
     List<Route> publicRoutes;

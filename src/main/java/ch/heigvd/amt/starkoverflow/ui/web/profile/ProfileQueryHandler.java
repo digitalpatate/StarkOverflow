@@ -1,11 +1,10 @@
 package ch.heigvd.amt.starkoverflow.ui.web.profile;
 
-import ch.heigvd.amt.starkoverflow.application.ServiceRegistry;
 import ch.heigvd.amt.starkoverflow.application.User.UserService;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
-import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,13 +15,12 @@ import java.io.IOException;
 @WebServlet("/profile")
 public class ProfileQueryHandler extends HttpServlet {
 
+    @Inject @Named("UserService")
     private UserService userService;
 
     @Override
     public void init() throws ServletException{
         super.init();
-        ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
-        userService = serviceRegistry.getUserService();
     }
 
     @Override

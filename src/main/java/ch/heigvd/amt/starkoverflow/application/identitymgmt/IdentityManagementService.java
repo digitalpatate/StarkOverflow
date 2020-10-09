@@ -14,14 +14,15 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Named("IdentityManagementService")
 @ApplicationScoped
-@Named("IdentityManagementFacade")
-public class IdentityManagementFacade {
+public class IdentityManagementService {
 
-    @Inject @Named("JdbcUserRepository")
+    @Inject @Named("InMemoryUserRepository")
     private IUserRepository userRepository;
+
 
 
     public void register(RegisterCommand command) throws RegistrationFailedException {
@@ -58,6 +59,7 @@ public class IdentityManagementFacade {
         }
 
         UserDTO currentUser = UserDTO.builder()
+                .id(user.getId().asString())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .firstname(user.getFirstname())
@@ -67,4 +69,5 @@ public class IdentityManagementFacade {
 
         return currentUser;
     }
+
 }

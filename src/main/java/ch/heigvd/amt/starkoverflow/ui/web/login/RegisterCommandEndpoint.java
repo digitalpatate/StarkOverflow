@@ -1,7 +1,6 @@
 package ch.heigvd.amt.starkoverflow.ui.web.login;
 
-import ch.heigvd.amt.starkoverflow.application.ServiceRegistry;
-import ch.heigvd.amt.starkoverflow.application.identitymgmt.IdentityManagementFacade;
+import ch.heigvd.amt.starkoverflow.application.identitymgmt.IdentityManagementService;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegisterCommand;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegistrationFailedException;
 
@@ -13,14 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "RegisterCommandEndpoint", urlPatterns = "/register")
 public class RegisterCommandEndpoint extends HttpServlet {
 
-    //private ServiceRegistry serviceRegistry = ServiceRegistry.getServiceRegistry();
-    @Inject @Named("IdentityManagementFacade")
-    private IdentityManagementFacade identityManagementFacade;
+    @Inject @Named("IdentityManagementService")
+    private IdentityManagementService identityManagementService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().removeAttribute("errors");
@@ -35,11 +32,11 @@ public class RegisterCommandEndpoint extends HttpServlet {
             .build();
 
         try {
-            identityManagementFacade.register(registerCommand);
-            response.sendRedirect("/starkOverflow/login");
+            identityManagementService.register(registerCommand);
+            response.sendRedirect("/login");
         } catch (RegistrationFailedException e) {
             request.getSession().setAttribute("errors", e.getMessage());
-            response.sendRedirect("/starkOverflow/register");
+            response.sendRedirect("/register");
         }
     }
 
