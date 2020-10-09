@@ -7,14 +7,8 @@ import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IVoteRepository;
-import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
-import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryVoteRepository;
-import junit.framework.Assert;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 public class VoteServiceTest {
 

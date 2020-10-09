@@ -16,7 +16,6 @@ import java.io.IOException;
 public class QuestionQueryHandler extends HttpServlet {
 
     @Inject @Named("QuestionService")
-
     private QuestionService questionService;
 
     @Override

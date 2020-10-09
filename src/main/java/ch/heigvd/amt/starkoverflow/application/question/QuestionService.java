@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class QuestionService {
 
-    @Inject
+    @Inject @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
 
     public Question createQuestion(CreateQuestionCommand command) {
