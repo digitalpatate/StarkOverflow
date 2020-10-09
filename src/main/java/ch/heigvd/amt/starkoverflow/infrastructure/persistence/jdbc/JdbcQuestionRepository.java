@@ -7,6 +7,7 @@ import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @Named("JdbcQuestionRepository")
 @NoArgsConstructor
 @AllArgsConstructor
+@Log
 public class JdbcQuestionRepository implements IQuestionRepository {
     @Resource(lookup = "jdbc/postgresql")
     DataSource dataSource;
@@ -85,7 +87,7 @@ public class JdbcQuestionRepository implements IQuestionRepository {
                         res.getDate("creation_date"),
                         new UserId()
                 );
-
+                log.info(question.toString());
                 findedQuestion.add(question);
             }
 

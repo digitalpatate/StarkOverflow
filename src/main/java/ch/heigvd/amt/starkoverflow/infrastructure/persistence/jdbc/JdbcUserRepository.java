@@ -13,7 +13,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -33,7 +35,36 @@ public class JdbcUserRepository implements IUserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.empty();
+        String  query = String.format("SELECT * FROM users WHERE email='%S'",email);
+        PreparedStatement statement = null;
+
+        Collection<User> foundedUser = new ArrayList<>();
+        try {
+            ResultSet res = statement.executeQuery();
+            while (res.next()){
+                User user = User.builder()
+                        .email(res.getString("email"))
+                        .id(new UserId(res.getString("id")))
+                        .username(res.getString("username"))
+                        .profilePictureURL(res.getString("picture_url"))
+                        .firstname(res.getString("firstname"))
+                        .lastname(res.getString("lastname"))
+                        .build();
+
+                foundedUser.add(user);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        try {
+            statement = dataSource.getConnection().prepareStatement(query);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return foundedUser.stream().findFirst();
+
     }
 
     @SneakyThrows
@@ -41,7 +72,7 @@ public class JdbcUserRepository implements IUserRepository {
     public User save(User entity) {
         try {
             PreparedStatement statement = dataSource.getConnection().prepareStatement(
-                    "INSERT INTO users(uuid, firstname, lastname, email, password)" +
+                    "INSERT INTO users(id, firstname, lastname, email, password)" +
                             "VALUES(?,?,?,?,?)");
             statement.setString(1, entity.getId().asString());
             statement.setString(2, entity.getFirstname());
