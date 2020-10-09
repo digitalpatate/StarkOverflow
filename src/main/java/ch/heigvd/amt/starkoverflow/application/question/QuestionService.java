@@ -10,15 +10,10 @@ import ch.heigvd.amt.starkoverflow.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-<<<<<<< HEAD
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-=======
 import java.text.SimpleDateFormat;
->>>>>>> master
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +26,8 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class QuestionService {
 
-    @Inject @Named("JdbcQuestionRepository")
+    @Inject
+    @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
 
     public Question createQuestion(CreateQuestionCommand command) {
@@ -81,7 +77,6 @@ public class QuestionService {
                         .id(question.getId().asString())
                         .title(question.getTitle())
                         .content(question.getContent())
-                        .creationDate(dateFormat.format(question.getCreationDate()))
                         .build())
                 .collect(Collectors.toList());
 

@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.ui.web.question;
 
 import ch.heigvd.amt.starkoverflow.application.question.CreateQuestionCommand;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
+import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="QuestionsCommandHandler", urlPatterns = "/questions.do")
-public class QuestionsCommandHandler extends HttpServlet {
+@WebServlet(name="QuestionsQueryHandler", urlPatterns = "/questions")
+public class QuestionsHandler extends HttpServlet {
 
     @Inject @Named("QuestionService")
     private QuestionService questionService;
@@ -21,6 +22,16 @@ public class QuestionsCommandHandler extends HttpServlet {
     @Override
     public void init() throws ServletException{
         super.init();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        QuestionsDTO questionsDTO = questionService.getQuestions();
+
+        req.setAttribute("questions", questionsDTO);
+
+        req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req,res);
+
     }
 
     @Override
