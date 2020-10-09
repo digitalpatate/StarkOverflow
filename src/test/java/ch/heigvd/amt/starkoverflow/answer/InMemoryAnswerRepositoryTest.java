@@ -3,6 +3,7 @@ package ch.heigvd.amt.starkoverflow.answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryAnswerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ public class InMemoryAnswerRepositoryTest {
         this.questioner = new User("michel", "questioner","test","test","test","test");
         this.answerer = new User("michel", "answerer","test","test","test","test");
         this.question = new Question("title","content");
-        this.question.setAuthor(this.questioner);
+        this.question.setAuthor(new UserId());
         this.answer= new Answer("NO");
     }
 

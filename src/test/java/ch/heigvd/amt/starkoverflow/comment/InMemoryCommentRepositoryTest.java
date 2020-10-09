@@ -5,6 +5,7 @@ import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.comment.Comment;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryCommentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,11 +25,9 @@ public class InMemoryCommentRepositoryTest {
     public void setup(){
         this.commentRepository = new InMemoryCommentRepository();
 
-        //this.commentator = new User("commentator","test","test","test","test");
-        this.commentableOwner = new User("michel", "answerer","test","test","test","test");
 
         this.aQuestion = new Question("Very Important question","content");
-        ((Question)this.aQuestion).setAuthor(this.commentableOwner);
+        ((Question)this.aQuestion).setAuthor(new UserId());
 
         this.comment= new Comment("This is a good comment !");
     }

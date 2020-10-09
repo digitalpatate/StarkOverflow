@@ -5,6 +5,7 @@ import ch.heigvd.amt.starkoverflow.domain.Votable;
 import ch.heigvd.amt.starkoverflow.domain.comment.Comment;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
 import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryCommentRepository;
 import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryVoteRepository;
@@ -32,7 +33,7 @@ public class InMemoryVoteRepositoryTest {
         this.voteUser = new User("michel", "answerer","test","test","test","test");
 
         this.aQuestion = new Question("Very Important question","content");
-        ((Question)this.aQuestion).setAuthor(this.voteUser);
+        ((Question)this.aQuestion).setAuthor(new UserId());
 
         this.vote= new Vote();
     }

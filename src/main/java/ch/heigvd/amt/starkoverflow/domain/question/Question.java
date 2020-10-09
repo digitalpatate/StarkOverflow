@@ -6,6 +6,7 @@ import ch.heigvd.amt.starkoverflow.domain.Votable;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.Builder;
 import lombok.Data;
 
@@ -22,7 +23,7 @@ public class Question implements IEntity<Question,QuestionId>, Commentable, Vota
     private String content;
     private Date creationDate;
     private List<Tag> tags;
-    private User author;
+    private UserId author;
 
    public Question(String title, String content) {
         this.id = new QuestionId();
@@ -31,6 +32,13 @@ public class Question implements IEntity<Question,QuestionId>, Commentable, Vota
         this.creationDate = new Date();
     }
 
+    public Question(QuestionId id, String title, String content, Date creationDate, UserId author) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.creationDate = creationDate;
+        this.author = author;
+    }
 
     //TODO complèter la fonction
     @Override

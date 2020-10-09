@@ -4,6 +4,7 @@ import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,13 @@ import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.sql.DataSource;
+import java.beans.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 
@@ -31,7 +38,23 @@ public class JdbcQuestionRepository implements IQuestionRepository {
 
     @Override
     public Question save(Question entity) {
-        return null;
+        PreparedStatement statement = null;
+        try {
+            statement = dataSource.getConnection().prepareStatement(
+                    "INSERT INTO questions(id, title, content)" +
+                            "VALUES(?,?,?)");
+
+            statement.setString(1, entity.getId().asString());
+            statement.setString(2, entity.getTitle());
+            statement.setString(3, entity.getContent());
+
+
+            statement.execute();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return entity;
     }
 
     @Override
@@ -46,6 +69,32 @@ public class JdbcQuestionRepository implements IQuestionRepository {
 
     @Override
     public Collection<Question> findAll() {
-        return null;
+        String query = "SELECT * FROM questions";
+        Collection<Question> findedQuestion = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
+            ResultSet res = statement.executeQuery();
+
+
+            while (res.next()){
+                Question question = new Question(
+                        new QuestionId(res.getString("id")),
+                        res.getString("title"),
+                        res.getString("content"),
+                        res.getDate("creation_date"),
+                        new UserId()
+                );
+
+                findedQuestion.add(question);
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return findedQuestion;
     }
 }
