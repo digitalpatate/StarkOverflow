@@ -20,7 +20,7 @@ import javax.inject.Named;
 @ApplicationScoped
 public class IdentityManagementService {
 
-    @Inject @Named("InMemoryUserRepository")
+    @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
 
 

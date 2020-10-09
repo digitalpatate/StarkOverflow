@@ -15,10 +15,11 @@ set time zone 'Europe/Zurich';
 CREATE TABLE users(
    id              TEXT PRIMARY KEY    NOT NULL,
    email           TEXT    NOT NULL,
-   profilePictureURL         TEXT    NOT NULL,
+   profilePictureURL         TEXT   ,
    firstname           TEXT    NOT NULL,
    lastname         TEXT    NOT NULL,
    username         TEXT     NOT NULL,
+   password         TEXT     NOT NULL,
    registrationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)  
 );
 
@@ -30,14 +31,16 @@ CREATE TABLE commentables_votalbes(
 
 
 CREATE TABLE questions(
-   CONSTRAINT     fk_user
+   author              TEXT    NOT NULL,
+   CONSTRAINT     author
       FOREIGN KEY(id)
          REFERENCES users(id),
    title           TEXT    NOT NULL
    ) INHERITS(commentables_votalbes);
 
 CREATE TABLE answers(
-   CONSTRAINT     fk_user
+   author              TEXT    NOT NULL,
+   CONSTRAINT     author
       FOREIGN KEY(id)
          REFERENCES users(id),
    approuval_state BOOLEAN NOT NULL
@@ -46,8 +49,9 @@ CREATE TABLE answers(
 
 CREATE TABLE comments(
    id TEXT PRIMARY KEY     NOT NULL,
+   author              TEXT    NOT NULL,
    content         TEXT     NOT NULL,
-   CONSTRAINT     fk_user
+   CONSTRAINT     author
       FOREIGN KEY(id)
          REFERENCES users(id),
    CONSTRAINT     fk_commentable
@@ -73,7 +77,8 @@ CREATE TABLE tags_questions(
 
 CREATE TABLE votes(
    id TEXT PRIMARY KEY     NOT NULL,
-   CONSTRAINT     fk_user
+   author              TEXT    NOT NULL,  
+   CONSTRAINT     author
       FOREIGN KEY(id)
          REFERENCES users(id),
    CONSTRAINT     fk_votable

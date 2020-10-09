@@ -20,12 +20,12 @@
                         <input id="profilePicture" class="form-control" name="profilePicture" type="url">
                     </div>
                     <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input id="name" class="form-control" name="name" type="text">
+                        <label for="firstname">Firstname:</label>
+                        <input id="firstname" class="form-control" name="firstname" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="surname">Surname:</label>
-                        <input id="surname" class="form-control" name="surname" type="text">
+                        <label for="lastname">Lastname:</label>
+                        <input id="lastname" class="form-control" name="lastname" type="text">
                     </div>
                     <div class="form-group">
                         <label for="password">Password:</label>

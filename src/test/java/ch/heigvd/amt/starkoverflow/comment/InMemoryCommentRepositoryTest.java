@@ -26,7 +26,7 @@ public class InMemoryCommentRepositoryTest {
         this.commentRepository = new InMemoryCommentRepository();
 
 
-        this.aQuestion = new Question("Very Important question","content");
+        this.aQuestion = new Question("Very Important question","content", new UserId());
         ((Question)this.aQuestion).setAuthor(new UserId());
 
         this.comment= new Comment("This is a good comment !");

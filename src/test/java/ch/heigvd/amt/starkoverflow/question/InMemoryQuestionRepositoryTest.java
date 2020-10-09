@@ -22,7 +22,7 @@ public class InMemoryQuestionRepositoryTest {
 
     @Test
     public void saveShouldReturnSameObject(){
-        Question question = new Question("Title","Content");
+        Question question = new Question("Title","Content", new UserId());
         question.setAuthor(new UserId());
         Question savedQuestion = this.questionRepository.save(question);
         //ArrayList<Question> savedQuestion = (ArrayList<Question>) questionRepository.findAll();
@@ -30,7 +30,7 @@ public class InMemoryQuestionRepositoryTest {
     }
     @Test
     public void findByIdShouldReturnAnObject(){
-        Question question = new Question("Title","Content");
+        Question question = new Question("Title","Content",new UserId());
         question.setAuthor(new UserId());
         Question savedQuestion = this.questionRepository.save(question);
         assertTrue(this.questionRepository.findById(savedQuestion.getId()).isPresent());
@@ -38,7 +38,7 @@ public class InMemoryQuestionRepositoryTest {
 
     @Test
     public void afterRemoveFindShoudReturnEmptyOptional(){
-        Question question = new Question("Title","Content");
+        Question question = new Question("Title","Content", new UserId());
         question.setAuthor(new UserId());
         Question savedQuestion = this.questionRepository.save(question);
 

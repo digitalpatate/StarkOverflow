@@ -32,7 +32,7 @@ public class InMemoryVoteRepositoryTest {
         //this.commentator = new User("commentator","test","test","test","test");
         this.voteUser = new User("michel", "answerer","test","test","test","test");
 
-        this.aQuestion = new Question("Very Important question","content");
+        this.aQuestion = new Question("Very Important question","content", new UserId());
         ((Question)this.aQuestion).setAuthor(new UserId());
 
         this.vote= new Vote();

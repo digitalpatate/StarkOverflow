@@ -37,7 +37,11 @@ public class JdbcUserRepository implements IUserRepository {
     public Optional<User> findByEmail(String email) {
         String  query = String.format("SELECT * FROM users WHERE email='%S'",email);
         PreparedStatement statement = null;
-
+        try {
+            statement = dataSource.getConnection().prepareStatement(query);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         Collection<User> foundedUser = new ArrayList<>();
         try {
             ResultSet res = statement.executeQuery();
@@ -57,11 +61,6 @@ public class JdbcUserRepository implements IUserRepository {
             throwables.printStackTrace();
         }
 
-        try {
-            statement = dataSource.getConnection().prepareStatement(query);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
 
         return foundedUser.stream().findFirst();
 
@@ -72,21 +71,22 @@ public class JdbcUserRepository implements IUserRepository {
     public User save(User entity) {
         try {
             PreparedStatement statement = dataSource.getConnection().prepareStatement(
-                    "INSERT INTO users(id, firstname, lastname, email, password)" +
-                            "VALUES(?,?,?,?,?)");
+                    "INSERT INTO users(id, email, profilePictureURL, firstname, lastname, username, password)" +
+                            "VALUES(?,?,?,?,?,?, ?)");
+            System.out.println();
             statement.setString(1, entity.getId().asString());
-            statement.setString(2, entity.getFirstname());
-            statement.setString(3, entity.getLastname());
-            statement.setString(4, entity.getEmail());
-            statement.setString(5, entity.getEncryptedPassword());
+            statement.setString(2, entity.getEmail());
+            statement.setString(3, entity.getProfilePictureURL());
+            statement.setString(4, entity.getFirstname());
+            statement.setString(5, entity.getLastname());
+            statement.setString(6, entity.getUsername());
+            statement.setString(7, entity.getEncryptedPassword());
 
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-        return null;
-
+        return entity;
     }
 
     @Override

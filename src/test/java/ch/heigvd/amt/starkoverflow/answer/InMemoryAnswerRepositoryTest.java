@@ -25,7 +25,7 @@ public class InMemoryAnswerRepositoryTest {
 
         this.questioner = new User("michel", "questioner","test","test","test","test");
         this.answerer = new User("michel", "answerer","test","test","test","test");
-        this.question = new Question("title","content");
+        this.question = new Question("title","content", new UserId());
         this.question.setAuthor(new UserId());
         this.answer= new Answer("NO");
     }
