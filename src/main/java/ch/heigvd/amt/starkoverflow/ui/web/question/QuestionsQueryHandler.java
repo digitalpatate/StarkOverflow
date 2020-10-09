@@ -1,8 +1,6 @@
 package ch.heigvd.amt.starkoverflow.ui.web.question;
 
 import ch.heigvd.amt.starkoverflow.application.ServiceRegistry;
-import ch.heigvd.amt.starkoverflow.application.question.CreateQuestionCommand;
-import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 
@@ -13,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="QuestionQueryHandler", urlPatterns = "/question/*")
-public class QuestionQueryHandler extends HttpServlet {
+@WebServlet(name="QuestionsQueryHandler", urlPatterns = "/questions")
+public class QuestionsQueryHandler extends HttpServlet {
 
     private QuestionService questionService;
 

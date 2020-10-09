@@ -3,27 +3,36 @@
 <header id="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/"><h1 class="logo">StarkØverflØw</h1></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse">
-            <c:choose>
-                <c:when test="${currentUser != null}">
-                    <div>
-                        ${currentUser.username}
-                    </div>
-                    <form action="/logout" method="POST">
-                        <button type="submit">Logout</button>
-                    </form>
-                </c:when>
-            </c:choose>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/statistic">statistics</a>
+                </li>
 
-            <div class="navbar-nav">
-                <a class="nav-link" href="/statistic">statistics</a>
-                <a class="nav-link" href="/register">Register</a>
-                <a class="nav-link" href="/login">login</a>
-                <a class="nav-link" href="/profile">Mon Profile</a>
-            </div>
+                <c:choose>
+                    <c:when test="${currentUser != null}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ${currentUser.username}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/profile">Mon Profile</a>
+                                <form class="dropdown-item" action="/logout" method="POST">
+                                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                                </form>
+                            </div>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">login</a
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
         </div>
     </nav>
 </header>

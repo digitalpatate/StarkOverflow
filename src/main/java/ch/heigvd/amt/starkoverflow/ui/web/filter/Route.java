@@ -23,8 +23,8 @@ public class Route {
         this.methods.addAll(Arrays.asList(methods));
     }
 
-    public boolean match(HttpServletRequest req){
-        return req.getRequestURI().startsWith(path) && methods.contains(req.getMethod());
-
+    public boolean match(HttpServletRequest req) {
+        return req.getRequestURI().equals("/") ||
+               req.getRequestURI().startsWith(path) && methods.contains(req.getMethod());
     }
 }
