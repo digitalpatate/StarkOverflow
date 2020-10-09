@@ -13,7 +13,7 @@ public class QuestionDTO {
     private String id;
     private String title;
     private String content;
-    private Date creationDate;
+    private String creationDate;
     //private AuthorDTO author;
 
 }
