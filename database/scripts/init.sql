@@ -33,7 +33,7 @@ CREATE TABLE commentables_votalbes(
 CREATE TABLE questions(
    author              TEXT    NOT NULL,
    CONSTRAINT     author
-      FOREIGN KEY(id)
+      FOREIGN KEY(author)
          REFERENCES users(id),
    title           TEXT    NOT NULL
    ) INHERITS(commentables_votalbes);
@@ -41,7 +41,7 @@ CREATE TABLE questions(
 CREATE TABLE answers(
    author              TEXT    NOT NULL,
    CONSTRAINT     author
-      FOREIGN KEY(id)
+      FOREIGN KEY(author)
          REFERENCES users(id),
    approuval_state BOOLEAN NOT NULL
 ) INHERITS(commentables_votalbes);

@@ -11,9 +11,9 @@ public class CreateQuestionCommand {
 
     private String title;
     private String content;
-    private UserId userId;
+    private String userId;
 
     public Question createEntity() {
-        return new Question(title, content, userId);
+        return new Question(title, content, new UserId(userId));
     }
 }

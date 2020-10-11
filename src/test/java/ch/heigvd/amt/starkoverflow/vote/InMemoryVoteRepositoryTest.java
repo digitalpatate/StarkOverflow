@@ -29,8 +29,8 @@ public class InMemoryVoteRepositoryTest {
     public void setup(){
         this.voteRepository = new InMemoryVoteRepository();
 
-        //this.commentator = new User("commentator","test","test","test","test");
-        this.voteUser = new User("michel", "answerer","test","test","test","test");
+        //this.commentator = new User(new UserId(),"commentator","test","test","test","test");
+        this.voteUser = new User(new UserId(),"michel", "answerer","test","test","test","test");
 
         this.aQuestion = new Question("Very Important question","content", new UserId());
         ((Question)this.aQuestion).setAuthor(new UserId());

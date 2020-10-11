@@ -31,8 +31,6 @@ public class QuestionQueryHandler extends HttpServlet {
         if(questionDTO != null) {
             req.setAttribute("question", questionDTO);
             req.getRequestDispatcher("/WEB-INF/views/question.jsp").forward(req,res);
-        } else {
-            res.sendRedirect("/");
         }
     }
 }

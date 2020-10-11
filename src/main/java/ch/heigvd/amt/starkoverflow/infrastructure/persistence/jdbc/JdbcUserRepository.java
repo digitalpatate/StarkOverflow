@@ -35,7 +35,7 @@ public class JdbcUserRepository implements IUserRepository {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        String  query = String.format("SELECT * FROM users WHERE email='%S'",email);
+        String  query = String.format("SELECT * FROM users WHERE email='%s'",email);
         PreparedStatement statement = null;
         try {
             statement = dataSource.getConnection().prepareStatement(query);
@@ -50,9 +50,10 @@ public class JdbcUserRepository implements IUserRepository {
                         .email(res.getString("email"))
                         .id(new UserId(res.getString("id")))
                         .username(res.getString("username"))
-                        .profilePictureURL(res.getString("picture_url"))
+                        .profilePictureURL(res.getString("profilepictureurl"))
                         .firstname(res.getString("firstname"))
                         .lastname(res.getString("lastname"))
+                        .encryptedPassword(res.getString("password"))
                         .build();
 
                 foundedUser.add(user);
@@ -71,7 +72,7 @@ public class JdbcUserRepository implements IUserRepository {
     public User save(User entity) {
         try {
             PreparedStatement statement = dataSource.getConnection().prepareStatement(
-                    "INSERT INTO users(id, email, profilePictureURL, firstname, lastname, username, password)" +
+                    "INSERT INTO users(id, email, profilepictureurl, firstname, lastname, username, password)" +
                             "VALUES(?,?,?,?,?,?, ?)");
             System.out.println();
             statement.setString(1, entity.getId().asString());
