@@ -12,7 +12,7 @@
                     <p class="question-creationDate">${question.creationDate}</p>
                     <hr />
                 </div>
-                <form action="/answer.do" method="post">
+                <form action="/answer" method="post">
                     <div class="form-group">
                         <label for="answerContent">Answer</label>
                         <textarea class="form-control" id="answerContent" name="answerContent" rows="3" required="true"></textarea>
