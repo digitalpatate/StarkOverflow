@@ -21,13 +21,7 @@ public class QuestionQueryHandler extends HttpServlet {
     private QuestionService questionService;
 
     @Override
-    public void init() throws ServletException{
-        super.init();
-    }
-
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        QuestionsDTO questionsDTO = questionService.getQuestions();
 
         String[] urlParts = req.getPathInfo().split("/");
 

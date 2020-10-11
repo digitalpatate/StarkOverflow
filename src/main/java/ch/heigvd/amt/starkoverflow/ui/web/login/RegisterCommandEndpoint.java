@@ -19,7 +19,7 @@ public class RegisterCommandEndpoint extends HttpServlet {
     @Inject @Named("IdentityManagementService")
     private IdentityManagementService identityManagementService;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getSession().removeAttribute("errors");
 
         RegisterCommand registerCommand = RegisterCommand.builder()
@@ -36,7 +36,7 @@ public class RegisterCommandEndpoint extends HttpServlet {
             response.sendRedirect("/login");
         } catch (RegistrationFailedException e) {
             request.getSession().setAttribute("errors", e.getMessage());
-            response.sendRedirect("/register");
+            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
         }
     }
 
