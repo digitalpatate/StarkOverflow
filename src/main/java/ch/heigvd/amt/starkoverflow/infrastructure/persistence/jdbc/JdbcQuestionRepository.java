@@ -4,6 +4,7 @@ import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -67,7 +68,27 @@ public class JdbcQuestionRepository implements IQuestionRepository {
 
     @Override
     public Optional<Question> findById(QuestionId id) {
-        return Optional.empty();
+        String  query = String.format("SELECT * FROM questions WHERE id='%s'",id.asString());
+
+        PreparedStatement statement = null;
+        try {
+            statement = dataSource.getConnection().prepareStatement(query);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Collection<Question> foundedQuestion = new ArrayList<>();
+        try {
+            ResultSet res = statement.executeQuery();
+            while (res.next()){
+                Question question = resultSetToEntity(res);
+                foundedQuestion.add(question);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return foundedQuestion.stream().findFirst();
     }
 
     @Override
@@ -85,7 +106,7 @@ public class JdbcQuestionRepository implements IQuestionRepository {
                         new QuestionId(res.getString("id")),
                         res.getString("title"),
                         res.getString("content"),
-                        res.getDate("creation_date"),
+                        res.getDate("creationDate"),
                         new UserId()
                 );
                 log.info(question.toString());
@@ -99,5 +120,19 @@ public class JdbcQuestionRepository implements IQuestionRepository {
             e.printStackTrace();
         }
         return findedQuestion;
+    }
+
+    private Question resultSetToEntity(ResultSet resultSet) throws SQLException {
+        return new Question(
+                new QuestionId(resultSet.getString("id")),
+                resultSet.getString("title"),
+                resultSet.getString("content"),
+                resultSet.getDate("creationDate"),
+                new UserId(resultSet.getString("author"))
+        );
+
+
+
+
     }
 }

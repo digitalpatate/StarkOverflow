@@ -39,10 +39,10 @@ public class QuestionsCommandHandler extends HttpServlet {
         CreateQuestionCommand createQuestionCommand = CreateQuestionCommand.builder()
                 .content(req.getParameter("questionContent"))
                 .title(req.getParameter("questionTitle"))
-                .userId(new UserId(userDTO.getId()))
+                .userId(userDTO.getId())
                 .build();
 
         questionService.createQuestion(createQuestionCommand);
-        res.sendRedirect(req.getParameter("sourcePath"));
+        res.sendRedirect("/");
     }
 }

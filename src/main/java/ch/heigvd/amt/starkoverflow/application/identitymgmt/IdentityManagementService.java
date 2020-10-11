@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.NotFoundException;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -51,7 +52,7 @@ public class IdentityManagementService {
 
     public UserDTO authenticate(AuthenticateCommand command) throws AuthenticationFailedException {
         User user = userRepository.findByEmail(command.getEmail())
-                .orElseThrow(() -> new AuthenticationFailedException("Verification of credentials failed!"));
+                .orElseThrow(() -> new NotFoundException("Cannot find user with this email"));
 
         boolean success = user.authenticate(command.getClearTextPassword());
         if(!success){

@@ -13,7 +13,7 @@
                     <c:when test="${currentUser != null}">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                ${currentUser.username}
+                                    ${currentUser.username}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="/profile">Mon Profile</a>
@@ -28,11 +28,20 @@
                             <a class="nav-link" href="/register">register</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/login">login</a
+                            <a class="nav-link" href="/login">login</a>
                         </li>
                     </c:otherwise>
                 </c:choose>
             </ul>
         </div>
     </nav>
+    <c:choose>
+        <c:when test="${errors != null}">
+            <div class="flash">
+                ${errors}
+            </div>
+        </c:when>
+    </c:choose>
+
+
 </header>

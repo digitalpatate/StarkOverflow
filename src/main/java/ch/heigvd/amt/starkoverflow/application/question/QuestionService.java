@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.NotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -32,8 +33,7 @@ public class QuestionService {
 
     public Question createQuestion(CreateQuestionCommand command) {
         Question question = command.createEntity();
-        //User author = userRepository.findById(command.getUserId()).orElseThrow(RuntimeException::new);
-        //question.setAuthor(author);
+
         return questionRepository.save(question);
     }
 
@@ -46,13 +46,10 @@ public class QuestionService {
     }
 
     public QuestionDTO getQuestion(QuestionId id) {
-        Optional<Question> q = questionRepository.findById(id);
+        Optional<Question> oQuestion = questionRepository.findById(id);
 
-        if(!q.isPresent()) {
-            return null;
-        }
+        Question question = oQuestion.orElseThrow(()-> new NotFoundException("No question found with this id"));
 
-        Question question = q.get();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH'h'mm dd/MM/yyyy");
 
