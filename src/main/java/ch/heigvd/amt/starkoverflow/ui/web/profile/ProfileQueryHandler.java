@@ -19,11 +19,6 @@ public class ProfileQueryHandler extends HttpServlet {
     private UserService userService;
 
     @Override
-    public void init() throws ServletException{
-        super.init();
-    }
-
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDTO userDTO = (UserDTO) request.getSession().getAttribute("user");
         request.setAttribute("currentUser", userDTO);

@@ -15,25 +15,28 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class VoteService {
 
-    @Inject
+    @Inject @Named("JdbcVoteRepository")
     private IVoteRepository voteRepository;
-    @Inject
+    @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
-    @Inject
+    @Inject @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
-
 
 
     public Vote createVote(CreateVoteCommand command) throws NotFoundException {
         Vote vote = command.createEntity();
-        User user = userRepository.findById(new UserId(command.getUserId())).orElseThrow(NotFoundException::new);
-        Question question = questionRepository.findById(new QuestionId(command.getVotableId())).orElseThrow(NotFoundException::new);
+        User user = userRepository.findById(new UserId(command.getUserId())).orElseThrow(() -> new NotFoundException("The user with this id does not exist"));
+        //FIXME: Should use the commentable_votables registry
+        Question question = questionRepository.findById(new QuestionId(command.getVotableId())).orElseThrow(() -> new NotFoundException("The votable with this id does not exist"));
         vote.setUser(user);
         vote.setVotable(question);
+
         return voteRepository.save(vote);
     }
 }

@@ -28,7 +28,6 @@ public class VoteServiceTest {
         this.command = CreateVoteCommand.builder()
                 .userId(new UserId().asString())
                 .votableId(new QuestionId().asString())
-                .votableType("question")
                 .build();
 
     }
