@@ -43,6 +43,6 @@ public class QuestionsCommandHandler extends HttpServlet {
                 .build();
 
         questionService.createQuestion(createQuestionCommand);
-        res.sendRedirect("");
+        res.sendRedirect(req.getParameter("sourcePath"));
     }
 }

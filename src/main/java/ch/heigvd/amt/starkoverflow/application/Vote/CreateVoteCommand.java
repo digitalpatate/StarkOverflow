@@ -15,7 +15,6 @@ public class CreateVoteCommand {
 
     private String userId;
     private String votableId;
-    private String votableType;
 
     public Vote createEntity() {
         return new Vote();
