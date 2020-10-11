@@ -19,6 +19,9 @@ services:
       PGADMIN_DEFAULT_EMAIL: dev@starkoverflow.ch
       PGADMIN_DEFAULT_PASSWORD: secret
       PGADMIN_LISTEN_PORT: 80
+      # set timezone to UTC+2
+      TZ: 'Europe/Zurich'
+      PGTZ: 'Europe/Zurich'
     ports:
       - "8081:80"
     links:
