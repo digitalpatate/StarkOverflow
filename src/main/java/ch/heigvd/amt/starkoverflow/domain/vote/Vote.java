@@ -5,6 +5,8 @@ import ch.heigvd.amt.starkoverflow.domain.Id;
 import ch.heigvd.amt.starkoverflow.domain.Votable;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +15,15 @@ import lombok.NoArgsConstructor;
 public class Vote implements IEntity<Vote, VoteId> {
     private VoteId id;
     private Votable votable;
-    private User user;
+    private UserId user_id;
 
     public Vote() {
         this.id = new VoteId();
+    }
+
+    public Vote(VoteId vote_id, UserId user_id ) {
+        this.id = vote_id;
+        this.user_id = user_id;
     }
     
 
