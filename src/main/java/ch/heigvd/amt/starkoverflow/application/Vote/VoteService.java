@@ -31,10 +31,10 @@ public class VoteService {
 
     public Vote createVote(CreateVoteCommand command) throws NotFoundException {
         Vote vote = command.createEntity();
-        User user = userRepository.findById(new UserId(command.getUserId())).orElseThrow(() -> new NotFoundException("The user with this id does not exist"));
+        UserId user_id = new UserId(command.getUserId());
         //FIXME: Should use the commentable_votables registry
         Question question = questionRepository.findById(new QuestionId(command.getVotableId())).orElseThrow(() -> new NotFoundException("The votable with this id does not exist"));
-        vote.setUser(user);
+        vote.setUser_id(user_id);
         vote.setVotable(question);
 
         return voteRepository.save(vote);
