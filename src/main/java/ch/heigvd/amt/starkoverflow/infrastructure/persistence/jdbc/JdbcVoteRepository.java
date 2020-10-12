@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -30,17 +31,14 @@ public class JdbcVoteRepository extends JdbcRepository implements IVoteRepositor
 
     @Override
     public Vote save(Vote entity) {
-        String query = String.format("INSERT INTO votes(vote_id, author) " +
-                "VALUES(?,?)");
-        try {
-            PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
-            statement.setString(1, entity.getId().asString());
-            statement.setString(2, entity.getUser_id().asString());
+        super.insert("votes", Arrays.asList(
+                "vote_id",
+                "author"
+        ), Arrays.asList(
+                entity.getId().asString(),
+                entity.getUser_id().asString()
+        ));
 
-            statement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
         return entity;
     }
 

@@ -35,24 +35,19 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
 
     @Override
     public Question save(Question entity) {
-        String Query = String.format("INSERT INTO questions(qa_id, title, content, author) VALUES(?,?,?,?)");
+        super.insert("questions",
+                Arrays.asList(
+                        "qa_id",
+                        "title",
+                        "content",
+                        "author"
+                ), Arrays.asList(
+                        entity.getId().asString(),
+                        entity.getTitle(),
+                        entity.getContent(),
+                        entity.getAuthor().asString()
+                ));
 
-        PreparedStatement statement = null;
-        try {
-            statement = dataSource.getConnection().prepareStatement(
-                    "INSERT INTO questions(qa_id, title, content, author)" +
-                            "VALUES(?,?,?,?)"
-            );
-
-            statement.setString(1, entity.getId().asString());
-            statement.setString(2, entity.getTitle());
-            statement.setString(3, entity.getContent());
-            statement.setString(4, entity.getAuthor().asString());
-            statement.execute();
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
         return entity;
     }
 

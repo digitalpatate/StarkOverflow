@@ -13,47 +13,37 @@ public abstract class JdbcRepository {
     @Resource(lookup = "jdbc/postgresql")
     DataSource dataSource;
 
-    public void remove(String tableName, String idFieldName, Id id) {
-        String query = String.format("DELETE FROM %s WHERE %s=?;", tableName, idFieldName);
+    public void insert(String tableName, List<String> fields, List<String> values) {
+        String queryFields = "";
+        Iterator<String> it = fields.iterator();
 
-        PreparedStatement preparedStatement = null;
+        while (it.hasNext()) {
+            queryFields += it.next();
 
-        try {
-            preparedStatement = dataSource.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, id.asString());
-            preparedStatement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            if(it.hasNext()) {
+                queryFields += ", ";
+            }
         }
+
+        String query = "INSERT INTO " + tableName + "(" + queryFields + ") VALUES(?,?,?,?)";
+        executeQuery(query, values);
+    }
+
+    public void remove(String tableName, String idFieldName, Id id) {
+        String query = String.format("DELETE FROM %s WHERE %s=?", tableName, idFieldName);
+        executeQuery(query, Arrays.asList(id.asString()));
     }
 
     public Collection<IEntity> findAll(String tableName) {
         String query = String.format("SELECT * FROM %s", tableName);
-
-        PreparedStatement preparedStatement = null;
-
-        try {
-            preparedStatement = dataSource.getConnection().prepareStatement(query);
-            preparedStatement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        PreparedStatement preparedStatement = executeQuery(query);
 
         return entitiesFound(preparedStatement);
     }
 
     public Optional<IEntity> find(String tableName, String fieldName, String value) {
         String query = String.format("SELECT * FROM %s WHERE %s=?", tableName, fieldName);
-
-        PreparedStatement preparedStatement = null;
-
-        try {
-            preparedStatement = dataSource.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, value);
-            preparedStatement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        PreparedStatement preparedStatement = executeQuery(query, Arrays.asList(value));
 
         return entitiesFound(preparedStatement).stream().findFirst();
     }
@@ -72,6 +62,50 @@ public abstract class JdbcRepository {
         }
 
         return entitiesFound;
+    }
+
+    protected PreparedStatement executeQuery(String query) {
+        PreparedStatement preparedStatement = createPreparedStatement(query, null);
+
+        try {
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return preparedStatement;
+    }
+
+    protected PreparedStatement executeQuery(String query, List<String> values) {
+        PreparedStatement preparedStatement = createPreparedStatement(query, values);
+
+        try {
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return preparedStatement;
+    }
+
+    protected PreparedStatement createPreparedStatement(String query, List<String> values) {
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = dataSource.getConnection().prepareStatement(query);
+
+            if(values != null) {
+                int i = 1;
+                for(Object value : values) {
+                   preparedStatement.setString(i, (String) value);
+                   i++;
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return preparedStatement;
     }
 
     public abstract IEntity resultSetToEntity(ResultSet resultSet) throws SQLException ;
