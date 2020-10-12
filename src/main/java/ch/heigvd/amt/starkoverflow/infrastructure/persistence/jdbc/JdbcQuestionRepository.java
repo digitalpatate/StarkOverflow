@@ -1,6 +1,7 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
+import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -10,29 +11,22 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 
-import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import javax.sql.DataSource;
-import java.beans.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Optional;
-
 
 @ApplicationScoped
 @Named("JdbcQuestionRepository")
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Log
-public class JdbcQuestionRepository implements IQuestionRepository {
-    @Resource(lookup = "jdbc/postgresql")
-    DataSource dataSource;
-
+public class JdbcQuestionRepository extends JdbcRepository implements IQuestionRepository {
 
     @Override
     public Collection<Question> find(QuestionQuery query) {
@@ -41,18 +35,19 @@ public class JdbcQuestionRepository implements IQuestionRepository {
 
     @Override
     public Question save(Question entity) {
+        String Query = String.format("INSERT INTO questions(qa_id, title, content, author) VALUES(?,?,?,?)");
+
         PreparedStatement statement = null;
         try {
             statement = dataSource.getConnection().prepareStatement(
-                    "INSERT INTO questions(id, title, content, author)" +
-                            "VALUES(?,?,?,?)");
+                    "INSERT INTO questions(qa_id, title, content, author)" +
+                            "VALUES(?,?,?,?)"
+            );
 
             statement.setString(1, entity.getId().asString());
             statement.setString(2, entity.getTitle());
             statement.setString(3, entity.getContent());
             statement.setString(4, entity.getAuthor().asString());
-
-
             statement.execute();
 
         } catch (SQLException throwables) {
@@ -63,76 +58,29 @@ public class JdbcQuestionRepository implements IQuestionRepository {
 
     @Override
     public void remove(QuestionId id) {
-
+        super.remove("questions", "qa_id", id); // FIXME: maybe put those strings as var in superclass
     }
 
     @Override
     public Optional<Question> findById(QuestionId id) {
-        String  query = String.format("SELECT * FROM questions WHERE id='%s'",id.asString());
+        Optional<IEntity> question = super.find("questions", "qa_id", id.asString()); // FIXME: maybe put those strings as var in superclass
 
-        PreparedStatement statement = null;
-        try {
-            statement = dataSource.getConnection().prepareStatement(query);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Collection<Question> foundedQuestion = new ArrayList<>();
-        try {
-            ResultSet res = statement.executeQuery();
-            while (res.next()){
-                Question question = resultSetToEntity(res);
-                foundedQuestion.add(question);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
-        return foundedQuestion.stream().findFirst();
+        return question.map(entity -> Optional.of((Question) entity)).orElse(null);
     }
 
     @Override
     public Collection<Question> findAll() {
-        String query = "SELECT * FROM questions";
-        Collection<Question> findedQuestion = new ArrayList<>();
-
-        try {
-            PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
-            ResultSet res = statement.executeQuery();
-
-
-            while (res.next()){
-                Question question = new Question(
-                        new QuestionId(res.getString("id")),
-                        res.getString("title"),
-                        res.getString("content"),
-                        res.getDate("creationDate"),
-                        new UserId()
-                );
-                log.info(question.toString());
-                findedQuestion.add(question);
-            }
-
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return findedQuestion;
+        return (Collection) super.findAll("questions");
     }
 
-    private Question resultSetToEntity(ResultSet resultSet) throws SQLException {
+    @Override
+    public Question resultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Question(
-                new QuestionId(resultSet.getString("id")),
+                new QuestionId(resultSet.getString("qa_id")),
                 resultSet.getString("title"),
                 resultSet.getString("content"),
-                resultSet.getDate("creationDate"),
+                resultSet.getDate("creation_date"),
                 new UserId(resultSet.getString("author"))
         );
-
-
-
-
     }
 }
