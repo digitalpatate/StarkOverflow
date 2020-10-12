@@ -26,6 +26,12 @@ public class Comment implements IEntity<Comment,CommentId> {
         this.id = new CommentId();
     }
 
+    public Comment(CommentId id, String content) {
+        this.content = content;
+        this.creationDate = new Date();
+        this.id = id;
+    }
+
     //TODO complèter la fonction
     @Override
     public Comment deepClone(){

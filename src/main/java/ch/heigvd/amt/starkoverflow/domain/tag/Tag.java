@@ -18,9 +18,13 @@ public class Tag implements IEntity<Tag, TagId> {
         this.id = new TagId();
         this.name = name;
         this.color = color;
-        this.id = new TagId();
     }
 
+    public Tag(TagId id, String name, String color) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+    }
 
     //TODO complèter la fonction
     @Override

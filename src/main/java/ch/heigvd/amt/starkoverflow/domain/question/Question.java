@@ -3,14 +3,9 @@ package ch.heigvd.amt.starkoverflow.domain.question;
 import ch.heigvd.amt.starkoverflow.domain.Commentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.Votable;
-import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
-import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
-import lombok.Builder;
 import lombok.Data;
-
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +17,7 @@ public class Question implements IEntity<Question,QuestionId>, Commentable, Vota
     private String title;
     private String content;
     private Date creationDate;
-    private List<Tag> tags;
+    private List<TagId> tags;
     private UserId author;
 
    public Question(String title, String content, UserId userId) {

@@ -4,27 +4,21 @@ import ch.heigvd.amt.starkoverflow.application.Answer.AnswerQuery;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
-
-import javax.annotation.Resource;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 
 @ApplicationScoped
 @Named("JdbcAnswerRepository")
-public class JdbcAnswerRepository implements IAnswerRepository {
-    @Resource(lookup = "jdbc/postgresql")
-    DataSource dataSource;
-
-    public JdbcAnswerRepository(){
-
-    }
-
-    public JdbcAnswerRepository(DataSource dataSource){
-        this.dataSource = dataSource;
-    }
+//@NoArgsConstructor
+@AllArgsConstructor
+public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepository {
 
     @Override
     public Collection<Answer> find(AnswerQuery query) {
@@ -48,6 +42,11 @@ public class JdbcAnswerRepository implements IAnswerRepository {
 
     @Override
     public Collection<Answer> findAll() {
+        return null;
+    }
+
+    @Override
+    public Answer resultSetToEntity(ResultSet resultSet) throws SQLException {
         return null;
     }
 }

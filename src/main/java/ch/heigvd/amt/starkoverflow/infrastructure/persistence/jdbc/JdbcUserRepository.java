@@ -1,6 +1,7 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.application.User.UserQuery;
+import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
@@ -24,51 +25,14 @@ import java.util.Optional;
 
 @ApplicationScoped
 @Named("JdbcUserRepository")
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Log
-public class JdbcUserRepository implements IUserRepository {
-    @Resource(lookup = "jdbc/postgresql")
-    DataSource dataSource;
-
+public class JdbcUserRepository extends JdbcRepository implements IUserRepository {
 
     @Override
     public Collection<User> find(UserQuery query) {
         return null;
-    }
-
-    @Override
-    public Optional<User> findByEmail(String email) {
-        String query = String.format("SELECT * FROM users WHERE email='%s'", email);
-        PreparedStatement statement = null;
-        try {
-            statement = dataSource.getConnection().prepareStatement(query);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Collection<User> foundedUser = new ArrayList<>();
-        try {
-            ResultSet res = statement.executeQuery();
-            while (res.next()) {
-                User user = User.builder()
-                        .email(res.getString("email"))
-                        .id(new UserId(res.getString("user_id")))
-                        .username(res.getString("username"))
-                        .profilePictureURL(res.getString("profile_picture_url"))
-                        .firstname(res.getString("firstname"))
-                        .lastname(res.getString("lastname"))
-                        .encryptedPassword(res.getString("password"))
-                        .build();
-
-                foundedUser.add(user);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
-        return foundedUser.stream().findFirst();
-
     }
 
     @SneakyThrows
@@ -96,68 +60,30 @@ public class JdbcUserRepository implements IUserRepository {
 
     @Override
     public void remove(UserId id) {
-        String query = String.format("DELETE FROM users WHERE user_id = '%s';", id.asString());
-        try {
-            PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
-            statement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        super.remove("users", "user_id", id); // FIXME: maybe put those strings as var in superclass
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        Optional<IEntity> user = super.find("users", "email", email); // FIXME: maybe put those strings as var in superclass
+
+        return user.map(entity -> Optional.of((User) entity)).orElse(null);
     }
 
     @Override
     public Optional<User> findById(UserId id) {
-        String  query = String.format("SELECT * FROM users WHERE qa_id='%s'",id.asString());
+        Optional<IEntity> user = super.find("users", "user_id", id.asString()); // FIXME: maybe put those strings as var in superclass
 
-        PreparedStatement statement = null;
-        try {
-            statement = dataSource.getConnection().prepareStatement(query);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Collection<User> foundedUser = new ArrayList<>();
-        try {
-            ResultSet res = statement.executeQuery();
-            while (res.next()){
-                User user = resultSetToEntity(res);
-                foundedUser.add(user);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return foundedUser.stream().findFirst();
+        return user.map(entity -> Optional.of((User) entity)).orElse(null);
     }
 
     @Override
     public Collection<User> findAll() {
-        String query = String.format("SELECT * FROM users");
-        Collection<User> foundedUsers = new ArrayList<>();
-
-        try {
-            PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
-            ResultSet res = statement.executeQuery();
-
-
-            /*
-             * Not sure if it's working ...
-             */
-            while (res.next()){
-                User user = resultSetToEntity(res);
-                log.info(user.toString());
-                foundedUsers.add(user);
-            }
-
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return foundedUsers;
+        return (Collection) super.findAll("users");
     }
 
-
-    private User resultSetToEntity(ResultSet resultSet) throws SQLException {
+    @Override
+    public User resultSetToEntity(ResultSet resultSet) throws SQLException {
         return new User(
                 new UserId(resultSet.getString("user_id")),
                 resultSet.getString("username"),
