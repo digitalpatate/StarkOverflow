@@ -8,10 +8,10 @@ import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
 import lombok.AllArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -21,10 +21,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class JdbcTagRepository extends JdbcRepository implements ITagRepository {
 
-    public JdbcTagRepository(DataSource dataSource){
-        this.dataSource = dataSource;
-    }
-
     @Override
     public Collection<Tag> find(TagQuery query) {
         return null;
@@ -32,18 +28,16 @@ public class JdbcTagRepository extends JdbcRepository implements ITagRepository 
 
     @Override
     public Tag save(Tag entity) {
-        String query = String.format("INSERT INTO tags(tag_id, name, color) VALUES(?,?,?)");
+        super.insert("tags", Arrays.asList(
+                "tag_id",
+                "name",
+                "color"
+        ), Arrays.asList(
+                entity.getId().asString(),
+                entity.getName(),
+                entity.getColor()
+        ));
 
-        try {
-            PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
-            statement.setString(1, entity.getId().asString());
-            statement.setString(2, entity.getName());
-            statement.setString(3, entity.getColor());
-
-            statement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
         return entity;
     }
 

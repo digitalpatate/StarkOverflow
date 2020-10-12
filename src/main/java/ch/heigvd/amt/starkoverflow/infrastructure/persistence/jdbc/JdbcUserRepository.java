@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -35,26 +36,26 @@ public class JdbcUserRepository extends JdbcRepository implements IUserRepositor
         return null;
     }
 
-    @SneakyThrows
     @Override
     public User save(User entity) {
-        String query = String.format("INSERT INTO users(user_id, email, profile_picture_url, firstname, lastname, username, password)" +
-                "VALUES(?,?,?,?,?,?, ?)");
-        try {
-            PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
-            System.out.println();
-            statement.setString(1, entity.getId().asString());
-            statement.setString(2, entity.getEmail());
-            statement.setString(3, entity.getProfilePictureURL());
-            statement.setString(4, entity.getFirstname());
-            statement.setString(5, entity.getLastname());
-            statement.setString(6, entity.getUsername());
-            statement.setString(7, entity.getEncryptedPassword());
+        super.insert("users", Arrays.asList(
+                "user_id",
+                "email",
+                "profile_picture_url",
+                "firstname",
+                "lastname",
+                "username",
+                "password"
+        ), Arrays.asList(
+                entity.getId().asString(),
+                entity.getEmail(),
+                entity.getProfilePictureURL(),
+                entity.getFirstname(),
+                entity.getLastname(),
+                entity.getUsername(),
+                entity.getEncryptedPassword()
+        ));
 
-            statement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
         return entity;
     }
 

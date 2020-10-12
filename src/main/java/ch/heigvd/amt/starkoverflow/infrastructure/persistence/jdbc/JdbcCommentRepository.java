@@ -13,6 +13,7 @@ import javax.inject.Named;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -29,18 +30,16 @@ public class JdbcCommentRepository extends JdbcRepository implements ICommentRep
 
     @Override
     public Comment save(Comment entity) {
-        String query = String.format("INSERT INTO comments(comment_id, author, content) VALUES(?,?,?)");
+        super.insert("comments", Arrays.asList(
+                "comment_id",
+                "author",
+                "content"
+        ), Arrays.asList(
+                entity.getId().asString(),
+                entity.getAuthor().getId().asString(),
+                entity.getContent()
+        ));
 
-        try {
-            PreparedStatement statement = dataSource.getConnection().prepareStatement(query);
-            statement.setString(1, entity.getId().asString());
-            statement.setString(2, entity.getAuthor().getId().asString());
-            statement.setString(3, entity.getContent());
-
-            statement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
         return entity;
     }
 
