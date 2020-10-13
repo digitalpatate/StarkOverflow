@@ -10,59 +10,60 @@ GRANT ALL PRIVILEGES ON DATABASE stark_db TO admin;
 \c stark_db
 
 CREATE TABLE users(
-   user_id              TEXT PRIMARY KEY    NOT NULL,
-   email           TEXT    NOT NULL,
-   profile_picture_url         TEXT   ,
-   firstname           TEXT    NOT NULL,
-   lastname         TEXT    NOT NULL,
-   username         TEXT     NOT NULL,
-   password         TEXT     NOT NULL,
-   registration_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
+    user_id              TEXT PRIMARY KEY    NOT NULL UNIQUE ,
+    email                TEXT    NOT NULL,
+    profile_picture_url  TEXT   ,
+    firstname           TEXT    NOT NULL,
+    lastname            TEXT    NOT NULL,
+    username            TEXT     NOT NULL,
+    password            TEXT     NOT NULL,
+    registration_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
 
 CREATE TABLE commentables_votables(
     -- Question & answer id
-   qa_id              TEXT PRIMARY KEY    NOT NULL,
-   content         TEXT     NOT NULL,
-   creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
+    qa_id              TEXT PRIMARY KEY    NOT NULL UNIQUE ,
+    content         TEXT     NOT NULL,
+    creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
 
 
 CREATE TABLE questions(
-   author              TEXT    NOT NULL,
-   CONSTRAINT     author
+    author              TEXT    NOT NULL,
+    CONSTRAINT     author
       FOREIGN KEY(author)
-         REFERENCES users(user_id),
-   title           TEXT    NOT NULL
-   ) INHERITS(commentables_votables);
+          REFERENCES users(user_id),
+title           TEXT    NOT NULL
+) INHERITS(commentables_votables);
 
 CREATE TABLE answers(
-   author              TEXT    NOT NULL,
-   CONSTRAINT     author
-      FOREIGN KEY(author)
-         REFERENCES users(user_id),
-   approuval_state BOOLEAN NOT NULL
+    author              TEXT    NOT NULL,
+    CONSTRAINT     author
+        FOREIGN KEY(author)
+            REFERENCES users(user_id),
+    approuval_state BOOLEAN NOT NULL
 ) INHERITS(commentables_votables);
 
 
 CREATE TABLE comments(
-   comment_id TEXT PRIMARY KEY     NOT NULL,
-   author              TEXT    NOT NULL,
-   content         TEXT     NOT NULL,
-   CONSTRAINT     author
-      FOREIGN KEY(author)
+    comment_id TEXT PRIMARY KEY     NOT NULL UNIQUE ,
+    author          TEXT    NOT NULL,
+    content         TEXT    NOT NULL,
+    fk_commentable  TEXT    NOT NULL,
+    CONSTRAINT     author
+     FOREIGN KEY(author)
          REFERENCES users(user_id),
-   CONSTRAINT     fk_commentable
-      FOREIGN KEY(comment_id)
+    CONSTRAINT     fk_commentable
+     FOREIGN KEY(comment_id)
          REFERENCES commentables_votables(qa_id),
-   creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
+    creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
 
 
 CREATE TABLE tags(
-   tag_id TEXT PRIMARY KEY     NOT NULL,
-   name         TEXT     NOT NULL,
-   color         TEXT    NOT NULL  
+    tag_id TEXT PRIMARY KEY     NOT NULL UNIQUE ,
+    name         TEXT     NOT NULL,
+    color         TEXT    NOT NULL
 );
 
 CREATE TABLE tags_questions(
@@ -74,13 +75,14 @@ CREATE TABLE tags_questions(
 
 
 CREATE TABLE votes(
-   vote_id TEXT PRIMARY KEY     NOT NULL,
-   author              TEXT    NOT NULL,  
-   CONSTRAINT     author
+  vote_id TEXT PRIMARY KEY     NOT NULL  UNIQUE ,
+  author              TEXT    NOT NULL,
+  fk_votable          TEXT    NOT NULL,
+  CONSTRAINT     author
       FOREIGN KEY(author)
-         REFERENCES users(user_id),
-   CONSTRAINT     fk_votable
+          REFERENCES users(user_id),
+  CONSTRAINT     fk_votable
       FOREIGN KEY(vote_id)
-         REFERENCES commentables_votables(qa_id),
-   creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)     
+          REFERENCES commentables_votables(qa_id),
+  creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
