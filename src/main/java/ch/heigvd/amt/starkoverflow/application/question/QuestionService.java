@@ -1,10 +1,13 @@
 package ch.heigvd.amt.starkoverflow.application.question;
 
+import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagDTO;
+import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagsDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import lombok.AllArgsConstructor;
@@ -27,14 +30,19 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class QuestionService {
 
-    @Inject
-    @Named("JdbcQuestionRepository")
+    @Inject @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
 
     public Question createQuestion(CreateQuestionCommand command) {
         Question question = command.createEntity();
 
-        return questionRepository.save(question);
+        question = questionRepository.save(question);
+
+        for(Tag tag : command.getTags()) {
+            questionRepository.addTag(question.getId(), tag.getId());
+        }
+
+        return question;
     }
 
     public QuestionsDTO getQuestion(QuestionQuery query){
@@ -49,18 +57,33 @@ public class QuestionService {
         Optional<Question> oQuestion = questionRepository.findById(id);
 
         Question question = oQuestion.orElseThrow(()-> new NotFoundException("No question found with this id"));
-
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH'h'mm dd/MM/yyyy");
+
+        TagsDTO tags = getQuestionTags(question.getId());
 
         QuestionDTO questionDTO = QuestionDTO.builder()
                 .id(question.getId().asString())
                 .title(question.getTitle())
                 .content(question.getContent())
                 .creationDate(dateFormat.format(question.getCreationDate()))
+                .tags(tags)
                 .build();
 
         return questionDTO;
+    }
+
+    public TagsDTO getQuestionTags(QuestionId questionId) {
+        Collection<Tag> tags = questionRepository.getQuestionTags(questionId);
+
+        List<TagDTO> tagsDTO = tags
+                .stream()
+                .map(tag -> TagDTO.builder()
+                        .name(tag.getName())
+                        .color(tag.getColor())
+                        .build())
+                .collect(Collectors.toList());
+
+        return TagsDTO.builder().tags(tagsDTO).build();
     }
 
     public QuestionsDTO getQuestions() {
@@ -74,6 +97,7 @@ public class QuestionService {
                         .id(question.getId().asString())
                         .title(question.getTitle())
                         .content(question.getContent())
+                        .tags(getQuestionTags(question.getId()))
                         .build())
                 .collect(Collectors.toList());
 

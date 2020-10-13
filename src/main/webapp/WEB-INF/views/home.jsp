@@ -15,6 +15,26 @@
                         <label for="questionContent">Question</label>
                         <textarea class="form-control" id="questionContent" name="questionContent" rows="3" required="true"></textarea>
                     </div>
+                    <div class="form-group">
+                        <select class="tag-select form-control" multiple="multiple" name="tags">
+                            <c:forEach items="${tags.getTags()}" var="tag">
+                                <option>${tag.name}</option>
+                            </c:forEach>
+                        </select>
+
+                        <!-- Load select2 -->
+                        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+                        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+                        <!-- Select2 code -->
+                        <script>
+                            $(document).ready(function() {
+                                $(".tag-select").select2({
+                                    tags: true
+                                });
+                            });
+                        </script>
+                    </div>
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
             </div>
@@ -25,6 +45,11 @@
                         <a href="/question/${question.id}">
                             <div class="question">
                                 <h2 class="question-title">${question.title}</h2>
+                                <ul class="tag-list">
+                                    <c:forEach items="${question.getTags().getTags()}" var="tag">
+                                        <li class="tag" style="background-color: ${tag.getColor()};">${tag.getName()}</li>
+                                    </c:forEach>
+                                </ul>
                             </div>
                         </a>
                     </c:forEach>

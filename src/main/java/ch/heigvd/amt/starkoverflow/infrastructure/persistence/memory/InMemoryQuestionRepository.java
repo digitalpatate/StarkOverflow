@@ -4,18 +4,28 @@ import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
+import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
 
-import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import java.util.Collection;
-
 
 @ApplicationScoped
 @Named("InMemoryQuestionRepository")
 public class InMemoryQuestionRepository extends InMemoryRepository<Question, QuestionId> implements IQuestionRepository {
     @Override
     public Collection<Question> find(QuestionQuery query) {
+        return null;
+    }
+
+    @Override
+    public void addTag(QuestionId questionId, TagId tagId) {
+
+    }
+
+    @Override
+    public Collection<Tag> getQuestionTags(QuestionId questionId) {
         return null;
     }
 }

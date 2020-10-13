@@ -15,17 +15,21 @@ public abstract class JdbcRepository {
 
     public void insert(String tableName, List<String> fields, List<String> values) {
         String queryFields = "";
+        String queryPrepared = "";
+
         Iterator<String> it = fields.iterator();
 
         while (it.hasNext()) {
             queryFields += it.next();
+            queryPrepared += "?";
 
             if(it.hasNext()) {
                 queryFields += ", ";
+                queryPrepared += ", ";
             }
         }
 
-        String query = "INSERT INTO " + tableName + "(" + queryFields + ") VALUES(?,?,?,?)";
+        String query = "INSERT INTO " + tableName + "(" + queryFields + ") VALUES(" + queryPrepared + ")";
         executeQuery(query, values);
     }
 
@@ -41,10 +45,13 @@ public abstract class JdbcRepository {
         return entitiesFound(preparedStatement);
     }
 
-    public Optional<IEntity> find(String tableName, String fieldName, String value) {
+    public PreparedStatement selectWhere(String tableName, String fieldName, String value) {
         String query = String.format("SELECT * FROM %s WHERE %s=?", tableName, fieldName);
-        PreparedStatement preparedStatement = executeQuery(query, Arrays.asList(value));
+        return executeQuery(query, Arrays.asList(value));
+    }
 
+    public Optional<IEntity> find(String tableName, String fieldName, String value) {
+        PreparedStatement preparedStatement = selectWhere(tableName, fieldName, value);
         return entitiesFound(preparedStatement).stream().findFirst();
     }
 

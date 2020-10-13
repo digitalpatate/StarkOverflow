@@ -8,7 +8,6 @@ import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
 import lombok.AllArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -50,7 +49,13 @@ public class JdbcTagRepository extends JdbcRepository implements ITagRepository 
     public Optional<Tag> findById(TagId id) {
         Optional<IEntity> tag = super.find("tags", "tag_id", id.asString());
 
-        return tag.map(entity -> Optional.of((Tag) entity)).orElse(null);
+        return tag.map(entity -> (Tag) entity);
+    }
+
+    public Optional<Tag> findByName(String name) {
+        Optional<IEntity> tag = super.find("tags", "name", name);
+
+        return tag.map(entity -> (Tag) entity);
     }
 
     @Override
@@ -58,7 +63,6 @@ public class JdbcTagRepository extends JdbcRepository implements ITagRepository 
         return (Collection) super.findAll("tags");
     }
 
-    @Override
     public Tag resultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Tag(
                 new TagId(resultSet.getString("tag_id")),

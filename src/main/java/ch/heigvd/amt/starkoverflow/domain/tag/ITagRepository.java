@@ -7,7 +7,9 @@ import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
 import ch.heigvd.amt.starkoverflow.domain.vote.VoteId;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface ITagRepository extends IRepository<Tag, TagId> {
     Collection<Tag> find(TagQuery query);
+    Optional<Tag> findByName(String name);
 }
