@@ -24,8 +24,6 @@ public class IdentityManagementService {
     @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
 
-
-
     public void register(RegisterCommand command) throws RegistrationFailedException {
         User existingUserWithSameEmail = userRepository.findByEmail(command.getEmail()).orElse(null);
 

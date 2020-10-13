@@ -50,7 +50,7 @@ public class JdbcVoteRepository extends JdbcRepository implements IVoteRepositor
     @Override
     public Optional<Vote> findById(VoteId id) {
         Optional<IEntity> vote = super.find("votes", "vote_id", id.asString());
-        return vote.map(entity -> Optional.of((Vote) entity)).orElse(null);
+        return vote.map(entity -> (Vote) entity);
     }
 
     @Override

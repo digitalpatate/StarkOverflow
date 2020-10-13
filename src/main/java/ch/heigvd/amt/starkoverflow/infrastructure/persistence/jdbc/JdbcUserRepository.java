@@ -68,14 +68,14 @@ public class JdbcUserRepository extends JdbcRepository implements IUserRepositor
     public Optional<User> findByEmail(String email) {
         Optional<IEntity> user = super.find("users", "email", email); // FIXME: maybe put those strings as var in superclass
 
-        return user.map(entity -> Optional.of((User) entity)).orElse(null);
+        return user.map(entity -> (User) entity);
     }
 
     @Override
     public Optional<User> findById(UserId id) {
         Optional<IEntity> user = super.find("users", "user_id", id.asString()); // FIXME: maybe put those strings as var in superclass
 
-        return user.map(entity -> Optional.of((User) entity)).orElse(null);
+        return user.map(entity -> (User) entity);
     }
 
     @Override

@@ -11,7 +11,6 @@ import lombok.Data;
 public class Tag implements IEntity<Tag, TagId> {
     private TagId id;
     private String name;
-    // HEX code ?
     private String color;
 
     public Tag(String name, String color) {

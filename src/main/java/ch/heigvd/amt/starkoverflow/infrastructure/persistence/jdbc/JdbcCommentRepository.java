@@ -10,6 +10,7 @@ import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
 import lombok.AllArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
+import javax.swing.text.html.Option;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,7 +53,7 @@ public class JdbcCommentRepository extends JdbcRepository implements ICommentRep
     public Optional<Comment> findById(CommentId id) {
         Optional<IEntity> comment = super.find("comments", "comment_id", id.asString());
 
-        return comment.map(entity -> Optional.of((Comment) entity)).orElse(null);
+        return comment.map(entity -> (Comment) entity);
     }
 
     @Override

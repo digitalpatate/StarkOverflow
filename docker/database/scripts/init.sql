@@ -11,7 +11,7 @@ GRANT ALL PRIVILEGES ON DATABASE stark_db TO admin;
 
 CREATE TABLE users(
    user_id              TEXT PRIMARY KEY    NOT NULL,
-   email           TEXT    NOT NULL,
+   email                TEXT    NOT NULL,
    profile_picture_url         TEXT   ,
    firstname           TEXT    NOT NULL,
    lastname         TEXT    NOT NULL,
@@ -21,14 +21,13 @@ CREATE TABLE users(
 );
 
 CREATE TABLE commentables_votables(
-    -- Question & answer id
-   qa_id              TEXT PRIMARY KEY    NOT NULL,
    content         TEXT     NOT NULL,
    creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
 
 
-CREATE TABLE questions(
+CREATE TABLE questions (
+   question_id         TEXT    PRIMARY KEY UNIQUE NOT NULL,
    author              TEXT    NOT NULL,
    CONSTRAINT     author
       FOREIGN KEY(author)
@@ -37,6 +36,7 @@ CREATE TABLE questions(
    ) INHERITS(commentables_votables);
 
 CREATE TABLE answers(
+   answer_id           TEXT    PRIMARY KEY UNIQUE NOT NULL,
    author              TEXT    NOT NULL,
    CONSTRAINT     author
       FOREIGN KEY(author)
@@ -45,7 +45,7 @@ CREATE TABLE answers(
 ) INHERITS(commentables_votables);
 
 
-CREATE TABLE comments(
+/*CREATE TABLE comments(
    comment_id TEXT PRIMARY KEY     NOT NULL,
    author              TEXT    NOT NULL,
    content         TEXT     NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE comments(
       FOREIGN KEY(comment_id)
          REFERENCES commentables_votables(qa_id),
    creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
-);
+);*/
 
 
 CREATE TABLE tags(
@@ -66,14 +66,12 @@ CREATE TABLE tags(
 );
 
 CREATE TABLE tags_questions(
-   tag_id TEXT REFERENCES tags(tag_id) ON UPDATE CASCADE ON DELETE CASCADE,
-   question_id TEXT REFERENCES commentables_votables(qa_id) ON UPDATE CASCADE ON DELETE CASCADE,
+   tag_id      TEXT    REFERENCES     tags(tag_id)                 ON UPDATE CASCADE ON DELETE CASCADE,
+   question_id TEXT    REFERENCES     questions(question_id)       ON UPDATE CASCADE ON DELETE CASCADE,
    CONSTRAINT tags_questions_pkey PRIMARY KEY (tag_id, question_id)
 );
 
-
-
-CREATE TABLE votes(
+/*CREATE TABLE votes(
    vote_id TEXT PRIMARY KEY     NOT NULL,
    author              TEXT    NOT NULL,  
    CONSTRAINT     author
@@ -83,4 +81,4 @@ CREATE TABLE votes(
       FOREIGN KEY(vote_id)
          REFERENCES commentables_votables(qa_id),
    creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)     
-);
+);*/
