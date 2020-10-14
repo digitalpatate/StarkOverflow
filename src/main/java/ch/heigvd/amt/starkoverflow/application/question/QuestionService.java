@@ -1,9 +1,12 @@
 package ch.heigvd.amt.starkoverflow.application.question;
 
+import ch.heigvd.amt.starkoverflow.application.Answer.dto.AnswerDTO;
+import ch.heigvd.amt.starkoverflow.application.Answer.dto.AnswersDTO;
 import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagDTO;
 import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagsDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
+import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -84,6 +87,19 @@ public class QuestionService {
                 .collect(Collectors.toList());
 
         return TagsDTO.builder().tags(tagsDTO).build();
+    }
+
+    public AnswersDTO getQuestionAnswers(QuestionId questionId) {
+        Collection<Answer> answers = questionRepository.getQuestionAnswers(questionId);
+
+        List<AnswerDTO> answersDTO = answers
+                .stream()
+                .map(answer -> AnswerDTO.builder()
+                        .content(answer.getContent())
+                        .build())
+                .collect(Collectors.toList());
+
+        return AnswersDTO.builder().answers(answersDTO).build();
     }
 
     public QuestionsDTO getQuestions() {

@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
+import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -74,6 +75,11 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
         }
 
         return tagsFound;
+    }
+
+    @Override
+    public Collection<Answer> getQuestionAnswers(QuestionId questionId) {
+        PreparedStatement preparedStatement = super.selectWhere("");
     }
 
     @Override

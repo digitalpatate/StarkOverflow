@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 @Data
 public class AnswerDTO {
-    // Do we need only answers ?
+    private String content;
 }
