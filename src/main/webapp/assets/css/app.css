@@ -2,6 +2,10 @@ p {
     font-size: 1rem;
 }
 
+h2 {
+    font-size: 2.4rem;
+}
+
 #content {
     margin-top: 40px;
 }
@@ -109,7 +113,7 @@ form.dropdown-item > .btn.btn-link {
 }
 
 .question-details .question-title {
-    font-size: 1.5rem;
+    font-size: 2.4rem;
 }
 
 .question-details .question-content {

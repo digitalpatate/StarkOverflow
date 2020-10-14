@@ -3,7 +3,7 @@
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags" %>
 <template:defaultLayout title="Home">
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-8">
                 <div class="question-details">
                     <h2 class="question-title">${question.title}</h2>
@@ -28,6 +28,7 @@
 
                 <div class="answer-list">
                     <c:forEach items="${question.getAnswers().getAnswers()}" var="answer">
+                        <hr />
                         <p class="answer-content">${answer.content}</p>
                     </c:forEach>
                 </div>
