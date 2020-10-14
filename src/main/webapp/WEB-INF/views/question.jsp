@@ -7,6 +7,11 @@
             <div class="col-8">
                 <div class="question-details">
                     <h2 class="question-title">${question.title}</h2>
+                    <ul class="tag-list">
+                        <c:forEach items="${question.getTags().getTags()}" var="tag">
+                            <li class="tag" style="background-color: ${tag.getColor()};">${tag.getName()}</li>
+                        </c:forEach>
+                    </ul>
                     <hr />
                     <p class="question-content">${question.content}</p>
                     <p class="question-creationDate">${question.creationDate}</p>
@@ -14,6 +19,7 @@
                 </div>
                 <form action="/answer" method="post">
                     <div class="form-group">
+                        <input type="hidden" name="questionId" value="${question.id}">
                         <label for="answerContent">Answer</label>
                         <textarea class="form-control" id="answerContent" name="answerContent" rows="3" required="true"></textarea>
                     </div>

@@ -44,25 +44,30 @@ form.dropdown-item > .btn.btn-link {
     margin-bottom: -1px;
     transition: .3s all;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
 }
 
 .question-list .tag-list {
+    justify-content: flex-end;
+}
+
+.tag-list {
     display: flex;
     list-style-type: none;
+    margin-top: 6px;
     margin-bottom: 0;
-    justify-content: flex-end;
+    padding: 0;
     align-items: center;
     flex-wrap: wrap;
     flex: 1 1 0;
 }
 
-.question-list .tag-list .tag {
+.tag-list .tag {
     font-size: 0.9rem;
-    flex-basis: 40px;
     border-radius: 8px;
-    padding: 0 5px;
-    margin: 3px 4px;
+    padding: 3px 6px;
+    margin: 3px 12px 3px 0;
     text-align: center;
     color: white;
     font-weight: bold;
