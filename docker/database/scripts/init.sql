@@ -25,9 +25,9 @@ CREATE TABLE questions(
     question_id              TEXT PRIMARY KEY NOT NULL UNIQUE,
     title           TEXT    NOT NULL,
     content         TEXT     NOT NULL,
-    author              TEXT    NOT NULL,
-    CONSTRAINT     author
-      FOREIGN KEY(author)
+    fk_author              TEXT    NOT NULL,
+    CONSTRAINT     fk_author
+      FOREIGN KEY(fk_author)
           REFERENCES users(user_id),
     creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 ) ;
@@ -35,70 +35,48 @@ CREATE TABLE questions(
 -- Answers
 CREATE TABLE answers(
     answer_id              TEXT PRIMARY KEY NOT NULL UNIQUE,
-    author              TEXT    NOT NULL,
+    fk_author              TEXT    NOT NULL,
     content         TEXT     NOT NULL,
-    CONSTRAINT     author
-        FOREIGN KEY(author)
+    fk_question     text    NOT NULL,
+    CONSTRAINT     fk_author
+        FOREIGN KEY(fk_author)
             REFERENCES users(user_id),
+    CONSTRAINT     fk_question
+        FOREIGN KEY(fk_question)
+            REFERENCES questions(question_id),
     approuval_state BOOLEAN NOT NULL,
     creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
 
 
 
--- comments
+-- comments on answers
 
-CREATE TABLE comments_on_questions(
+CREATE TABLE comments(
     comment_id TEXT PRIMARY KEY     NOT NULL UNIQUE,
-    author               TEXT    NOT NULL,
+    fk_author               TEXT    NOT NULL,
     content              TEXT    NOT NULL,
-    fk_question_id         TEXT    NOT NULL,
-    CONSTRAINT     fk_question_id
-      FOREIGN KEY(fk_question_id)
-          REFERENCES questions(question_id),
-    CONSTRAINT     author
-      FOREIGN KEY(author)
-          REFERENCES users(user_id),
-    creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
-);
-
-CREATE TABLE comments_on_answers(
-    comment_id TEXT PRIMARY KEY     NOT NULL UNIQUE,
-    author               TEXT    NOT NULL,
-    content              TEXT    NOT NULL,
-    fk_answer_id         TEXT    NOT NULL,
-    CONSTRAINT     fk_answer_id
-        FOREIGN KEY(fk_answer_id)
+    fk_answer         TEXT    NOT NULL,
+    CONSTRAINT     fk_answer
+        FOREIGN KEY(fk_answer)
             REFERENCES answers(answer_id),
-    CONSTRAINT     author
-        FOREIGN KEY(author)
+    CONSTRAINT     fk_author
+        FOREIGN KEY(fk_author)
             REFERENCES users(user_id),
     creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
 
 -- votes
-CREATE TABLE votes_on_questions(
-    vote_on_question_id TEXT PRIMARY KEY     NOT NULL UNIQUE,
-    author              TEXT    NOT NULL,
-    fk_question_id      TEXT    NOT NULL,
-    CONSTRAINT     author
-       FOREIGN KEY(author)
-           REFERENCES users(user_id),
-    CONSTRAINT     fk_question_id
-       FOREIGN KEY(fk_question_id)
-           REFERENCES questions(question_id),
-    creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
-);
 
-CREATE TABLE votes_on_answers(
-vote_on_answer_id TEXT PRIMARY KEY     NOT NULL UNIQUE,
-author              TEXT    NOT NULL,
-fk_answer_id        TEXT    NOT NULL,
-CONSTRAINT     author
-    FOREIGN KEY(author)
+CREATE TABLE votes(
+vote_id TEXT PRIMARY KEY     NOT NULL UNIQUE,
+fk_author              TEXT    NOT NULL,
+fk_answer       TEXT    NOT NULL,
+CONSTRAINT     fk_author
+    FOREIGN KEY(fk_author)
         REFERENCES users(user_id),
-CONSTRAINT     fk_answer_id
-    FOREIGN KEY(fk_answer_id)
+CONSTRAINT     fk_answer
+    FOREIGN KEY(fk_answer)
         REFERENCES answers(answer_id),
 creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
@@ -113,7 +91,7 @@ CREATE TABLE tags(
 );
 
 CREATE TABLE tags_questions(
-    tag_id TEXT REFERENCES tags(tag_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    question_id TEXT REFERENCES questions(question_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT tags_questions_pkey PRIMARY KEY (tag_id, question_id)
+    fk_tag TEXT REFERENCES tags(tag_id),
+    fk_question TEXT REFERENCES questions(question_id),
+    CONSTRAINT tags_questions_pkey PRIMARY KEY (fk_tag, fk_question)
 );
