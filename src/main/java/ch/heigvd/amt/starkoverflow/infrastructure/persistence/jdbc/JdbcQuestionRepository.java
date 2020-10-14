@@ -3,6 +3,8 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
+import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -34,6 +36,10 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     @Inject
     @Named("JdbcTagRepository")
     private ITagRepository tagRepository;
+
+    @Inject
+    @Named("JdbcAnswerRepository")
+    private JdbcAnswerRepository answerRepository;
 
     @Override
     public Collection<Question> find(QuestionQuery query) {
@@ -79,7 +85,20 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
 
     @Override
     public Collection<Answer> getQuestionAnswers(QuestionId questionId) {
-        PreparedStatement preparedStatement = super.selectWhere("");
+        PreparedStatement preparedStatement = super.selectWhere("answers","fk_question", questionId.asString());
+
+        Collection<Answer> answersFound = new ArrayList<>();
+
+        try {
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()){
+                answersFound.add(answerRepository.resultSetToEntity(res));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return answersFound;
     }
 
     @Override
@@ -124,7 +143,7 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
                 resultSet.getString("title"),
                 resultSet.getString("content"),
                 resultSet.getDate("creation_date"),
-                new UserId(resultSet.getString("author"))
+                new UserId(resultSet.getString("fk_author"))
         );
     }
 }

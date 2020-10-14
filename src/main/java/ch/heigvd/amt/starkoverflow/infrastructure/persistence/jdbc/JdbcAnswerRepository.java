@@ -4,6 +4,9 @@ import ch.heigvd.amt.starkoverflow.application.Answer.AnswerQuery;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
+import ch.heigvd.amt.starkoverflow.domain.question.Question;
+import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
@@ -47,6 +50,13 @@ public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepos
 
     @Override
     public Answer resultSetToEntity(ResultSet resultSet) throws SQLException {
-        return null;
+        return new Answer(
+                new AnswerId(resultSet.getString("answer_id")),
+                resultSet.getString("content"),
+                resultSet.getDate("creation_date"),
+                new UserId(resultSet.getString("fk_author")),
+                new QuestionId(resultSet.getString("fk_question")),
+                resultSet.getBoolean("approuval_state")
+        );
     }
 }

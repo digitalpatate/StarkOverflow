@@ -63,6 +63,7 @@ public class QuestionService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH'h'mm dd/MM/yyyy");
 
         TagsDTO tags = getQuestionTags(question.getId());
+        AnswersDTO answers = getQuestionAnswers(question.getId());
 
         QuestionDTO questionDTO = QuestionDTO.builder()
                 .id(question.getId().asString())
@@ -70,6 +71,7 @@ public class QuestionService {
                 .content(question.getContent())
                 .creationDate(dateFormat.format(question.getCreationDate()))
                 .tags(tags)
+                .answers(answers)
                 .build();
 
         return questionDTO;
