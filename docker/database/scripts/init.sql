@@ -44,7 +44,7 @@ CREATE TABLE answers(
     CONSTRAINT     fk_question
         FOREIGN KEY(fk_question)
             REFERENCES questions(question_id),
-    approuval_state BOOLEAN NOT NULL,
+    approuval_state BOOLEAN NOT NULL DEFAULT FALSE,
     creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
 
@@ -80,7 +80,6 @@ CONSTRAINT     fk_answer
         REFERENCES answers(answer_id),
 creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
-
 
 
 -- Tags
