@@ -61,5 +61,4 @@ jobs:
           cd e2e
           echo ${{ secrets.REGISTRY_TOKEN }} | docker login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
           docker-compose up -d
-          npm install
-          npm run e2e-test
+          ./run-test.sh

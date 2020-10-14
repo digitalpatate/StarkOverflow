@@ -12,7 +12,7 @@ services:
     volumes:
       - ./scripts:/docker-entrypoint-initdb.d
   backend:
-    image: digitalpatate/starkoverflow
+    image: ghcr.io/digitalpatate/starkoverflow:latest
     environment:
       DB_HOST: db
       DB_PORT: 5432
@@ -25,10 +25,6 @@ services:
      - "8080:9080"
     networks:
       - backend
-
-
-
-
 networks:
   backend:
     external: false

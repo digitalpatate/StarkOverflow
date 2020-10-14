@@ -3,7 +3,7 @@ const {I} = inject();
 module.exports = {
 
     fields: {
-        email: 'input[type=text]',
+        email: 'input[type=email]',
         password: 'input[type=password]'
     },
     submitButton: 'input[type=submit]',
