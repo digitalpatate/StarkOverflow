@@ -9,15 +9,19 @@ import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Named("AnswerService")
+@ApplicationScoped
 public class AnswerService {
-    @Inject
+    @Inject @Named("JdbcAnswerRepository")
     private IAnswerRepository answerRepository;
 
     public void createAnswer(CreateAnswerCommand command){

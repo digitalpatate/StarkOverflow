@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@WebServlet(name="QuestionsQueryHandler", urlPatterns = "/questions")
+@WebServlet(name="QuestionsCommandHandler", urlPatterns = "/questions")
 public class QuestionsCommandHandler extends HttpServlet {
 
     @Inject @Named("QuestionService")

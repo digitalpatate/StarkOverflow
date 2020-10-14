@@ -128,7 +128,7 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     public Optional<Question> findById(QuestionId id) {
         Optional<IEntity> question = super.find("questions", "question_id", id.asString()); // FIXME: maybe put those strings as var in superclass
 
-        return question.map(entity -> Optional.of((Question) entity)).orElse(null);
+        return question.map(entity -> (Question) entity);
     }
 
     @Override
