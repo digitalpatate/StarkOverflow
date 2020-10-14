@@ -25,10 +25,6 @@ services:
      - "8080:9080"
     networks:
       - backend
-
-
-
-
 networks:
   backend:
     external: false
