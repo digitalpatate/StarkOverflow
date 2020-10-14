@@ -68,9 +68,10 @@ jobs:
   deploy:
     needs: [ e2e-test ]
     name: Deploy App
+    runs-on: ubuntu-latest
     steps:
       - name: Use ssh to deploy
-      - uses: tarunjangra/ssh-remote-cmd@v1
+        uses: tarunjangra/ssh-remote-cmd@v1
         with:
           command: |
             ./deploy.sh
