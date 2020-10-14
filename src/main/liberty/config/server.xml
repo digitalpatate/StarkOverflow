@@ -5,6 +5,12 @@
         <feature>jdbc-4.2</feature>
     </featureManager>
 
+    <variable name="DB_HOST" defaultValue="localhost"/>
+    <variable name="DB_PORT" defaultValue="5432"/>
+    <variable name="DB_NAME" defaultValue="stark_db"/>
+    <variable name="DB_USER" defaultValue="admin"/>
+    <variable name="DB_PASSWORD" defaultValue="secret"/>
+
     <configuration>
         <serverStartTimeout>120</serverStartTimeout>
     </configuration>
@@ -15,11 +21,11 @@
 
     <dataSource jndiName="jdbc/postgresql">
         <jdbcDriver libraryRef="postgresql-library"/>
-        <properties.postgresql serverName="localhost"
-                               portNumber="5432"
-                               databaseName="stark_db"
-                               user="${env.POSTGRES_USER}"
-                               password="${env.POSTGRES_PASSWORD}"/>
+        <properties.postgresql serverName="${DB_HOST}"
+                               databaseName="${DB_NAME}"
+                               portNumber="${DB_PORT}"
+                               user="${DB_USER}"
+                               password="${DB_PASSWORD}"/>
     </dataSource>
 
     <library id="postgresql-library">

@@ -16,8 +16,6 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <liberty.env.POSTGRES_USER>admin</liberty.env.POSTGRES_USER>
-        <liberty.env.POSTGRES_PASSWORD>secret</liberty.env.POSTGRES_PASSWORD>
     </properties>
 
     <dependencies>
