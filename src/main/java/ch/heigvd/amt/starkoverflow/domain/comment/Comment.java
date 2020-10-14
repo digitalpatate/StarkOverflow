@@ -3,6 +3,7 @@ package ch.heigvd.amt.starkoverflow.domain.comment;
 import ch.heigvd.amt.starkoverflow.domain.Commentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import lombok.Builder;
@@ -18,7 +19,7 @@ public class Comment implements IEntity<Comment,CommentId> {
     private String content;
     private Date creationDate;
     private User author;
-    private Commentable commentable;
+    private AnswerId answerId;
 
     public Comment(String content) {
         this.content = content;

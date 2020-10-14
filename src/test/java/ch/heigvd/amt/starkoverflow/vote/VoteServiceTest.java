@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.vote;
 
 import ch.heigvd.amt.starkoverflow.application.Vote.CreateVoteCommand;
 import ch.heigvd.amt.starkoverflow.application.Vote.VoteService;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
@@ -27,7 +28,7 @@ public class VoteServiceTest {
         this.voteService = new VoteService(voteRepository,userRepository,questionRepository);
         this.command = CreateVoteCommand.builder()
                 .userId(new UserId().asString())
-                .votableId(new QuestionId().asString())
+                .answerId(new AnswerId().asString())
                 .build();
 
     }
