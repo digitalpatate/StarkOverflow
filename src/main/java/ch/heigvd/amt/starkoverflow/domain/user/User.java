@@ -2,8 +2,15 @@ package ch.heigvd.amt.starkoverflow.domain.user;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import javax.validation.constraints.*;
+
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import lombok.*;
+import org.apache.commons.validator.Arg;
+
 import java.util.Date;
+
+import static ch.heigvd.amt.starkoverflow.infrastructure.security.argon2.Parameters.*;
 
 @Getter
 @Setter
@@ -13,7 +20,6 @@ public class User implements IEntity<User, UserId> {
 
 
     private UserId id;
-
     private String email;
     private String profilePictureURL;
     private String firstname;
@@ -24,11 +30,6 @@ public class User implements IEntity<User, UserId> {
     private String encryptedPassword;
 
     private Date registrationDate;
-
-    //TODO Replacer toUpperCase avec une vrai fonction de chiffrement
-    public boolean authenticate(String plainPassword){
-        return plainPassword.equals(encryptedPassword);
-    }
 
     @Override
     public User deepClone(){
@@ -49,22 +50,55 @@ public class User implements IEntity<User, UserId> {
 
 
     public static class UserBuilder {
-        public UserBuilder plainPassword(String plainPassword){
+        private String hash;
+        private Argon2 argon2;
+        public UserBuilder hashPassword(String plainPassword){
 
             if(plainPassword == null || plainPassword.isEmpty()){
                 throw new java.lang.IllegalArgumentException("mot de passe vide");
             }
 
-            //TODO Replacer toUpperCase avec une vrai fonction de chiffrement
-            encryptedPassword = plainPassword.toUpperCase();
+            /*
+             * Argon2Types.ARGON2id
+             * salt 32 bytes
+             * Hash length 64 bytes
+             */
+
+            argon2 = Argon2Factory.create(
+                    Argon2Factory.Argon2Types.ARGON2id,
+                    SALT_LENGTH,
+                    HASH_LENGTH);
+
+            char[] password = plainPassword.toCharArray();
+            try {
+
+                /*
+                 * iterations = 10
+                 * memory = 64m
+                 * parallelism = 1
+                 */
+                hash = argon2.hash(ITERATIONS, MEMORY, PARALLELISM, password);
+
+            } finally {
+                // Wipe confidential data
+                argon2.wipeArray(password);
+            }
             return this;
+        }
+        public boolean verifyPassword(String plainPassword, String hash){
+            argon2 = Argon2Factory.create(
+                    Argon2Factory.Argon2Types.ARGON2id,
+                    SALT_LENGTH,
+                    HASH_LENGTH);
+            return argon2.verify(hash, plainPassword.toCharArray());
         }
 
         public User build(){
             if(id==null){
                 id = new UserId();
             }
-            User newUser = new User(id,username ,email, encryptedPassword, profilePictureURL, firstname, lastname);
+            hashPassword(encryptedPassword);
+            User newUser = new User(id,username ,email, hash, profilePictureURL, firstname, lastname);
             return newUser;
         }
     }
