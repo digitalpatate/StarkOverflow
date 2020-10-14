@@ -40,7 +40,49 @@ services:
      - "8080:9080"
 ```
 
+
 (!) For now there is only the _latest_ tag available for the image
+
+## Environment variables
+
+For local dev, we use the openliberty maven plugin and use the default variable name in the server.xml file to setup the database configuration
+
+```xml
+<variable name="DB_HOST" defaultValue="localhost"/>
+<variable name="DB_PORT" defaultValue="5432"/>
+<variable name="DB_NAME" defaultValue="stark_db"/>
+<variable name="DB_USER" defaultValue="admin"/>
+<variable name="DB_PASSWORD" defaultValue="secret"/>
+<dataSource jndiName="jdbc/postgresql">
+        <jdbcDriver libraryRef="postgresql-library"/>
+        <properties.postgresql serverName="${DB_HOST}"
+                               databaseName="${DB_NAME}"
+                               portNumber="${DB_PORT}"
+                               user="${DB_USER}"
+                               password="${DB_PASSWORD}"/>
+</dataSource>
+```
+
+With this configuration, the variables can be override with environment variable. Like in the docker-compose :
+
+```yaml
+ backend:
+    image: ghcr.io/digitalpatate/starkoverflow
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: stark_db
+      DB_USER: admin
+      DB_PASSWORD: secret
+    depends_on:
+      - db
+    ports:
+     - "8080:9080"
+    networks:
+      - backend
+```
+
+
 
 ## Site Map
 
