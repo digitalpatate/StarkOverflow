@@ -22,7 +22,7 @@ public class Vote implements IEntity<Vote, VoteId> {
         this.id = new VoteId();
     }
 
-    public Vote(VoteId vote_id, UserId user_id ) {
+    public Vote(VoteId vote_id, UserId user_id, AnswerId answer_id ) {
         this.id = vote_id;
         this.user_id = user_id;
     }
