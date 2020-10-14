@@ -1,6 +1,7 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory;
 
 import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
+import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -26,6 +27,11 @@ public class InMemoryQuestionRepository extends InMemoryRepository<Question, Que
 
     @Override
     public Collection<Tag> getQuestionTags(QuestionId questionId) {
+        return null;
+    }
+
+    @Override
+    public Collection<Answer> getQuestionAnswers(QuestionId questionId) {
         return null;
     }
 }

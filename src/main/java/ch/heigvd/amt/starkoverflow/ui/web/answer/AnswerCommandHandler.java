@@ -21,8 +21,8 @@ public class AnswerCommandHandler extends HttpServlet {
         UserDTO userDTO = (UserDTO) req.getSession().getAttribute("currentUser");
 
         CreateAnswerCommand command = CreateAnswerCommand.builder()
-                .author(userDTO.getId())
-                .question(req.getParameter("question"))
+                .userId(userDTO.getId())
+                .questionId(req.getParameter("question"))
                 .content(req.getParameter("content"))
                 .build();
 

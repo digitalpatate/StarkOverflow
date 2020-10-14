@@ -2,6 +2,9 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
+import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
+import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -34,6 +37,10 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     @Named("JdbcTagRepository")
     private ITagRepository tagRepository;
 
+    @Inject
+    @Named("JdbcAnswerRepository")
+    private JdbcAnswerRepository answerRepository;
+
     @Override
     public Collection<Question> find(QuestionQuery query) {
         return null;
@@ -43,8 +50,8 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     public void addTag(QuestionId questionId, TagId tagId) {
         // FIXME: maybe check if question and tag exists ?
         super.insert("tags_questions", Arrays.asList(
-            "tag_id",
-            "question_id"
+            "fk_tag",
+            "fk_question"
         ), Arrays.asList(
             tagId.asString(),
             questionId.asString()
@@ -53,7 +60,7 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
 
     @Override
     public Collection<Tag> getQuestionTags(QuestionId questionId) {
-        PreparedStatement preparedStatement = super.selectWhere("tags_questions", "question_id", questionId.asString());
+        PreparedStatement preparedStatement = super.selectWhere("tags_questions", "fk_question", questionId.asString());
 
         Collection<Tag> tagsFound = new ArrayList<>();
 
@@ -61,7 +68,7 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
             ResultSet res = preparedStatement.executeQuery();
 
             while (res.next()){
-                Optional<Tag> tag = tagRepository.findById(new TagId(res.getString("tag_id")));
+                Optional<Tag> tag = tagRepository.findById(new TagId(res.getString("fk_tag")));
 
                 if(tag.isPresent()) {
                     tagsFound.add(tag.get());
@@ -77,13 +84,31 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     }
 
     @Override
+    public Collection<Answer> getQuestionAnswers(QuestionId questionId) {
+        PreparedStatement preparedStatement = super.selectWhere("answers","fk_question", questionId.asString());
+
+        Collection<Answer> answersFound = new ArrayList<>();
+
+        try {
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()){
+                answersFound.add(answerRepository.resultSetToEntity(res));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return answersFound;
+    }
+
+    @Override
     public Question save(Question entity) {
         super.insert("questions",
                 Arrays.asList(
                         "question_id",
                         "title",
                         "content",
-                        "author"
+                        "fk_author"
                 ), Arrays.asList(
                         entity.getId().asString(),
                         entity.getTitle(),
@@ -118,7 +143,7 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
                 resultSet.getString("title"),
                 resultSet.getString("content"),
                 resultSet.getDate("creation_date"),
-                new UserId(resultSet.getString("author"))
+                new UserId(resultSet.getString("fk_author"))
         );
     }
 }

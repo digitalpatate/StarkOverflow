@@ -20,6 +20,12 @@
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
 
+                <div class="answer-list">
+                    <c:forEach items="${question.getAnswers().getAnswers()}" var="answer">
+                        <p class="answer-content">${answer.content}</p>
+                    </c:forEach>
+                </div>
+
             </div>
         </div>
     </div>

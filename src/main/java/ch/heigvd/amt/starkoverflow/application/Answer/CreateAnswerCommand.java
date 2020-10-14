@@ -13,8 +13,8 @@ import java.util.UUID;
 public class CreateAnswerCommand  {
 
     private String content;
-    private String question;
-    private String author;
+    private String questionId;
+    private String userId;
 
     public Answer createEntity() {
         return new Answer(content);
