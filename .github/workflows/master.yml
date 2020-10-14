@@ -64,3 +64,16 @@ jobs:
           docker-compose up -d
           cd ..
           ./run-test.sh
+
+  deploy:
+    needs: [ e2e-test ]
+    name: Deploy App
+    steps:
+      - name: Use ssh to deploy
+      - uses: tarunjangra/ssh-remote-cmd@v1
+        with:
+          command: |
+            ./deploy.sh
+          host: ${{ secrets.HOST }}
+          user: ubuntu
+          key: ${{ secrets.PRIVATE_KEY}}
