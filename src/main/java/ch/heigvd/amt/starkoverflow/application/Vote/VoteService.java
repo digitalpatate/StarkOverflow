@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.application.Vote;
 
 
 import ch.heigvd.amt.starkoverflow.domain.Votable;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -32,10 +33,11 @@ public class VoteService {
     public Vote createVote(CreateVoteCommand command) throws NotFoundException {
         Vote vote = command.createEntity();
         UserId user_id = new UserId(command.getUserId());
+        AnswerId answerId = new AnswerId(command.getAnswerId());
         //FIXME: Should use the commentable_votables registry
-        Question question = questionRepository.findById(new QuestionId(command.getVotableId())).orElseThrow(() -> new NotFoundException("The votable with this id does not exist"));
+        Question question = questionRepository.findById(new QuestionId(command.getAnswerId())).orElseThrow(() -> new NotFoundException("The votable with this id does not exist"));
         vote.setUser_id(user_id);
-        vote.setVotable(question);
+        vote.setAnswerId(answerId);
 
         return voteRepository.save(vote);
     }

@@ -24,7 +24,7 @@ public class VoteCommandHander extends HttpServlet {
 
         CreateVoteCommand command = CreateVoteCommand.builder()
                 .userId(userDTO.getId())
-                .votableId(req.getParameter("votableId"))
+                .answerId(req.getParameter("answerId"))
                 .build();
 
         try {

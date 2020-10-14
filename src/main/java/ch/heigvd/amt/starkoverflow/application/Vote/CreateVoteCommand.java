@@ -14,7 +14,7 @@ import java.util.Date;
 public class CreateVoteCommand {
 
     private String userId;
-    private String votableId;
+    private String answerId;
 
     public Vote createEntity() {
         return new Vote();
