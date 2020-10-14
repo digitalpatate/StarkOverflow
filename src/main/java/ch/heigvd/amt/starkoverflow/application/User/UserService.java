@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Named("UserService")
 public class UserService {
 
-    @Inject @Named("InMemoryUserRepository")
+    @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
 
 
@@ -46,5 +46,22 @@ public class UserService {
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .build();
+    }
+
+    public UsersDTO getAllUsers() {
+        Collection<User> users = userRepository.findAll();
+        List<UserDTO> usersDTO = users.stream()
+                .map(user -> UserDTO.builder()
+                        .id(user.getId().asString())
+                        .email(user.getEmail())
+                        .firstname(user.getFirstname())
+                        .lastname(user.getLastname())
+                        .profilePicture(user.getProfilePictureURL())
+                        .username(user.getUsername())
+                        .build())
+                .collect(Collectors.toList());
+
+        return UsersDTO.builder().users(usersDTO).build();
+
     }
 }
