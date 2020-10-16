@@ -3,25 +3,21 @@ package ch.heigvd.amt.starkoverflow.domain.answer;
 import ch.heigvd.amt.starkoverflow.domain.Commentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.Votable;
-import ch.heigvd.amt.starkoverflow.domain.question.Question;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.enterprise.context.NormalScope;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
 public class Answer implements IEntity<Answer, AnswerId>, Commentable, Votable {
-
     private AnswerId id;
-
     private String content;
     private Date creationDate;
-    private User author;
-    private Question question;
+    private UserId userId;
+    private QuestionId questionId;
     private boolean approved;
 
 
@@ -31,6 +27,13 @@ public class Answer implements IEntity<Answer, AnswerId>, Commentable, Votable {
         this.id = new AnswerId();
         // Is that a domain related or business ? Or is domain== business
         this.approved = false;
+    }
+
+    public Answer(AnswerId id, String content, UserId userId, QuestionId questionId) {
+        this.id = id;
+        this.content = content;
+        this.userId = userId;
+        this.questionId = questionId;
     }
 
 

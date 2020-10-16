@@ -23,7 +23,7 @@ public class CreateUserCommand {
                 .profilePictureURL(imageUrl)
                 .firstname(firstname)
                 .lastname(lastname)
-                .plainPassword(password)
+                .encryptedPassword(password)
                 .registrationDate(regDate)
                 .build();
     }

@@ -6,11 +6,13 @@ import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet(name="AnswerCommandHandler", urlPatterns = "/answer")
 public class AnswerCommandHandler extends HttpServlet {
 
     @Inject @Named("AnswerService")
@@ -21,13 +23,13 @@ public class AnswerCommandHandler extends HttpServlet {
         UserDTO userDTO = (UserDTO) req.getSession().getAttribute("currentUser");
 
         CreateAnswerCommand command = CreateAnswerCommand.builder()
-                .author(userDTO.getId())
-                .question(req.getParameter("question"))
-                .content(req.getParameter("content"))
+                .userId(userDTO.getId())
+                .questionId(req.getParameter("questionId"))
+                .content(req.getParameter("answerContent"))
                 .build();
 
         answerService.createAnswer(command);
 
-        resp.sendRedirect(req.getParameter("sourcePath"));
+        resp.sendRedirect("/question/" + req.getParameter("questionId"));
     }
 }

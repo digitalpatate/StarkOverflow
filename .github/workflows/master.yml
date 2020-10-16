@@ -60,6 +60,22 @@ jobs:
         run: |
           cd e2e
           echo ${{ secrets.REGISTRY_TOKEN }} | docker login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+          cd topology
           docker-compose up -d
-          npm install
-          npm run e2e-test
+          cd ..
+          ./run-test.sh
+
+  deploy:
+    needs: [ e2e-test ]
+    name: Deploy App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use ssh to deploy
+        uses: tarunjangra/ssh-remote-cmd@v1
+        with:
+          command: |
+            ./deploy.sh
+          host: ${{ secrets.HOST }}
+          user: ubuntu
+          key: ${{ secrets.PRIVATE_KEY}}
+          args: -tt

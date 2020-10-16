@@ -1,6 +1,7 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IVoteRepository;
@@ -33,10 +34,12 @@ public class JdbcVoteRepository extends JdbcRepository implements IVoteRepositor
     public Vote save(Vote entity) {
         super.insert("votes", Arrays.asList(
                 "vote_id",
-                "author"
+                "fk_author",
+                "fk_answer"
         ), Arrays.asList(
                 entity.getId().asString(),
-                entity.getUser_id().asString()
+                entity.getUser_id().asString(),
+                entity.getAnswerId().asString()
         ));
 
         return entity;
@@ -62,7 +65,8 @@ public class JdbcVoteRepository extends JdbcRepository implements IVoteRepositor
     public Vote resultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Vote(
                 new VoteId(resultSet.getString("vote_id")),
-                new UserId(resultSet.getString("author"))
+                new UserId(resultSet.getString("fk_author")),
+                new AnswerId(resultSet.getString("fk_answer"))
         );
     }
 }

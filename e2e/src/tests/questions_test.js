@@ -26,8 +26,11 @@ Scenario('Le champ contenu est obligatoire', (I, questionPage) => {
     );
 });
 
-Scenario('Il est possible de poster une question', (I, questionPage) => {
-    // FIXME: s'authentifier avant de poser la question
+Scenario('Il est possible de poster une question', (I, questionPage,registerPage,loginPage) => {
+    I.amOnPage("/register")
+    registerPage.sendForm('test2@test.com','showman','https://contacts.heig-vd.ch/picture/87','test firstname','test lastname','1234')
+    I.amOnPage('/login');
+    loginPage.sendForm('test2@test.com','1234');
     I.amOnPage('/');
     questionPage.sendQuestion('Ceci est une question de test','Et ceci est son contenu !');
     I.seeElement(

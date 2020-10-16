@@ -4,13 +4,15 @@ import ch.heigvd.amt.starkoverflow.application.Answer.AnswerQuery;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
+import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -27,7 +29,19 @@ public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepos
 
     @Override
     public Answer save(Answer entity) {
-        return null;
+        super.insert("answers", Arrays.asList(
+                "answer_id",
+                "fk_author",
+                "content",
+                "fk_question"
+        ), Arrays.asList(
+                entity.getId().asString(),
+                entity.getUserId().asString(),
+                entity.getContent(),
+                entity.getQuestionId().asString()
+        ));
+
+        return entity;
     }
 
     @Override
@@ -47,6 +61,13 @@ public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepos
 
     @Override
     public Answer resultSetToEntity(ResultSet resultSet) throws SQLException {
-        return null;
+        return new Answer(
+                new AnswerId(resultSet.getString("answer_id")),
+                resultSet.getString("content"),
+                resultSet.getDate("creation_date"),
+                new UserId(resultSet.getString("fk_author")),
+                new QuestionId(resultSet.getString("fk_question")),
+                resultSet.getBoolean("approuval_state")
+        );
     }
 }

@@ -30,6 +30,7 @@
                         <script>
                             $(document).ready(function() {
                                 $(".tag-select").select2({
+                                    placeholder: "Tags",
                                     tags: true
                                 });
                             });
