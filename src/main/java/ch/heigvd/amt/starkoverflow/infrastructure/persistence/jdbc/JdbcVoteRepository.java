@@ -2,6 +2,8 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
+import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
+import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IVoteRepository;
@@ -38,7 +40,7 @@ public class JdbcVoteRepository extends JdbcRepository implements IVoteRepositor
                 "fk_answer"
         ), Arrays.asList(
                 entity.getId().asString(),
-                entity.getUser_id().asString(),
+                entity.getUserId().asString(),
                 entity.getAnswerId().asString()
         ));
 
@@ -59,6 +61,48 @@ public class JdbcVoteRepository extends JdbcRepository implements IVoteRepositor
     @Override
     public Collection<Vote> findAll() {
         return (Collection) super.findAll("votes");
+    }
+
+    @Override
+    public Vote userVoteOnAnswer(UserId viewer, AnswerId answerId) {
+        Vote vote = null;
+
+        try {
+            PreparedStatement preparedStatement = dataSource.getConnection()
+                    .prepareStatement("SELECT * FROM votes WHERE fk_author=? AND fk_answer=?");
+            preparedStatement.setString(1, viewer.asString());
+            preparedStatement.setString(2, answerId.asString());
+            preparedStatement.execute();
+            ResultSet res = preparedStatement.executeQuery();
+
+            if(res.next()) { // if result set is not empty, user has voted the answer
+                vote = resultSetToEntity(res);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return vote;
+    }
+
+    @Override
+    public long getNbVotesOfAnswer(AnswerId answerId) {
+        long nbVotes = 0;
+
+        try {
+            PreparedStatement preparedStatement = dataSource.getConnection()
+                    .prepareStatement("SELECT COUNT(*) AS total FROM votes WHERE fk_answer=?");
+            preparedStatement.setString(1, answerId.asString());
+            ResultSet res = preparedStatement.executeQuery();
+
+            if(res.next()) {
+                nbVotes = res.getLong("total");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return nbVotes;
     }
 
     @Override

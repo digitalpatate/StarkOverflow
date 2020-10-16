@@ -15,11 +15,14 @@ import ch.heigvd.amt.starkoverflow.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@ApplicationScoped
+@Named("VoteService")
 public class VoteService {
 
     @Inject @Named("JdbcVoteRepository")
@@ -32,13 +35,17 @@ public class VoteService {
 
     public Vote createVote(CreateVoteCommand command) throws NotFoundException {
         Vote vote = command.createEntity();
-        UserId user_id = new UserId(command.getUserId());
+        UserId userId = new UserId(command.getUserId());
         AnswerId answerId = new AnswerId(command.getAnswerId());
-        //FIXME: Should use the commentable_votables registry
-        Question question = questionRepository.findById(new QuestionId(command.getAnswerId())).orElseThrow(() -> new NotFoundException("The votable with this id does not exist"));
-        vote.setUser_id(user_id);
-        vote.setAnswerId(answerId);
 
-        return voteRepository.save(vote);
+        Vote userVote = voteRepository.userVoteOnAnswer(userId, answerId);
+        if(userVote != null) {
+            // delete his vote
+            voteRepository.remove(userVote.getId());
+            return null;
+        } else {
+            // insert his vote
+            return voteRepository.save(vote);
+        }
     }
 }

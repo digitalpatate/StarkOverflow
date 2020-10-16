@@ -1,9 +1,11 @@
 package ch.heigvd.amt.starkoverflow.ui.web.question;
 
+import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,8 +27,17 @@ public class QuestionQueryHandler extends HttpServlet {
 
         String[] urlParts = req.getPathInfo().split("/");
 
+        UserDTO viewer = (UserDTO) req.getSession().getAttribute("currentUser");
+
         QuestionId id = new QuestionId(urlParts[1]);
-        QuestionDTO questionDTO = questionService.getQuestion(id);
+
+        UserId viewerId = null;
+
+        if(viewer != null) {
+            viewerId = new UserId(viewer.getId());
+        }
+
+        QuestionDTO questionDTO = questionService.getQuestion(id, viewerId);
 
         if(questionDTO != null) {
             req.setAttribute("question", questionDTO);

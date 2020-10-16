@@ -37,6 +37,23 @@
                                 <p class="author-username">${answer.user.username}</p>
                             </div>
                             <p class="answer-content">${answer.content}</p>
+                            <div class="vote-container">
+                                <p class="vote-nb">${answer.nbVotes}</p>
+                                <form class="vote-form" method="post" action="/vote">
+                                    <input type="hidden" name="questionId" value="${question.id}" />
+                                    <input type="hidden" name="answerId" value="${answer.id}" />
+                                    <button class="vote-btn" type="submit">
+                                        <c:choose>
+                                            <c:when test="${answer.voted}">
+                                                <i class="fas fa-lightbulb"></i>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <i class="far fa-lightbulb"></i>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                         <hr />
                     </c:forEach>
