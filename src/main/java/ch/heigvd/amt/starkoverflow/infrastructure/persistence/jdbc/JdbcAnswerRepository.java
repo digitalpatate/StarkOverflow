@@ -5,6 +5,7 @@ import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
 
