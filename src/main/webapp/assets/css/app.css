@@ -223,10 +223,8 @@ form.dropdown-item > .btn.btn-link {
 
 .user-image-container {
     width: 60px;
-}
-
-.user-image-container .user-image {
-    width: 60px;
+    height: 60px;
+    background-size: cover;
     clip-path: circle(30px at center);
 }
 
