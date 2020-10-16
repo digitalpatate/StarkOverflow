@@ -25,7 +25,7 @@ public class RegisterCommandEndpoint extends HttpServlet {
         RegisterCommand registerCommand = RegisterCommand.builder()
             .username(request.getParameter("username"))
             .clearTextPassword(request.getParameter("password"))
-            .profilePicture(request.getParameter("profilePicture"))
+            .profilePicture(request.getParameter("profilePicture")) // FIXME: check that url finish by an image extension
             .firstname(request.getParameter("firstname"))
             .lastname(request.getParameter("lastname"))
             .email(request.getParameter("email"))

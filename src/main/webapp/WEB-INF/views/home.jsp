@@ -16,7 +16,8 @@
                         <textarea class="form-control" id="questionContent" name="questionContent" rows="3" required="true"></textarea>
                     </div>
                     <div class="form-group">
-                        <select class="tag-select form-control" multiple="multiple" name="tags">
+                        <label for="tags">Tags</label>
+                        <select id="tags" class="tag-select form-control" multiple="multiple" name="tags">
                             <c:forEach items="${tags.getTags()}" var="tag">
                                 <option>${tag.name}</option>
                             </c:forEach>

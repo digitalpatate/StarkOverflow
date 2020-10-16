@@ -4,9 +4,11 @@ import ch.heigvd.amt.starkoverflow.application.Answer.dto.AnswerDTO;
 import ch.heigvd.amt.starkoverflow.application.Answer.dto.AnswersDTO;
 import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagDTO;
 import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagsDTO;
+import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
+import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -35,6 +37,9 @@ public class QuestionService {
 
     @Inject @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
+
+    @Inject @Named("JdbcUserRepository")
+    private IUserRepository userRepository;
 
     public Question createQuestion(CreateQuestionCommand command) {
         Question question = command.createEntity();
@@ -94,10 +99,23 @@ public class QuestionService {
     public AnswersDTO getQuestionAnswers(QuestionId questionId) {
         Collection<Answer> answers = questionRepository.getQuestionAnswers(questionId);
 
+
+
         List<AnswerDTO> answersDTO = answers
                 .stream()
                 .map(answer -> AnswerDTO.builder()
                         .content(answer.getContent())
+                        .user(userRepository.findById(answer.getUserId())
+                                .map(user -> UserDTO.builder()
+                                        .username(user.getUsername())
+                                        .email(user.getEmail())
+                                        .lastname(user.getLastname())
+                                        .firstname(user.getLastname())
+                                        .profilePicture(user.getProfilePictureURL())
+                                        .id(user.getId().asString())
+                                        .build()
+                                ).orElseThrow(() -> new NotFoundException("Answer user " + answer.getUserId() + " not found!"))
+                        )
                         .build())
                 .collect(Collectors.toList());
 
