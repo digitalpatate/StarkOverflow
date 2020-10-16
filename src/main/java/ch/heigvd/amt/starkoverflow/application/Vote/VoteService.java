@@ -3,6 +3,7 @@ package ch.heigvd.amt.starkoverflow.application.Vote;
 
 import ch.heigvd.amt.starkoverflow.domain.Votable;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
+import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -31,7 +32,8 @@ public class VoteService {
     private IUserRepository userRepository;
     @Inject @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
-
+    @Inject @Named("JdbcAnswerRepository")
+    private IAnswerRepository answerRepository;
 
     public Vote createVote(CreateVoteCommand command) throws NotFoundException {
         Vote vote = command.createEntity();
@@ -43,6 +45,8 @@ public class VoteService {
             // delete his vote
             voteRepository.remove(userVote.getId());
             return null;
+        } else if (answerRepository.findById(answerId).map(answer -> answer.getUserId() == userId).orElse(false)) {
+            throw new IllegalArgumentException("User can't vote on his own answer");
         } else {
             // insert his vote
             return voteRepository.save(vote);

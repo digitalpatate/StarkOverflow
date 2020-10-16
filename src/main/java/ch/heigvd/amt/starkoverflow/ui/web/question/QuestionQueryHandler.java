@@ -40,6 +40,7 @@ public class QuestionQueryHandler extends HttpServlet {
         QuestionDTO questionDTO = questionService.getQuestion(id, viewerId);
 
         if(questionDTO != null) {
+            req.setAttribute("currentUser", viewer);
             req.setAttribute("question", questionDTO);
             req.getRequestDispatcher("/WEB-INF/views/question.jsp").forward(req,res);
         }

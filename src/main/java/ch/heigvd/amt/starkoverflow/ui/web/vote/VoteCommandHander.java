@@ -33,6 +33,9 @@ public class VoteCommandHander extends HttpServlet {
             voteService.createVote(command);
         } catch (NotFoundException e) {
             e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            req.getSession().setAttribute("errors", e.getMessage());
+            resp.sendRedirect("/question/" + req.getParameter("questionId"));
         }
 
         resp.sendRedirect("/question/" + req.getParameter("questionId"));

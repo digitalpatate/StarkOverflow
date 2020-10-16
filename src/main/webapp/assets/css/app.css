@@ -179,6 +179,15 @@ form.dropdown-item > .btn.btn-link {
     color: #CCCC00;
 }
 
+.vote-btn .fas.fa-lightbulb.disabled {
+    color: black;
+}
+
+.vote-btn .fas.fa-lightbulb.disabled:hover {
+    color: black;
+    cursor: not-allowed;
+}
+
 .vote-btn:hover {
     color: #CCCC00;
 }
