@@ -132,6 +132,46 @@ form.dropdown-item > .btn.btn-link {
 }
 
 /***********************/
+/*      ANSWERS        */
+/***********************/
+
+.answer-list {
+    margin-bottom: 40px;
+}
+
+.answer-details {
+    display: flex;
+    align-items: center;
+}
+
+.answer-details .answer-author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 100px;
+    margin-right: 30px;
+
+}
+
+.answer-details .answer-author .user-image-container {
+    width: 60px;
+}
+
+.answer-details .answer-author .user-image-container .user-image {
+    width: 60px;
+    clip-path: circle(30px at center);
+}
+
+.answer-details .answer-author-username {
+    margin-bottom: 0;
+    font-size: 0.8rem;
+}
+
+.answer-details .answer-content {
+    flex: 1 1;
+}
+
+/***********************/
 /*       ALERTS        */
 /***********************/
 

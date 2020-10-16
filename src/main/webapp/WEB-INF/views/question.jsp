@@ -19,8 +19,15 @@
                 </div>
                 <div class="answer-list">
                     <c:forEach items="${question.getAnswers().getAnswers()}" var="answer">
-                        <p class="answer-content">${answer.content}</p>
-                        <p class="answer-author">${answer.user.username}</p>
+                        <div class="answer-details">
+                            <div class="answer-author">
+                                <div class="user-image-container">
+                                    <img class="user-image" src="${answer.user.profilePicture}" />
+                                </div>
+                                <p class="answer-author-username">${answer.user.username}</p>
+                            </div>
+                            <p class="answer-content">${answer.content}</p>
+                        </div>
                         <hr />
                     </c:forEach>
                 </div>
