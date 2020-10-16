@@ -43,7 +43,7 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     public void addTag(QuestionId questionId, TagId tagId) {
         // FIXME: maybe check if question and tag exists ?
         super.insert("tags_questions", Arrays.asList(
-            "tag_id",
+            "fk_tag",
             "question_id"
         ), Arrays.asList(
             tagId.asString(),
@@ -118,7 +118,7 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
                 resultSet.getString("title"),
                 resultSet.getString("content"),
                 resultSet.getDate("creation_date"),
-                new UserId(resultSet.getString("author"))
+                new UserId(resultSet.getString("fk_author"))
         );
     }
 }
