@@ -13,18 +13,28 @@
                         </c:forEach>
                     </ul>
                     <hr />
-                    <p class="question-content">${question.content}</p>
-                    <p class="question-creationDate">${question.creationDate}</p>
+                    <div class="question-content-container">
+                        <p class="question-content">${question.content}</p>
+                        <div class="question-infos">
+                            <div class="author">
+                                <div class="user-image-container">
+                                    <img class="user-image" src="${question.user.profilePicture}" />
+                                </div>
+                                <p class="author-username">${question.user.username}</p>
+                            </div>
+                            <p class="creationDate">${question.creationDate}</p>
+                        </div>
+                    </div>
                     <hr />
                 </div>
                 <div class="answer-list">
                     <c:forEach items="${question.getAnswers().getAnswers()}" var="answer">
                         <div class="answer-details">
-                            <div class="answer-author">
+                            <div class="author">
                                 <div class="user-image-container">
                                     <img class="user-image" src="${answer.user.profilePicture}" />
                                 </div>
-                                <p class="answer-author-username">${answer.user.username}</p>
+                                <p class="author-username">${answer.user.username}</p>
                             </div>
                             <p class="answer-content">${answer.content}</p>
                         </div>

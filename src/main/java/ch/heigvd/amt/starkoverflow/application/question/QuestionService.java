@@ -69,6 +69,16 @@ public class QuestionService {
 
         TagsDTO tags = getQuestionTags(question.getId());
         AnswersDTO answers = getQuestionAnswers(question.getId());
+        UserDTO userDTO = userRepository.findById(question.getAuthor()).map(
+                user -> UserDTO.builder()
+                .id(user.getId().asString())
+                .profilePicture(user.getProfilePictureURL())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build()
+        ).orElseThrow(() -> new NotFoundException("Question author " + question.getAuthor().asString() + " not found!"));
 
         QuestionDTO questionDTO = QuestionDTO.builder()
                 .id(question.getId().asString())
@@ -77,6 +87,7 @@ public class QuestionService {
                 .creationDate(dateFormat.format(question.getCreationDate()))
                 .tags(tags)
                 .answers(answers)
+                .user(userDTO)
                 .build();
 
         return questionDTO;
@@ -99,8 +110,6 @@ public class QuestionService {
     public AnswersDTO getQuestionAnswers(QuestionId questionId) {
         Collection<Answer> answers = questionRepository.getQuestionAnswers(questionId);
 
-
-
         List<AnswerDTO> answersDTO = answers
                 .stream()
                 .map(answer -> AnswerDTO.builder()
@@ -114,7 +123,7 @@ public class QuestionService {
                                         .profilePicture(user.getProfilePictureURL())
                                         .id(user.getId().asString())
                                         .build()
-                                ).orElseThrow(() -> new NotFoundException("Answer user " + answer.getUserId() + " not found!"))
+                                ).orElseThrow(() -> new NotFoundException("Answer user " + answer.getUserId().asString() + " not found!"))
                         )
                         .build())
                 .collect(Collectors.toList());
@@ -124,8 +133,6 @@ public class QuestionService {
 
     public QuestionsDTO getQuestions() {
         Collection<Question> questions = questionRepository.findAll();
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH'h'mm dd/MM/yyyy");
 
         List<QuestionDTO> questionsDTO = questions
                 .stream()
