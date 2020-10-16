@@ -7,6 +7,9 @@ import lombok.Data;
 @Builder
 @Data
 public class AnswerDTO {
+    private String id;
     private String content;
     private UserDTO user;
+    private boolean voted;
+    private long nbVotes;
 }

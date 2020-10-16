@@ -15,6 +15,8 @@ import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.vote.IVoteRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -41,6 +43,9 @@ public class QuestionService {
     @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
 
+    @Inject @Named("JdbcVoteRepository")
+    private IVoteRepository voteRepository;
+
     public Question createQuestion(CreateQuestionCommand command) {
         Question question = command.createEntity();
 
@@ -61,14 +66,14 @@ public class QuestionService {
         return QuestionsDTO.builder().questions(questionsDTO).build();
     }
 
-    public QuestionDTO getQuestion(QuestionId id) {
+    public QuestionDTO getQuestion(QuestionId id, UserId viewer) {
         Optional<Question> oQuestion = questionRepository.findById(id);
 
         Question question = oQuestion.orElseThrow(()-> new NotFoundException("No question found with this id"));
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH'h'mm dd/MM/yyyy");
 
         TagsDTO tags = getQuestionTags(question.getId());
-        AnswersDTO answers = getQuestionAnswers(question.getId());
+        AnswersDTO answers = getQuestionAnswers(question.getId(), viewer);
         UserDTO userDTO = userRepository.findById(question.getAuthor()).map(
                 user -> UserDTO.builder()
                 .id(user.getId().asString())
@@ -107,13 +112,16 @@ public class QuestionService {
         return TagsDTO.builder().tags(tagsDTO).build();
     }
 
-    public AnswersDTO getQuestionAnswers(QuestionId questionId) {
+    public AnswersDTO getQuestionAnswers(QuestionId questionId, UserId viewer) {
         Collection<Answer> answers = questionRepository.getQuestionAnswers(questionId);
 
         List<AnswerDTO> answersDTO = answers
                 .stream()
                 .map(answer -> AnswerDTO.builder()
+                        .id(answer.getId().asString())
                         .content(answer.getContent())
+                        .voted(viewer != null && voteRepository.userVoteOnAnswer(viewer, answer.getId()) != null)
+                        .nbVotes(voteRepository.getNbVotesOfAnswer(answer.getId()))
                         .user(userRepository.findById(answer.getUserId())
                                 .map(user -> UserDTO.builder()
                                         .username(user.getUsername())
