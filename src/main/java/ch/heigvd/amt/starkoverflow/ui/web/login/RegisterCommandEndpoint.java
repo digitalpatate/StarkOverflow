@@ -22,14 +22,20 @@ public class RegisterCommandEndpoint extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getSession().removeAttribute("errors");
 
-        RegisterCommand registerCommand = RegisterCommand.builder()
-            .username(request.getParameter("username"))
-            .clearTextPassword(request.getParameter("password"))
-            .profilePicture(request.getParameter("profilePicture")) // FIXME: check that url finish by an image extension
-            .firstname(request.getParameter("firstname"))
-            .lastname(request.getParameter("lastname"))
-            .email(request.getParameter("email"))
-            .build();
+        RegisterCommand registerCommand = null;
+        try {
+             registerCommand = RegisterCommand.builder()
+                    .username(request.getParameter("username"))
+                    .clearTextPassword(request.getParameter("password"))
+                    .profilePicture(request.getParameter("profilePicture"))
+                    .firstname(request.getParameter("firstname"))
+                    .lastname(request.getParameter("lastname"))
+                    .email(request.getParameter("email"))
+                    .build();
+        } catch (IllegalArgumentException e) {
+            request.getSession().setAttribute("errors", e.getMessage());
+            request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+        }
 
         try {
             identityManagementService.register(registerCommand);
