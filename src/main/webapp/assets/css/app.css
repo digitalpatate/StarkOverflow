@@ -229,6 +229,19 @@ form.dropdown-item > .btn.btn-link {
 }
 
 /***********************/
+/*    USER DROPDOWN    */
+/***********************/
+.user-dropdown {
+    display: flex;
+}
+
+.user-dropdown .user-image-container {
+    height: 40px;
+    width: 40px;
+    clip-path: circle(20px at center);
+}
+
+/***********************/
 /*       ALERTS        */
 /***********************/
 
