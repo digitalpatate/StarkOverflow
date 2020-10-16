@@ -35,13 +35,16 @@
             </ul>
         </div>
     </nav>
-    <c:choose>
-        <c:when test="${errors != null}">
-            <div class="flash">
-                ${errors}
-            </div>
-        </c:when>
-    </c:choose>
-
+    <div class="container">
+        <div class="row">
+            <c:choose>
+                <c:when test="${errors != null}">
+                    <div class="alert alert-danger" role="alert">
+                            ${errors}
+                    </div>
+                </c:when>
+            </c:choose>
+        </div>
+    </div>
 
 </header>

@@ -130,3 +130,12 @@ form.dropdown-item > .btn.btn-link {
     text-align: right;
     font-size: 0.9rem;
 }
+
+/***********************/
+/*       ALERTS        */
+/***********************/
+
+.alert {
+    margin-top: 20px;
+    width: 100%;
+}
