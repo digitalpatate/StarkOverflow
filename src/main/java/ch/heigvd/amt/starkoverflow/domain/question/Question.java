@@ -25,7 +25,6 @@ public class Question implements IEntity<Question,QuestionId>, Commentable, Vota
        this.title = title;
        this.content = content;
        this.author = userId;
-       this.creationDate = new Date();
    }
 
     public Question(QuestionId id, String title, String content, Date creationDate, UserId author) {

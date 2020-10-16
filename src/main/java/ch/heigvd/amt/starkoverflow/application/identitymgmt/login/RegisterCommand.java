@@ -40,7 +40,7 @@ public class RegisterCommand {
             final String http = "http:";
 
             if(url.contains(http)) {
-                url = url.substring(http.length() - 1);
+                url = url.substring(http.length());
             }
 
             return url;
