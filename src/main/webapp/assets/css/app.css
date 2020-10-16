@@ -155,6 +155,7 @@ form.dropdown-item > .btn.btn-link {
 
 .answer-details .author {
     margin-right: 30px;
+    flex-basis: 100px;
 }
 
 .answer-details .answer-content {
@@ -168,7 +169,6 @@ form.dropdown-item > .btn.btn-link {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-basis: 100px;
 }
 
 .creationDate {
