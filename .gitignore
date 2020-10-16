@@ -5,3 +5,4 @@ target/
 
 # ignore unwanted e2e files
 e2e/output
+e2e/node_modules
