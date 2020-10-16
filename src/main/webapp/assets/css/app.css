@@ -223,11 +223,22 @@ form.dropdown-item > .btn.btn-link {
 
 .user-image-container {
     width: 60px;
+    height: 60px;
+    background-size: cover;
+    clip-path: circle(30px at center);
 }
 
-.user-image-container .user-image {
-    width: 60px;
-    clip-path: circle(30px at center);
+/***********************/
+/*    USER DROPDOWN    */
+/***********************/
+.user-dropdown {
+    display: flex;
+}
+
+.user-dropdown .user-image-container {
+    height: 40px;
+    width: 40px;
+    clip-path: circle(20px at center);
 }
 
 /***********************/

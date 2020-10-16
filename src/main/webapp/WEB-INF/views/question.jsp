@@ -17,9 +17,7 @@
                         <p class="question-content">${question.content}</p>
                         <div class="question-infos">
                             <div class="author">
-                                <div class="user-image-container">
-                                    <img class="user-image" src="${question.user.profilePicture}" />
-                                </div>
+                                <div class="user-image-container" style="background-image: url(${question.user.profilePicture})"></div>
                                 <p class="author-username">${question.user.username}</p>
                             </div>
                             <p class="creationDate">${question.creationDate}</p>
@@ -31,9 +29,7 @@
                     <c:forEach items="${question.getAnswers().getAnswers()}" var="answer">
                         <div class="answer-details">
                             <div class="author">
-                                <div class="user-image-container">
-                                    <img class="user-image" src="${answer.user.profilePicture}" />
-                                </div>
+                                <div class="user-image-container" style="background-image: url(${answer.user.profilePicture})"></div>
                                 <p class="author-username">${answer.user.username}</p>
                             </div>
                             <p class="answer-content">${answer.content}</p>
