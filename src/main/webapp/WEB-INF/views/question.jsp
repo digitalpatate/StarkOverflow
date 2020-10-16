@@ -17,6 +17,13 @@
                     <p class="question-creationDate">${question.creationDate}</p>
                     <hr />
                 </div>
+                <div class="answer-list">
+                    <c:forEach items="${question.getAnswers().getAnswers()}" var="answer">
+                        <p class="answer-content">${answer.content}</p>
+                        <p class="answer-author">${answer.user.username}</p>
+                        <hr />
+                    </c:forEach>
+                </div>
                 <form action="/answer" method="post">
                     <div class="form-group">
                         <input type="hidden" name="questionId" value="${question.id}">
@@ -25,13 +32,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
-
-                <div class="answer-list">
-                    <c:forEach items="${question.getAnswers().getAnswers()}" var="answer">
-                        <hr />
-                        <p class="answer-content">${answer.content}</p>
-                    </c:forEach>
-                </div>
 
             </div>
         </div>
