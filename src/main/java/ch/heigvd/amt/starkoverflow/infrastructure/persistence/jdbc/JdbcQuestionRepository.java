@@ -162,7 +162,7 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
                 new QuestionId(resultSet.getString("question_id")),
                 resultSet.getString("title"),
                 resultSet.getString("content"),
-                resultSet.getDate("creation_date"),
+                resultSet.getTimestamp("creation_date"),
                 new UserId(resultSet.getString("fk_author"))
         );
     }

@@ -50,14 +50,18 @@ public class QuestionsCommandHandler extends HttpServlet {
         UserDTO userDTO = (UserDTO) req.getSession().getAttribute("currentUser");
         ArrayList<Tag> tags = new ArrayList<>();
 
-        for (String tagName : req.getParameterValues("tags")) {
-            CreateTagCommand createTagCommand = CreateTagCommand.builder()
-                    .name(tagName)
-                    .build();
+        final String[] reqTags = req.getParameterValues("tags");
 
-            tags.add(tagService.findOrCreateTag(createTagCommand));
+        if(reqTags != null) {
+            for (String tagName : reqTags) {
+                CreateTagCommand createTagCommand = CreateTagCommand.builder()
+                        .name(tagName)
+                        .build();
+
+                tags.add(tagService.findOrCreateTag(createTagCommand));
+            }
         }
-
+        
         CreateQuestionCommand createQuestionCommand = CreateQuestionCommand.builder()
                 .content(req.getParameter("questionContent"))
                 .title(req.getParameter("questionTitle"))

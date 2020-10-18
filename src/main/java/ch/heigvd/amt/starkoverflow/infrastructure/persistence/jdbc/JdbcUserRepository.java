@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.application.User.UserQuery;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;

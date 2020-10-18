@@ -2,8 +2,13 @@ p {
     font-size: 1rem;
 }
 
+label {
+    font-size: 1.3rem;
+}
+
 h2 {
     font-size: 2.4rem;
+    margin-bottom: 1rem;
 }
 a {
     text-decoration: none;
@@ -42,7 +47,7 @@ form.dropdown-item > .btn.btn-link {
 /***********************/
 
 .question-list {
-    margin-top: 40px;
+    margin-top: 55px;
 }
 
 .question-list .question {
@@ -119,11 +124,130 @@ form.dropdown-item > .btn.btn-link {
     font-size: 2.4rem;
 }
 
-.question-details .question-content {
-
+.question-details .question-content-container {
+    display: flex;
 }
 
-.question-details .question-creationDate {
-    text-align: right;
-    font-size: 0.9rem;
+.question-details .question-infos {
+    margin-left: 20px;
+}
+
+.question-details .question-content {
+    white-space: pre-wrap;
+    flex: 1 1;
+}
+
+.question-details .question-infos {
+    display: flex;
+    flex-direction: column;
+}
+
+/***********************/
+/*      ANSWERS        */
+/***********************/
+
+.answer-list {
+    margin-bottom: 40px;
+}
+
+.answer-details {
+    display: flex;
+    align-items: center;
+}
+
+.answer-details .author {
+    margin-right: 30px;
+    flex-basis: 100px;
+}
+
+.answer-details .answer-content {
+    flex: 1 1;
+}
+
+.vote-btn {
+    /* Reset default button style */
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    /* -------------- */
+    font-size: 1.8rem;
+}
+
+.vote-btn .fas.fa-lightbulb {
+    color: #CCCC00;
+}
+
+.vote-btn .fas.fa-lightbulb.disabled {
+    color: black;
+}
+
+.vote-btn .fas.fa-lightbulb.disabled:hover {
+    color: black;
+    cursor: not-allowed;
+}
+
+.vote-btn:hover {
+    color: #CCCC00;
+}
+
+.vote-container {
+    display: flex;
+    margin-left: 20px;
+}
+
+.vote-nb {
+    margin-right: 5px;
+}
+
+
+/***********************/
+/*       AUTHOR        */
+/***********************/
+.author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.creationDate {
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.author-username {
+    margin-bottom: 0;
+    font-size: 0.8rem;
+}
+
+.user-image-container {
+    width: 60px;
+    height: 60px;
+    background-size: cover;
+    clip-path: circle(30px at center);
+}
+
+/***********************/
+/*    USER DROPDOWN    */
+/***********************/
+.user-dropdown {
+    display: flex;
+}
+
+.user-dropdown .user-image-container {
+    height: 40px;
+    width: 40px;
+    clip-path: circle(20px at center);
+}
+
+/***********************/
+/*       ALERTS        */
+/***********************/
+
+.alert {
+    margin-top: 20px;
+    width: 100%;
 }
