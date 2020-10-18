@@ -14,4 +14,6 @@ public interface IQuestionRepository extends IRepository<Question,QuestionId> {
     Collection<Tag> getQuestionTags(QuestionId questionId);
 
     Collection<Answer> getQuestionAnswers(QuestionId questionId);
+
+    Collection<Question> findByAuthor(String authorId);
 }

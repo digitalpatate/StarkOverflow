@@ -11,6 +11,7 @@ import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.tag.ITagRepository;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
+import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -99,6 +100,25 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
             throwables.printStackTrace();
         }
         return answersFound;
+    }
+
+    @Override
+    public Collection<Question> findByAuthor(String authorId) {
+        PreparedStatement preparedStatement = super.selectWhere("questions","fk_author",authorId);
+        Collection<Question> questionsFound = new ArrayList<>();
+
+        try {
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()){
+
+                questionsFound.add(this.resultSetToEntity(res));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return questionsFound;
+
     }
 
     @Override

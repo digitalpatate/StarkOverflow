@@ -46,6 +46,11 @@ public class InMemoryUserRepository extends InMemoryRepository<User,UserId> impl
     }
 
     @Override
+    public Optional<User> findByUsername(String username) {
+        return Optional.empty();
+    }
+
+    @Override
     public Collection<User> find(UserQuery query) {
         return null;
     }
