@@ -34,4 +34,9 @@ public class InMemoryQuestionRepository extends InMemoryRepository<Question, Que
     public Collection<Answer> getQuestionAnswers(QuestionId questionId) {
         return null;
     }
+
+    @Override
+    public Collection<Question> findByAuthor(String authorId) {
+        return null;
+    }
 }

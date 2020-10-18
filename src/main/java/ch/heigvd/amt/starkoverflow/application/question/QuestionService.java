@@ -154,4 +154,20 @@ public class QuestionService {
 
         return QuestionsDTO.builder().questions(questionsDTO).build();
     }
+
+    public QuestionsDTO getQuestionsByAuthor(String authorId) {
+        Collection<Question> questions = questionRepository.findByAuthor(authorId);
+
+        List<QuestionDTO> questionsDTO = questions
+                .stream()
+                .map(question -> QuestionDTO.builder()
+                        .id(question.getId().asString())
+                        .title(question.getTitle())
+                        .content(question.getContent())
+                        .tags(getQuestionTags(question.getId()))
+                        .build())
+                .collect(Collectors.toList());
+
+        return QuestionsDTO.builder().questions(questionsDTO).build();
+    }
 }

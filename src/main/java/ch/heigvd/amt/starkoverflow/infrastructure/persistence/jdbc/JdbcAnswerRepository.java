@@ -8,6 +8,7 @@ import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -19,8 +20,7 @@ import java.util.Optional;
 
 @ApplicationScoped
 @Named("JdbcAnswerRepository")
-//@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor
 public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepository {
 
     @Override

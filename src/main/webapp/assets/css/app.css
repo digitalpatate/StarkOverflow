@@ -10,8 +10,10 @@ h2 {
     font-size: 2.4rem;
     margin-bottom: 1rem;
 }
-
-
+a {
+    text-decoration: none;
+    color: black;
+}
 #content {
     margin-top: 40px;
 }
