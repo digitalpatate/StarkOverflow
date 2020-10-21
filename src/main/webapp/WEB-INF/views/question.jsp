@@ -33,6 +33,28 @@
                                 <p class="author-username">${answer.user.username}</p>
                             </div>
                             <p class="answer-content">${answer.content}</p>
+                            <div class="answer-actions">
+                                <c:choose>
+                                    <c:when test="${empty question.acceptedAnswerId}">
+                                        <c:choose>
+                                            <c:when test="${question.user.id == currentUser.id}">
+                                                <form class="acceptation-form" method="post" action="/answer/accept">
+                                                    <input type="hidden" name="questionId" value="${question.id}">
+                                                    <input type="hidden" name="answerId" value="${answer.id}" />
+                                                    <button class="reset-btn accept-btn" type="submit">✓</button>
+                                                </form>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:choose>
+                                            <c:when test="${question.acceptedAnswerId == answer.id}">
+                                                <p class="accepted-answer">✓</p>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
                             <div class="vote-container">
                                 <p class="vote-nb">${answer.nbVotes}</p>
                                 <form class="vote-form" method="post" action="/vote">
@@ -40,7 +62,7 @@
                                     <input type="hidden" name="answerId" value="${answer.id}" />
                                     <c:choose>
                                         <c:when test="${answer.user.id != currentUser.id}">
-                                            <button class="vote-btn" type="submit">
+                                            <button class="reset-btn vote-btn" type="submit">
                                                 <c:choose>
                                                     <c:when test="${answer.voted}">
                                                         <i class="fas fa-lightbulb"></i>
@@ -52,7 +74,7 @@
                                             </button>
                                         </c:when>
                                         <c:otherwise>
-                                            <button class="vote-btn" type="submit" disabled>
+                                            <button class="reset-btn vote-btn" type="submit" disabled>
                                                 <i class="fas fa-lightbulb disabled"></i>
                                             </button>
                                         </c:otherwise>

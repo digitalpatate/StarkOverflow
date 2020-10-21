@@ -122,6 +122,67 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     }
 
     @Override
+    public Optional<Answer> getAcceptedAnswer(QuestionId questionId) {
+        Optional<Answer> acceptedAnswer = null;
+
+        try {
+            PreparedStatement preparedStatement = dataSource.getConnection()
+                    .prepareStatement("SELECT answers.answer_id, " +
+                                         "answers.content, " +
+                                         "answers.creation_date, " +
+                                         "answers.fk_author, " +
+                                         "answers.fk_question, " +
+                                         "answers.approuval_state " +
+                                         "FROM questions " +
+                                         "INNER JOIN answers " +
+                                         "ON questions.question_id = answers.fk_question " +
+                                         "WHERE answers.approuval_state = true " +
+                                         "AND questions.question_id = ?");
+            preparedStatement.setString(1, questionId.asString());
+
+            ResultSet res = preparedStatement.executeQuery();
+
+            if(res.next()) {
+                acceptedAnswer = Optional.of(answerRepository.resultSetToEntity(res));
+            } else {
+                acceptedAnswer = Optional.empty();
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return acceptedAnswer;
+    }
+
+    @Override
+    public boolean hasAcceptedAnswer(QuestionId questionId) {
+        boolean hasAcceptedAnswer = false;
+
+        try {
+            PreparedStatement preparedStatement = dataSource.getConnection()
+                    .prepareStatement("SELECT COUNT(*) > 0 AS has_accepted " +
+                                         "FROM questions " +
+                                         "INNER JOIN answers " +
+                                         "ON questions.question_id = answers.fk_question " +
+                                         "WHERE answers.approuval_state = true " +
+                                         "AND questions.question_id = ?");
+
+            preparedStatement.setString(1, questionId.asString());
+            ResultSet res = preparedStatement.executeQuery();
+
+            if(res.next()) {
+                hasAcceptedAnswer = res.getBoolean("has_accepted");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return hasAcceptedAnswer;
+    }
+
+    @Override
     public Question save(Question entity) {
         super.insert("questions",
                 Arrays.asList(
