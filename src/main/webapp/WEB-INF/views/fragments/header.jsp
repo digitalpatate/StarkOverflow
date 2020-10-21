@@ -5,13 +5,6 @@
         <a class="navbar-brand" href="/"><h1 class="logo">StarkØverflØw</h1></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/statistic">statistics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users">Utilisateurs</a>
-                </li>
-
                 <c:choose>
                     <c:when test="${currentUser != null}">
                         <li class="nav-item dropdown user-dropdown">
@@ -40,6 +33,9 @@
                 </c:choose>
                 <li class="nav-item">
                     <a class="nav-link" href="/statistic">statistics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users">utilisateurs</a>
                 </li>
             </ul>
         </div>

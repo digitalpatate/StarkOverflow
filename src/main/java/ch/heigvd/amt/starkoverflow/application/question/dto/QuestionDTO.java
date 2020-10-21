@@ -16,4 +16,5 @@ public class QuestionDTO {
     private TagsDTO tags;
     private AnswersDTO answers;
     private UserDTO user;
+    private String acceptedAnswerId;
 }
