@@ -41,7 +41,16 @@
                 </form>
             </div>
             <div class="col">
-                <h2>Last questions</h2>
+                <h2>
+                    <c:choose>
+                        <c:when test="${tag.length() > 0}">
+                            Questions with tag: ${tag}
+                        </c:when>
+                        <c:otherwise>
+                            Last questions
+                        </c:otherwise>
+                    </c:choose>
+                </h2>
                 <div class="question-list">
                     <c:forEach items="${questions.getQuestions()}" var="question">
                         <a href="/question/${question.id}">

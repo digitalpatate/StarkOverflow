@@ -42,6 +42,11 @@ public class InMemoryQuestionRepository extends InMemoryRepository<Question, Que
     }
 
     @Override
+    public Collection<Question> findByTag(String authorId) {
+        return null;
+    }
+
+    @Override
     public Optional<Answer> getAcceptedAnswer(QuestionId questionId) {
         return Optional.empty();
     }

@@ -38,9 +38,17 @@ public class QuestionsCommandHandler extends HttpServlet {
         req.setAttribute("tags", tagsDTO);
 
         // Fetch questions
-        QuestionsDTO questionsDTO = questionService.getQuestions();
+        if (!req.getParameterMap().containsKey("tag")) {
+            QuestionsDTO questionsDTO = questionService.getQuestions();
 
-        req.setAttribute("questions", questionsDTO);
+            req.setAttribute("questions", questionsDTO);
+        } else {
+            String tag = req.getParameter("tag");
+            QuestionsDTO questionsDTO = questionService.getQuestionsByTag(tag);
+
+            req.setAttribute("questions", questionsDTO);
+            req.setAttribute("tag", tag);
+        }
 
         req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req,res);
     }

@@ -122,6 +122,39 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     }
 
     @Override
+    public Collection<Question> findByTag(String tag) {
+        Collection<Question> questions = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = dataSource.getConnection()
+                    .prepareStatement("SELECT questions.question_id, " +
+                            "questions.title, " +
+                            "questions.content, " +
+                            "questions.creation_date, " +
+                            "questions.fk_author " +
+                            "FROM questions " +
+                            "INNER JOIN tags_questions " +
+                            "ON questions.question_id = tags_questions.fk_question " +
+                            "INNER JOIN tags " +
+                            "ON tags.tag_id = tags_questions.fk_tag " +
+                            "WHERE tags.name LIKE ?");
+
+            preparedStatement.setString(1, tag);
+
+            ResultSet res = preparedStatement.executeQuery();
+
+            while (res.next()) {
+                questions.add(resultSetToEntity(res));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return questions;
+
+    }
+
+    @Override
     public Optional<Answer> getAcceptedAnswer(QuestionId questionId) {
         Optional<Answer> acceptedAnswer = null;
 
