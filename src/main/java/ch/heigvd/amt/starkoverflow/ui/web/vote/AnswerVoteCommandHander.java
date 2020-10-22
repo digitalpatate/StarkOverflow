@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="VoteCommandHandler", urlPatterns = "/vote")
-public class VoteCommandHander extends HttpServlet {
+@WebServlet(name="AnswerVoteCommandHandler", urlPatterns = "/vote/answer")
+public class AnswerVoteCommandHander extends HttpServlet {
 
     @Inject @Named("VoteService")
     VoteService voteService;

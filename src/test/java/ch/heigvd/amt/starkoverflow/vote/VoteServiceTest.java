@@ -8,12 +8,14 @@ import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.mockito.Mockito.*;
 public class VoteServiceTest {
 
     private IAnswerVoteRepository answerVoteRepository;
+    private IQuestionVoteRepository questionVoteRepository;
     private IUserRepository userRepository;
     private IQuestionRepository questionRepository;
     private IAnswerRepository answerRepository;
@@ -27,7 +29,7 @@ public class VoteServiceTest {
         this.userRepository = mock(IUserRepository.class);
         this.questionRepository = mock(IQuestionRepository.class);
         this.answerRepository = mock(IAnswerRepository.class);
-        this.voteService = new VoteService(answerVoteRepository,answerRepository);
+        this.voteService = new VoteService(answerVoteRepository,questionVoteRepository, answerRepository, questionRepository);
         this.command = CreateAnswerVoteCommand.builder()
                 .userId(new UserId().asString())
                 .answerId(new AnswerId().asString())

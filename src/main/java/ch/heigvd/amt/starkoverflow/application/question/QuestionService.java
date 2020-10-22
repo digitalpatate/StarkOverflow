@@ -15,6 +15,7 @@ import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -40,8 +41,11 @@ public class QuestionService {
     @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
 
-    @Inject @Named("JdbcVoteRepository")
+    @Inject @Named("JdbcAnswerVoteRepository")
     private IAnswerVoteRepository answerVoteRepository;
+
+    @Inject @Named("JdbcQuestionVoteRepository")
+    private IQuestionVoteRepository questionVoteRepository;
 
     public Question createQuestion(CreateQuestionCommand command) {
         Question question = command.createEntity();
@@ -55,13 +59,13 @@ public class QuestionService {
         return question;
     }
 
-    public QuestionsDTO getQuestion(QuestionQuery query){
+    /*public QuestionsDTO getQuestion(QuestionQuery query){
         Collection<Question> questions = questionRepository.find(query);
 
         List<QuestionDTO> questionsDTO = questions.stream().map(question -> QuestionDTO.builder().build()).collect(Collectors.toList());
 
         return QuestionsDTO.builder().questions(questionsDTO).build();
-    }
+    }*/
 
     public QuestionDTO getQuestion(QuestionId id, UserId viewer) {
         Optional<Question> oQuestion = questionRepository.findById(id);
@@ -95,6 +99,8 @@ public class QuestionService {
                 .answers(answers)
                 .acceptedAnswerId(acceptedAnswerId)
                 .user(userDTO)
+                .nbVotes(questionVoteRepository.getNbVotesOfQuestion(question.getId()))
+                .voted(viewer != null && questionVoteRepository.userVoteOnQuestion(viewer, question.getId()) != null)
                 .build();
 
         return questionDTO;

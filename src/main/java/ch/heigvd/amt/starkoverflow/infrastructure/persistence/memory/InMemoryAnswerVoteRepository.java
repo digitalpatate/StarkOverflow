@@ -10,7 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
 @ApplicationScoped
-@Named("InMemoryVoteRepository")
+@Named("InMemoryAnswerVoteRepository")
 public class InMemoryAnswerVoteRepository extends InMemoryRepository<Vote,VoteId> implements IAnswerVoteRepository {
 
     @Override
