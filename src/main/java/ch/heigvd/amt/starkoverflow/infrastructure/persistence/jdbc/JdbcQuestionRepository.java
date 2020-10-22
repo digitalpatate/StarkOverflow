@@ -15,6 +15,7 @@ import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -23,10 +24,7 @@ import javax.inject.Named;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 @ApplicationScoped
 @Named("JdbcQuestionRepository")
@@ -51,22 +49,21 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     public void addTag(QuestionId questionId, TagId tagId) {
         // FIXME: maybe check if question and tag exists ?
         super.insert("tags_questions", Arrays.asList(
-            "fk_tag",
-            "fk_question"
+                "fk_tag",
+                "fk_question"
         ), Arrays.asList(
-            tagId.asString(),
-            questionId.asString()
+                tagId.asString(),
+                questionId.asString()
         ));
     }
 
     @Override
     public Collection<Tag> getQuestionTags(QuestionId questionId) {
-        PreparedStatement preparedStatement = super.selectWhere("tags_questions", "fk_question", questionId.asString());
+        ResultSet res = super.selectWhere("tags_questions", "fk_question", questionId.asString());
 
         Collection<Tag> tagsFound = new ArrayList<>();
 
         try {
-            ResultSet res = preparedStatement.executeQuery();
 
             while (res.next()){
                 Optional<Tag> tag = tagRepository.findById(new TagId(res.getString("fk_tag")));
@@ -84,31 +81,12 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
         return tagsFound;
     }
 
-    @Override
-    public Collection<Answer> getQuestionAnswers(QuestionId questionId) {
-        PreparedStatement preparedStatement = super.selectWhere("answers","fk_question", questionId.asString());
-
-        Collection<Answer> answersFound = new ArrayList<>();
-
-        try {
-            ResultSet res = preparedStatement.executeQuery();
-
-            while (res.next()){
-                answersFound.add(answerRepository.resultSetToEntity(res));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return answersFound;
-    }
 
     @Override
     public Collection<Question> findByAuthor(String authorId) {
-        PreparedStatement preparedStatement = super.selectWhere("questions","fk_author",authorId);
+        ResultSet res = super.selectWhere("questions","fk_author",authorId);
         Collection<Question> questionsFound = new ArrayList<>();
-
         try {
-            ResultSet res = preparedStatement.executeQuery();
 
             while (res.next()){
 
@@ -161,16 +139,16 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
         try {
             PreparedStatement preparedStatement = dataSource.getConnection()
                     .prepareStatement("SELECT answers.answer_id, " +
-                                         "answers.content, " +
-                                         "answers.creation_date, " +
-                                         "answers.fk_author, " +
-                                         "answers.fk_question, " +
-                                         "answers.approuval_state " +
-                                         "FROM questions " +
-                                         "INNER JOIN answers " +
-                                         "ON questions.question_id = answers.fk_question " +
-                                         "WHERE answers.approuval_state = true " +
-                                         "AND questions.question_id = ?");
+                            "answers.content, " +
+                            "answers.creation_date, " +
+                            "answers.fk_author, " +
+                            "answers.fk_question, " +
+                            "answers.approuval_state " +
+                            "FROM questions " +
+                            "INNER JOIN answers " +
+                            "ON questions.question_id = answers.fk_question " +
+                            "WHERE answers.approuval_state = true " +
+                            "AND questions.question_id = ?");
             preparedStatement.setString(1, questionId.asString());
 
             ResultSet res = preparedStatement.executeQuery();
@@ -196,11 +174,11 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
         try {
             PreparedStatement preparedStatement = dataSource.getConnection()
                     .prepareStatement("SELECT COUNT(*) > 0 AS has_accepted " +
-                                         "FROM questions " +
-                                         "INNER JOIN answers " +
-                                         "ON questions.question_id = answers.fk_question " +
-                                         "WHERE answers.approuval_state = true " +
-                                         "AND questions.question_id = ?");
+                            "FROM questions " +
+                            "INNER JOIN answers " +
+                            "ON questions.question_id = answers.fk_question " +
+                            "WHERE answers.approuval_state = true " +
+                            "AND questions.question_id = ?");
 
             preparedStatement.setString(1, questionId.asString());
             ResultSet res = preparedStatement.executeQuery();
@@ -241,8 +219,8 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     @Override
     public Optional<Question> findById(QuestionId id) {
         Optional<IEntity> question = super.find("questions", "question_id", id.asString()); // FIXME: maybe put those strings as var in superclass
-
         return question.map(entity -> (Question) entity);
+
     }
 
     @Override
@@ -260,4 +238,16 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
                 new UserId(resultSet.getString("fk_author"))
         );
     }
+
+    @SneakyThrows
+    public Collection<Question> resultSetToCollection(ResultSet resultSet){
+        Collection<Question> entities = new LinkedList<>();
+
+        while (resultSet.next()){
+            entities.add(resultSetToEntity(resultSet));
+        }
+        return entities;
+    }
+
+
 }

@@ -7,7 +7,7 @@ import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.Data;
 
 @Data
-public class Vote implements IEntity<Vote, VoteId> {
+public class Vote implements IEntity{
     private VoteId id;
     private Id votableId;
     private UserId userId;
@@ -28,9 +28,4 @@ public class Vote implements IEntity<Vote, VoteId> {
         this.userId = userId;
     }
 
-    //TODO complèter la fonction
-    @Override
-    public Vote deepClone(){
-        return null;
-    }
 }
