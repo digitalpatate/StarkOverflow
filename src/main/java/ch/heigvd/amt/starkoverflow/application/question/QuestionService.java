@@ -8,16 +8,14 @@ import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
-import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
-import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
-import ch.heigvd.amt.starkoverflow.domain.vote.IVoteRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +25,6 @@ import javax.inject.Named;
 import javax.ws.rs.NotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,8 +41,11 @@ public class QuestionService {
     @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
 
-    @Inject @Named("JdbcVoteRepository")
-    private IVoteRepository voteRepository;
+    @Inject @Named("JdbcAnswerVoteRepository")
+    private IAnswerVoteRepository answerVoteRepository;
+
+    @Inject @Named("JdbcQuestionVoteRepository")
+    private IQuestionVoteRepository questionVoteRepository;
 
     public Question createQuestion(CreateQuestionCommand command) {
         Question question = command.createEntity();
@@ -59,13 +59,13 @@ public class QuestionService {
         return question;
     }
 
-    public QuestionsDTO getQuestion(QuestionQuery query){
+    /*public QuestionsDTO getQuestion(QuestionQuery query){
         Collection<Question> questions = questionRepository.find(query);
 
         List<QuestionDTO> questionsDTO = questions.stream().map(question -> QuestionDTO.builder().build()).collect(Collectors.toList());
 
         return QuestionsDTO.builder().questions(questionsDTO).build();
-    }
+    }*/
 
     public QuestionDTO getQuestion(QuestionId id, UserId viewer) {
         Optional<Question> oQuestion = questionRepository.findById(id);
@@ -99,6 +99,8 @@ public class QuestionService {
                 .answers(answers)
                 .acceptedAnswerId(acceptedAnswerId)
                 .user(userDTO)
+                .nbVotes(questionVoteRepository.getNbVotesOfQuestion(question.getId()))
+                .voted(viewer != null && questionVoteRepository.userVoteOnQuestion(viewer, question.getId()) != null)
                 .build();
 
         return questionDTO;
@@ -126,8 +128,8 @@ public class QuestionService {
                 .map(answer -> AnswerDTO.builder()
                         .id(answer.getId().asString())
                         .content(answer.getContent())
-                        .voted(viewer != null && voteRepository.userVoteOnAnswer(viewer, answer.getId()) != null)
-                        .nbVotes(voteRepository.getNbVotesOfAnswer(answer.getId()))
+                        .voted(viewer != null && answerVoteRepository.userVoteOnAnswer(viewer, answer.getId()) != null)
+                        .nbVotes(answerVoteRepository.getNbVotesOfAnswer(answer.getId()))
                         .user(userRepository.findById(answer.getUserId())
                                 .map(user -> UserDTO.builder()
                                         .username(user.getUsername())
