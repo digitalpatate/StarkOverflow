@@ -2,6 +2,8 @@ package ch.heigvd.amt.starkoverflow.ui.web.profile;
 
 import ch.heigvd.amt.starkoverflow.application.User.UserService;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
+import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
+import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,14 +16,16 @@ import java.io.IOException;
 
 @WebServlet("/profile")
 public class ProfileQueryHandler extends HttpServlet {
-
-    @Inject @Named("UserService")
-    private UserService userService;
+    @Inject @Named("QuestionService")
+    private QuestionService questionService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDTO userDTO = (UserDTO) request.getSession().getAttribute("user");
-        request.setAttribute("currentUser", userDTO);
-        request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
+        UserDTO userDTO = (UserDTO) request.getSession().getAttribute("currentUser");
+        QuestionsDTO questionsDTO = questionService.getQuestionsByAuthor(userDTO.getId());
+        request.setAttribute("questions",questionsDTO);
+        request.setAttribute("user",userDTO);
+
+        request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request,response);
     }
 }

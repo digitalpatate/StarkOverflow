@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.NotFoundException;
 import java.io.IOException;
 
 @WebServlet(name = "LoginCommandEndpoint", urlPatterns = "/login")
@@ -42,6 +43,10 @@ public class LoginCommandEndpoint extends HttpServlet {
             UserDTO currentUser = identityManagementService.authenticate(command);
             request.getSession().setAttribute("currentUser", currentUser);
             response.sendRedirect("/profile");
+        } catch (NotFoundException e) {
+            log.info("Authentification failed! Email " + command.getEmail() + " not found");
+            request.getSession().setAttribute("errors", e.getMessage());
+            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         } catch (AuthenticationFailedException e) {
             log.info("Authentification failed for "+ command.getEmail());
             request.getSession().setAttribute("errors", e.getMessage());

@@ -1,15 +1,21 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.application.Answer.AnswerQuery;
+import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
+import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -18,9 +24,11 @@ import java.util.Optional;
 
 @ApplicationScoped
 @Named("JdbcAnswerRepository")
-//@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor
 public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepository {
+    @Inject
+    @Named("JdbcQuestionRepository")
+    private JdbcQuestionRepository questionRepository;
 
     @Override
     public Collection<Answer> find(AnswerQuery query) {
@@ -50,8 +58,32 @@ public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepos
     }
 
     @Override
+    public Optional<Question> getAnswerQuestion(AnswerId id) {
+        Optional<Answer> answer = findById(id);
+
+        if(answer.isPresent()) {
+            return questionRepository.findById(answer.get().getQuestionId());
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public void accept(AnswerId answerId) {
+        try {
+            PreparedStatement preparedStatement = dataSource.getConnection()
+                    .prepareStatement("UPDATE answers SET approuval_state=true WHERE answer_id=?");
+            preparedStatement.setString(1, answerId.asString());
+            preparedStatement.executeQuery();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
     public Optional<Answer> findById(AnswerId id) {
-        return Optional.empty();
+        return super.find("answers", "answer_id", id.asString())
+                    .map(entity -> (Answer) entity);
     }
 
     @Override

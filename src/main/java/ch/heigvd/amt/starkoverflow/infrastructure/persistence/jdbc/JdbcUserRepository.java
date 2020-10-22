@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.application.User.UserQuery;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
@@ -67,6 +68,13 @@ public class JdbcUserRepository extends JdbcRepository implements IUserRepositor
     @Override
     public Optional<User> findByEmail(String email) {
         Optional<IEntity> user = super.find("users", "email", email); // FIXME: maybe put those strings as var in superclass
+
+        return user.map(entity -> (User) entity);
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        Optional<IEntity> user = super.find("users", "username", username); // FIXME: maybe put those strings as var in superclass
 
         return user.map(entity -> (User) entity);
     }

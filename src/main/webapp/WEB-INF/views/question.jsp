@@ -13,14 +13,75 @@
                         </c:forEach>
                     </ul>
                     <hr />
-                    <p class="question-content">${question.content}</p>
-                    <p class="question-creationDate">${question.creationDate}</p>
+                    <div class="question-content-container">
+                        <p class="question-content">${question.content}</p>
+                        <div class="question-infos">
+                            <div class="author">
+                                <div class="user-image-container" style="background-image: url(${question.user.profilePicture})"></div>
+                                <p class="author-username">${question.user.username}</p>
+                            </div>
+                            <p class="creationDate">${question.creationDate}</p>
+                        </div>
+                    </div>
                     <hr />
                 </div>
                 <div class="answer-list">
                     <c:forEach items="${question.getAnswers().getAnswers()}" var="answer">
-                        <p class="answer-content">${answer.content}</p>
-                        <p class="answer-author">${answer.user.username}</p>
+                        <div class="answer-details">
+                            <div class="author">
+                                <div class="user-image-container" style="background-image: url(${answer.user.profilePicture})"></div>
+                                <p class="author-username">${answer.user.username}</p>
+                            </div>
+                            <p class="answer-content">${answer.content}</p>
+                            <div class="answer-actions">
+                                <c:choose>
+                                    <c:when test="${empty question.acceptedAnswerId}">
+                                        <c:choose>
+                                            <c:when test="${question.user.id == currentUser.id}">
+                                                <form class="acceptation-form" method="post" action="/answer/accept">
+                                                    <input type="hidden" name="questionId" value="${question.id}">
+                                                    <input type="hidden" name="answerId" value="${answer.id}" />
+                                                    <button class="reset-btn accept-btn" type="submit">✓</button>
+                                                </form>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:choose>
+                                            <c:when test="${question.acceptedAnswerId == answer.id}">
+                                                <p class="accepted-answer">✓</p>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <div class="vote-container">
+                                <p class="vote-nb">${answer.nbVotes}</p>
+                                <form class="vote-form" method="post" action="/vote">
+                                    <input type="hidden" name="questionId" value="${question.id}" />
+                                    <input type="hidden" name="answerId" value="${answer.id}" />
+                                    <c:choose>
+                                        <c:when test="${answer.user.id != currentUser.id}">
+                                            <button class="reset-btn vote-btn" type="submit">
+                                                <c:choose>
+                                                    <c:when test="${answer.voted}">
+                                                        <i class="fas fa-lightbulb"></i>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <i class="far fa-lightbulb"></i>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="reset-btn vote-btn" type="submit" disabled>
+                                                <i class="fas fa-lightbulb disabled"></i>
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </form>
+                            </div>
+                        </div>
                         <hr />
                     </c:forEach>
                 </div>

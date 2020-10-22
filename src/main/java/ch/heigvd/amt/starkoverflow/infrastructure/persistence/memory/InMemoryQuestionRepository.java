@@ -11,6 +11,7 @@ import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.Optional;
 
 @ApplicationScoped
 @Named("InMemoryQuestionRepository")
@@ -33,5 +34,20 @@ public class InMemoryQuestionRepository extends InMemoryRepository<Question, Que
     @Override
     public Collection<Answer> getQuestionAnswers(QuestionId questionId) {
         return null;
+    }
+
+    @Override
+    public Collection<Question> findByAuthor(String authorId) {
+        return null;
+    }
+
+    @Override
+    public Optional<Answer> getAcceptedAnswer(QuestionId questionId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean hasAcceptedAnswer(QuestionId questionId) {
+        return false;
     }
 }

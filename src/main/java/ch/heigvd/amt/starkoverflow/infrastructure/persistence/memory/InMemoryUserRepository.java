@@ -1,6 +1,7 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory;
 
 import ch.heigvd.amt.starkoverflow.application.User.UserQuery;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
@@ -43,6 +44,11 @@ public class InMemoryUserRepository extends InMemoryRepository<User,UserId> impl
         }
 
         return Optional.of(matchingEntities.get(0).deepClone());
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return Optional.empty();
     }
 
     @Override

@@ -16,17 +16,23 @@ import lombok.NoArgsConstructor;
 public class Vote implements IEntity<Vote, VoteId> {
     private VoteId id;
     private AnswerId answerId;
-    private UserId user_id;
+    private UserId userId;
 
     public Vote() {
         this.id = new VoteId();
     }
 
-    public Vote(VoteId vote_id, UserId user_id, AnswerId answer_id ) {
-        this.id = vote_id;
-        this.user_id = user_id;
+    public Vote(UserId userId, AnswerId answerId ) {
+        this.id = new VoteId();
+        this.answerId = answerId;
+        this.userId = userId;
     }
-    
+
+    public Vote(VoteId voteId, UserId userId, AnswerId answerId ) {
+        this.id = voteId;
+        this.answerId = answerId;
+        this.userId = userId;
+    }
 
     //TODO complèter la fonction
     @Override
