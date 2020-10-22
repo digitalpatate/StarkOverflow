@@ -1,14 +1,11 @@
 package ch.heigvd.amt.starkoverflow.vote;
 
-import ch.heigvd.amt.starkoverflow.domain.Commentable;
 import ch.heigvd.amt.starkoverflow.domain.Votable;
-import ch.heigvd.amt.starkoverflow.domain.comment.Comment;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
-import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryCommentRepository;
-import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryVoteRepository;
+import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryAnswerVoteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InMemoryVoteRepositoryTest {
 
-    private InMemoryVoteRepository voteRepository;
+    private InMemoryAnswerVoteRepository voteRepository;
     private Vote vote;
     private Votable aQuestion;
     // private User commentator;
@@ -27,7 +24,7 @@ public class InMemoryVoteRepositoryTest {
 
     @BeforeEach
     public void setup(){
-        this.voteRepository = new InMemoryVoteRepository();
+        this.voteRepository = new InMemoryAnswerVoteRepository();
 
         //this.commentator = new User(new UserId(),"commentator","test","test","test","test");
         this.voteUser = new User(new UserId(),"michel", "answerer","test","test","test","test");

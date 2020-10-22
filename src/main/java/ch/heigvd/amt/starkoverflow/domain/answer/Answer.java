@@ -20,6 +20,9 @@ public class Answer implements IEntity<Answer, AnswerId>, Commentable, Votable {
     private QuestionId questionId;
     private boolean approved;
 
+    public Answer(AnswerId id) {
+        this.id = id;
+    }
 
     public Answer(String content) {
         this.content = content;

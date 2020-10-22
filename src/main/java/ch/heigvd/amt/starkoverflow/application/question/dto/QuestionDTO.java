@@ -17,4 +17,6 @@ public class QuestionDTO {
     private AnswersDTO answers;
     private UserDTO user;
     private String acceptedAnswerId;
+    private boolean voted;
+    private long nbVotes;
 }
