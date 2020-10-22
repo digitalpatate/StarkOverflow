@@ -80,6 +80,20 @@ public class JdbcUserRepository extends JdbcRepository implements IUserRepositor
     }
 
     @Override
+    public int getTotalUser() {
+        int nbUser = -1;
+        try {
+            ResultSet resultSet = executeQuery("SELECT COUNT(*) AS totalUser FROM users").getResultSet();
+            if(resultSet.next()) {
+                nbUser = resultSet.getInt("totalUser");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbUser;
+    }
+
+    @Override
     public Optional<User> findById(UserId id) {
         Optional<IEntity> user = super.find("users", "user_id", id.asString()); // FIXME: maybe put those strings as var in superclass
 

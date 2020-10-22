@@ -5,9 +5,20 @@
     <div class="container">
         <div class="row">
             <h2>Statistics</h2>
-            <div class="statistic">
-
-            </div>
+        </div>
+        <div class="statistic">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Total number of users</th>
+                        <td>${nbUsers}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template:defaultLayout>

@@ -52,6 +52,11 @@ public class InMemoryUserRepository extends InMemoryRepository<User,UserId> impl
     }
 
     @Override
+    public int getTotalUser() {
+        return 0;
+    }
+
+    @Override
     public Collection<User> find(UserQuery query) {
         return null;
     }

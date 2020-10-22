@@ -15,4 +15,6 @@ public interface IUserRepository extends IRepository<User, UserId> {
     Optional<User> findByEmail(String email);
 
     Optional<User> findByUsername(String username);
+
+    int getTotalUser();
 }
