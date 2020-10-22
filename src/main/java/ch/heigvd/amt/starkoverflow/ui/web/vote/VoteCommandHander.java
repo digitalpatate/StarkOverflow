@@ -1,7 +1,7 @@
 package ch.heigvd.amt.starkoverflow.ui.web.vote;
 
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
-import ch.heigvd.amt.starkoverflow.application.Vote.CreateVoteCommand;
+import ch.heigvd.amt.starkoverflow.application.Vote.CreateAnswerVoteCommand;
 import ch.heigvd.amt.starkoverflow.application.Vote.VoteService;
 import ch.heigvd.amt.starkoverflow.exception.NotFoundException;
 
@@ -24,13 +24,13 @@ public class VoteCommandHander extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDTO userDTO = (UserDTO) req.getSession().getAttribute("currentUser");
 
-        CreateVoteCommand command = CreateVoteCommand.builder()
+        CreateAnswerVoteCommand command = CreateAnswerVoteCommand.builder()
                 .userId(userDTO.getId())
                 .answerId(req.getParameter("answerId"))
                 .build();
 
         try {
-            voteService.createVote(command);
+            voteService.createAnswerVote(command);
         } catch (NotFoundException e) {
             e.printStackTrace();
         } catch (IllegalArgumentException e) {

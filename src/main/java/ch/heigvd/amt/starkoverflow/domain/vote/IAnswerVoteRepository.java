@@ -6,7 +6,7 @@ import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 
-public interface IVoteRepository extends IRepository<Vote, VoteId> {
+public interface IAnswerVoteRepository extends IRepository<Vote, VoteId> {
     Vote userVoteOnAnswer(UserId viewer, AnswerId answerId);
     long getNbVotesOfAnswer(AnswerId answerId);
 }

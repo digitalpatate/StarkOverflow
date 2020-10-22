@@ -8,16 +8,13 @@ import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
-import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
-import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
-import ch.heigvd.amt.starkoverflow.domain.vote.IVoteRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +24,6 @@ import javax.inject.Named;
 import javax.ws.rs.NotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,7 +41,7 @@ public class QuestionService {
     private IUserRepository userRepository;
 
     @Inject @Named("JdbcVoteRepository")
-    private IVoteRepository voteRepository;
+    private IAnswerVoteRepository answerVoteRepository;
 
     public Question createQuestion(CreateQuestionCommand command) {
         Question question = command.createEntity();
@@ -126,8 +122,8 @@ public class QuestionService {
                 .map(answer -> AnswerDTO.builder()
                         .id(answer.getId().asString())
                         .content(answer.getContent())
-                        .voted(viewer != null && voteRepository.userVoteOnAnswer(viewer, answer.getId()) != null)
-                        .nbVotes(voteRepository.getNbVotesOfAnswer(answer.getId()))
+                        .voted(viewer != null && answerVoteRepository.userVoteOnAnswer(viewer, answer.getId()) != null)
+                        .nbVotes(answerVoteRepository.getNbVotesOfAnswer(answer.getId()))
                         .user(userRepository.findById(answer.getUserId())
                                 .map(user -> UserDTO.builder()
                                         .username(user.getUsername())

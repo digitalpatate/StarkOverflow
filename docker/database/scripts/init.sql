@@ -66,9 +66,22 @@ CREATE TABLE comments(
     creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
 
--- votes
+-- question votes
+CREATE TABLE question_votes(
+vote_id TEXT PRIMARY KEY     NOT NULL UNIQUE,
+fk_author              TEXT    NOT NULL,
+fk_question       TEXT    NOT NULL,
+CONSTRAINT     fk_author
+    FOREIGN KEY(fk_author)
+        REFERENCES users(user_id),
+CONSTRAINT     fk_answer
+    FOREIGN KEY(fk_question)
+        REFERENCES questions(question_id),
+creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
+);
 
-CREATE TABLE votes(
+-- answer votes
+CREATE TABLE answer_votes(
 vote_id TEXT PRIMARY KEY     NOT NULL UNIQUE,
 fk_author              TEXT    NOT NULL,
 fk_answer       TEXT    NOT NULL,
@@ -80,7 +93,6 @@ CONSTRAINT     fk_answer
         REFERENCES answers(answer_id),
 creationDate     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
-
 
 -- Tags
 CREATE TABLE tags(
