@@ -20,6 +20,8 @@ public interface IQuestionRepository extends IRepository<Question,QuestionId> {
 
     Collection<Question> findByAuthor(String authorId);
 
+    Collection<Question> findByTag(String tag);
+
     Optional<Answer> getAcceptedAnswer(QuestionId questionId);
 
     boolean hasAcceptedAnswer(QuestionId questionId);

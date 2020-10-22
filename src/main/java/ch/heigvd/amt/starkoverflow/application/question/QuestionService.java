@@ -178,4 +178,24 @@ public class QuestionService {
 
         return QuestionsDTO.builder().questions(questionsDTO).build();
     }
+
+    public QuestionsDTO getQuestionsByTag(String tag) {
+        Collection<Question> questions = questionRepository.findByTag(tag);
+
+        if (questions == null) {
+            return null;
+        }
+
+        List<QuestionDTO> questionsDTO = questions
+                .stream()
+                .map(question -> QuestionDTO.builder()
+                        .id(question.getId().asString())
+                        .title(question.getTitle())
+                        .content(question.getContent())
+                        .tags(getQuestionTags(question.getId()))
+                        .build())
+                .collect(Collectors.toList());
+
+        return QuestionsDTO.builder().questions(questionsDTO).build();
+    }
 }
