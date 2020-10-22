@@ -1,8 +1,8 @@
 package ch.heigvd.amt.starkoverflow.domain.answer;
 
-import ch.heigvd.amt.starkoverflow.domain.Commentable;
+import ch.heigvd.amt.starkoverflow.domain.comment.ICommentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import ch.heigvd.amt.starkoverflow.domain.Votable;
+import ch.heigvd.amt.starkoverflow.domain.vote.IVotable;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
-public class Answer implements IEntity<Answer, AnswerId>, Commentable, Votable {
+public class Answer implements IEntity<Answer, AnswerId>, ICommentable, IVotable {
     private AnswerId id;
     private String content;
     private Date creationDate;

@@ -1,18 +1,19 @@
 package ch.heigvd.amt.starkoverflow.ui.web.comment;
 
 import ch.heigvd.amt.starkoverflow.application.Comment.CommentService;
-import ch.heigvd.amt.starkoverflow.application.Comment.CreateCommentCommand;
+import ch.heigvd.amt.starkoverflow.application.Comment.CreateAnswerCommentCommand;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CommentCommandHandler extends HttpServlet {
+@WebServlet(name="AnswerCommentCommandHandler", urlPatterns = "/comment/answer")
+public class AnswerCommentCommandHandler extends HttpServlet {
 
     @Inject @Named("CommentService")
     CommentService commentService;
@@ -22,15 +23,14 @@ public class CommentCommandHandler extends HttpServlet {
 
         UserDTO userDTO = (UserDTO) req.getSession().getAttribute("currentUser");
 
-
-        CreateCommentCommand command = CreateCommentCommand.builder()
-                .commentableId(req.getParameter("commentable"))
-                .content(req.getParameter("content"))
+        CreateAnswerCommentCommand command = CreateAnswerCommentCommand.builder()
+                .content(req.getParameter("commentContent"))
                 .author(userDTO.getId())
+                .answerId(req.getParameter("answerId"))
                 .build();
 
-        commentService.createComment(command);
+        commentService.createAnswerComment(command);
 
-        resp.sendRedirect(req.getParameter("sourcePath"));
+        resp.sendRedirect("/question/" + req.getParameter("questionId"));
     }
 }

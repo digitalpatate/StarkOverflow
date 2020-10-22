@@ -1,6 +1,6 @@
 package ch.heigvd.amt.starkoverflow.vote;
 
-import ch.heigvd.amt.starkoverflow.domain.Votable;
+import ch.heigvd.amt.starkoverflow.domain.vote.IVotable;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
@@ -18,7 +18,7 @@ public class InMemoryVoteRepositoryTest {
 
     private InMemoryAnswerVoteRepository voteRepository;
     private Vote vote;
-    private Votable aQuestion;
+    private IVotable aQuestion;
     // private User commentator;
     private User voteUser;
 

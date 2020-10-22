@@ -1,6 +1,7 @@
 package ch.heigvd.amt.starkoverflow.application.question.dto;
 
 import ch.heigvd.amt.starkoverflow.application.Answer.dto.AnswersDTO;
+import ch.heigvd.amt.starkoverflow.application.Comment.dto.CommentsDTO;
 import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagsDTO;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import lombok.Builder;
@@ -15,6 +16,7 @@ public class QuestionDTO {
     private String creationDate;
     private TagsDTO tags;
     private AnswersDTO answers;
+    private CommentsDTO comments;
     private UserDTO user;
     private String acceptedAnswerId;
     private boolean voted;

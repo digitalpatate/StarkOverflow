@@ -1,8 +1,8 @@
 package ch.heigvd.amt.starkoverflow.domain.question;
 
-import ch.heigvd.amt.starkoverflow.domain.Commentable;
+import ch.heigvd.amt.starkoverflow.domain.comment.ICommentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import ch.heigvd.amt.starkoverflow.domain.Votable;
+import ch.heigvd.amt.starkoverflow.domain.vote.IVotable;
 import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class Question implements IEntity<Question,QuestionId>, Commentable, Votable {
+public class Question implements IEntity<Question,QuestionId>, ICommentable, IVotable {
 
     private QuestionId id;
 
