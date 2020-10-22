@@ -1,35 +1,36 @@
 package ch.heigvd.amt.starkoverflow.vote;
 
-import ch.heigvd.amt.starkoverflow.application.Vote.CreateVoteCommand;
+import ch.heigvd.amt.starkoverflow.application.Vote.CreateAnswerVoteCommand;
 import ch.heigvd.amt.starkoverflow.application.Vote.VoteService;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
-import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
-import ch.heigvd.amt.starkoverflow.domain.vote.IVoteRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.mockito.Mockito.*;
 public class VoteServiceTest {
 
-    private IVoteRepository voteRepository;
+    private IAnswerVoteRepository answerVoteRepository;
+    private IQuestionVoteRepository questionVoteRepository;
     private IUserRepository userRepository;
     private IQuestionRepository questionRepository;
     private IAnswerRepository answerRepository;
     private VoteService voteService;
 
-    private CreateVoteCommand command;
+    private CreateAnswerVoteCommand command;
 
     @BeforeEach
     private void setup(){
-        this.voteRepository = mock(IVoteRepository.class);
+        this.answerVoteRepository = mock(IAnswerVoteRepository.class);
         this.userRepository = mock(IUserRepository.class);
         this.questionRepository = mock(IQuestionRepository.class);
         this.answerRepository = mock(IAnswerRepository.class);
-        this.voteService = new VoteService(voteRepository,userRepository,questionRepository,answerRepository);
-        this.command = CreateVoteCommand.builder()
+        this.voteService = new VoteService(answerVoteRepository,questionVoteRepository, answerRepository, questionRepository);
+        this.command = CreateAnswerVoteCommand.builder()
                 .userId(new UserId().asString())
                 .answerId(new AnswerId().asString())
                 .build();

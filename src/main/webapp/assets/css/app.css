@@ -168,16 +168,25 @@ form.dropdown-item > .btn.btn-link {
 
 .question-details .question-infos {
     margin-left: 20px;
+    flex-basis: 110px;
 }
 
 .question-details .question-content {
     white-space: pre-wrap;
     flex: 1 1;
+    align-self: center;
 }
 
 .question-details .question-infos {
     display: flex;
     flex-direction: column;
+}
+
+.question-details .question-actions {
+    display: flex;
+    margin-right: 20px;
+    flex-basis: 110px;
+    justify-content: center;
 }
 
 /***********************/
@@ -194,8 +203,8 @@ form.dropdown-item > .btn.btn-link {
 }
 
 .answer-details .author {
-    margin-right: 30px;
-    flex-basis: 100px;
+    margin-right: 20px;
+    flex-basis: 110px;
 }
 
 .answer-details .answer-content {
@@ -205,6 +214,8 @@ form.dropdown-item > .btn.btn-link {
 .answer-actions {
     display: flex;
     margin-left: 20px;
+    flex-basis: 110px;
+    justify-content: flex-end;
 }
 
 /***********************/

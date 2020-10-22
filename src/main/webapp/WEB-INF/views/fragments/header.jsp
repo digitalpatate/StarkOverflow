@@ -35,7 +35,7 @@
                     <a class="nav-link" href="/statistic">statistics</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/users">utilisateurs</a>
+                    <a class="nav-link" href="/users">users</a>
                 </li>
             </ul>
         </div>
