@@ -8,6 +8,7 @@ import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
+import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -37,6 +38,9 @@ public class QuestionService {
 
     @Inject @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
+
+    @Inject @Named("JdbcAnswerRepository")
+    private IAnswerRepository answerRepository;
 
     @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
@@ -121,7 +125,7 @@ public class QuestionService {
     }
 
     public AnswersDTO getQuestionAnswers(QuestionId questionId, UserId viewer) {
-        Collection<Answer> answers = questionRepository.getQuestionAnswers(questionId);
+        Collection<Answer> answers = answerRepository.getByQuestionId(questionId);
 
         List<AnswerDTO> answersDTO = answers
                 .stream()

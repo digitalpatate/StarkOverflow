@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class Question implements IEntity<Question,QuestionId>, Commentable, Votable {
+public class Question implements IEntity,Votable,Commentable {
 
     private QuestionId id;
 
@@ -37,11 +37,5 @@ public class Question implements IEntity<Question,QuestionId>, Commentable, Vota
         this.content = content;
         this.creationDate = creationDate;
         this.author = author;
-    }
-
-    //TODO complèter la fonction
-    @Override
-    public Question deepClone(){
-        return null;
     }
 }

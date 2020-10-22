@@ -12,7 +12,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class Comment implements IEntity<Comment,CommentId> {
+public class Comment implements IEntity{
 
     private CommentId id;
 
@@ -31,11 +31,5 @@ public class Comment implements IEntity<Comment,CommentId> {
         this.content = content;
         this.creationDate = new Date();
         this.id = id;
-    }
-
-    //TODO complèter la fonction
-    @Override
-    public Comment deepClone(){
-        return null;
     }
 }
