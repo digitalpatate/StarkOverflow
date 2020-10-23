@@ -3,15 +3,15 @@ const {I} = inject();
 module.exports = {
 
     fields: {
-        email: 'input[type=email]',
-        password: 'input[type=password]'
+        email: 'input#email[name=email]',
+        password: 'input#password[type=password]'
     },
-    submitButton: 'input[type=submit]',
+    submitButton: 'input[type=submit,value=Login]',
 
-    sendForm(email, password) {
+    async sendForm(email, password) {
         I.fillField(this.fields.email, email);
         I.fillField(this.fields.password, password);
-        I.click(this.submitButton);
+        I.click('Login');
     },
 
 }

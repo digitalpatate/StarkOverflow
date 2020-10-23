@@ -2,12 +2,11 @@ package ch.heigvd.amt.starkoverflow.domain.vote;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.Id;
-import ch.heigvd.amt.starkoverflow.domain.Votable;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.Data;
 
 @Data
-public class Vote implements IEntity<Vote, VoteId> {
+public class Vote implements IEntity{
     private VoteId id;
     private Id votableId;
     private UserId userId;
@@ -16,21 +15,16 @@ public class Vote implements IEntity<Vote, VoteId> {
         this.id = new VoteId();
     }
 
-    public Vote(UserId userId, Votable votable) {
+    public Vote(UserId userId, IVotable votable) {
         this.id = new VoteId();
         this.votableId = votable.getId();
         this.userId = userId;
     }
 
-    public Vote(VoteId voteId, UserId userId, Votable votable) {
+    public Vote(VoteId voteId, UserId userId, IVotable votable) {
         this.id = voteId;
         this.votableId = votable.getId();
         this.userId = userId;
     }
 
-    //TODO complèter la fonction
-    @Override
-    public Vote deepClone(){
-        return null;
-    }
 }

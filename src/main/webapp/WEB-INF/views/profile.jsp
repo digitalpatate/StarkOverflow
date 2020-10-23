@@ -4,15 +4,15 @@
 <template:defaultLayout title="Home">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-8 box-content">
                 <h2 class="border-bottom mb-3">${user.username}</h2>
-                <img class="mb-3" width="200px" height="200px" src="${user.getProfilePicture()}" alt="">
+                <img class="mb-3" width="200px" src="${user.getProfilePicture()}" alt="">
                 <h3 class="mb-3 text-secondary">${user.firstname} ${user.lastname}</h3>
                 <h4 class="mb-3">${user.email}</h4>
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-8 ">
+            <div class="col-8 box-content">
                 <h2 class="border-bottom mb-3">Asked questions</h2>
                 <c:choose>
                     <c:when test="${questions.getQuestions().size() > 0}">

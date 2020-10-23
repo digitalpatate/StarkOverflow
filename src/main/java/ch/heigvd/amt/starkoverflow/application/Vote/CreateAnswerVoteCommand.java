@@ -11,7 +11,6 @@ import lombok.Getter;
 @Builder(toBuilder = true)
 @Getter
 public class CreateAnswerVoteCommand {
-
     private String userId;
     private String answerId;
 

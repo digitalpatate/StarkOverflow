@@ -3,10 +3,12 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
+import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
 import ch.heigvd.amt.starkoverflow.domain.vote.VoteId;
+import ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc.utils.QueryBuilder;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import javax.enterprise.context.ApplicationScoped;
@@ -47,7 +49,8 @@ public class JdbcAnswerVoteRepository extends JdbcRepository implements IAnswerV
 
     @Override
     public Optional<Vote> findById(VoteId id) {
-        Optional<IEntity> vote = super.find("answer_votes", "vote_id", id.asString());
+        Optional<IEntity> vote =  super.find("answer_votes", "vote_id", id.asString());
+
         return vote.map(entity -> (Vote) entity);
     }
 

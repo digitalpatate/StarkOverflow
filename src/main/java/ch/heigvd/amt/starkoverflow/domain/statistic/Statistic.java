@@ -12,10 +12,4 @@ public class Statistic implements IEntity<Statistic, StatisticId> {
     private String title;
     private String data;
 
-
-    //TODO complèter la fonction
-    @Override
-    public Statistic deepClone(){
-        return null;
-    }
 }

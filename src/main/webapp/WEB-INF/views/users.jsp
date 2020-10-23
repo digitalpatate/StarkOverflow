@@ -4,7 +4,7 @@
 <template:defaultLayout title="Users">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-8 d-flex justify-content-around">
+            <div class="col-8 d-flex justify-content-around box-content">
                 <c:forEach items="${users.getUsers()}" var="user">
                     <a href="/users/${user.getUsername()}">
                         <div class="card" style="width: 18rem;">

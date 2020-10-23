@@ -9,9 +9,11 @@ exports.config = {
   output: './output',
   helpers: {
     Puppeteer: {
-      url: 'http://localhost:8080',
+      url: 'http://localhost:9080',
       show: true,
-      windowSize: '1200x900'
+      windowSize: '1200x900',
+      waitForNavigation: [ "domcontentloaded", "networkidle2" ],
+      waitForAction: 500
     }
   },
   include: {

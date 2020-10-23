@@ -11,7 +11,7 @@ module.exports = {
     sendQuestion(title, content) {
         I.fillField(this.fields.title, title);
         I.fillField(this.fields.content, content);
-        I.click(this.submitButton);
+        I.click('Post');
     },
 
 }

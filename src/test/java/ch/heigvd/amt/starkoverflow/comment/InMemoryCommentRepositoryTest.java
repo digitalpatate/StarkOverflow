@@ -1,12 +1,11 @@
 package ch.heigvd.amt.starkoverflow.comment;
 
-import ch.heigvd.amt.starkoverflow.domain.Commentable;
-import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
+import ch.heigvd.amt.starkoverflow.domain.comment.ICommentable;
 import ch.heigvd.amt.starkoverflow.domain.comment.Comment;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
-import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryCommentRepository;
+import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryAnswerCommentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,15 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InMemoryCommentRepositoryTest {
 
-    private InMemoryCommentRepository commentRepository;
+    private InMemoryAnswerCommentRepository commentRepository;
     private Comment comment;
-    private Commentable aQuestion;
+    private ICommentable aQuestion;
     // private User commentator;
     private User commentableOwner;
 
     @BeforeEach
     public void setup(){
-        this.commentRepository = new InMemoryCommentRepository();
+        this.commentRepository = new InMemoryAnswerCommentRepository();
 
 
         this.aQuestion = new Question("Very Important question","content", new UserId());

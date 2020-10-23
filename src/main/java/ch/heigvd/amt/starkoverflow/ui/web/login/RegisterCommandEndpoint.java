@@ -35,14 +35,17 @@ public class RegisterCommandEndpoint extends HttpServlet {
         } catch (IllegalArgumentException e) {
             request.getSession().setAttribute("errors", e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+            return;
         }
 
         try {
             identityManagementService.register(registerCommand);
             response.sendRedirect("/login");
+            return;
         } catch (RegistrationFailedException e) {
             request.getSession().setAttribute("errors", e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+            return;
         }
     }
 
