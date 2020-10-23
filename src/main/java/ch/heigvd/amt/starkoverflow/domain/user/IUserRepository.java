@@ -13,7 +13,6 @@ import java.util.Optional;
 public interface IUserRepository extends IRepository<User, UserId> {
     Collection<User> find(UserQuery query);
     Optional<User> findByEmail(String email);
-
     Optional<User> findByUsername(String username);
 
     int getTotalUser();

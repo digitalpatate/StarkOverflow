@@ -43,7 +43,7 @@ public class InMemoryUserRepository extends InMemoryRepository<User,UserId> impl
             //throw new DataCorruptionException("");
         }
 
-        return Optional.of(matchingEntities.get(0).deepClone());
+        return Optional.of(matchingEntities.get(0));
     }
 
     @Override

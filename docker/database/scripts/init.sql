@@ -48,11 +48,8 @@ CREATE TABLE answers(
     creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
 );
 
-
-
 -- comments on answers
-
-CREATE TABLE comments(
+CREATE TABLE answer_comments(
     comment_id TEXT PRIMARY KEY     NOT NULL UNIQUE,
     fk_author               TEXT    NOT NULL,
     content              TEXT    NOT NULL,
@@ -60,6 +57,21 @@ CREATE TABLE comments(
     CONSTRAINT     fk_answer
         FOREIGN KEY(fk_answer)
             REFERENCES answers(answer_id),
+    CONSTRAINT     fk_author
+        FOREIGN KEY(fk_author)
+            REFERENCES users(user_id),
+    creation_date     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP(3)
+);
+
+-- comments on questions
+CREATE TABLE question_comments(
+    comment_id TEXT PRIMARY KEY     NOT NULL UNIQUE,
+    fk_author               TEXT    NOT NULL,
+    content              TEXT    NOT NULL,
+    fk_question         TEXT    NOT NULL,
+    CONSTRAINT     fk_answer
+        FOREIGN KEY(fk_question)
+            REFERENCES questions(question_id),
     CONSTRAINT     fk_author
         FOREIGN KEY(fk_author)
             REFERENCES users(user_id),

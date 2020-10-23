@@ -3,8 +3,8 @@
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags" %>
 <template:defaultLayout title="Register">
     <div class="container">
-        <div class="row">
-            <div id="register">
+        <div class="row justify-content-center">
+            <div id="register" class="box-content col-4">
                 <h2>Register Page</h2>
                 <form action="register" method="post">
                     <div class="form-group">

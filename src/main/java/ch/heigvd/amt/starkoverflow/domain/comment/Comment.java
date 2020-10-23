@@ -1,25 +1,20 @@
 package ch.heigvd.amt.starkoverflow.domain.comment;
 
-import ch.heigvd.amt.starkoverflow.domain.Commentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
-import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
-import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
-import lombok.Builder;
+import ch.heigvd.amt.starkoverflow.domain.Id;
+import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class Comment implements IEntity<Comment,CommentId> {
+public class Comment implements IEntity{
 
     private CommentId id;
-
     private String content;
     private Date creationDate;
-    private User author;
-    private AnswerId answerId;
+    private UserId author;
+    private Id commentableId;
 
     public Comment(String content) {
         this.content = content;
@@ -27,15 +22,19 @@ public class Comment implements IEntity<Comment,CommentId> {
         this.id = new CommentId();
     }
 
-    public Comment(CommentId id, String content) {
+    public Comment(String content, UserId author, ICommentable commentable) {
         this.content = content;
         this.creationDate = new Date();
-        this.id = id;
+        this.author = author;
+        this.id = new CommentId();
+        this.commentableId = commentable.getId();
     }
 
-    //TODO complèter la fonction
-    @Override
-    public Comment deepClone(){
-        return null;
+    public Comment(CommentId id, String content, UserId author, ICommentable commentable) {
+        this.content = content;
+        this.creationDate = new Date();
+        this.author = author;
+        this.id = id;
+        this.commentableId = commentable.getId();
     }
 }

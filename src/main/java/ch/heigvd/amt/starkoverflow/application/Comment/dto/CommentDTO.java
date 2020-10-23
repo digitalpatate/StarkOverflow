@@ -1,5 +1,6 @@
 package ch.heigvd.amt.starkoverflow.application.Comment.dto;
 
+import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +12,5 @@ public class CommentDTO {
     private String id;
     private String content;
     private Date creationDate;
-    //Author DTO ?
-    private String authorId;
-
+    private UserDTO user;
 }

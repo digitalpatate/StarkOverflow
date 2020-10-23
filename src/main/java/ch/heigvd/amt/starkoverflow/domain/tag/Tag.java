@@ -1,14 +1,10 @@
 package ch.heigvd.amt.starkoverflow.domain.tag;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import ch.heigvd.amt.starkoverflow.domain.Votable;
-import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
-import ch.heigvd.amt.starkoverflow.domain.vote.VoteId;
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class Tag implements IEntity<Tag, TagId> {
+public class Tag implements IEntity {
     private TagId id;
     private String name;
     private String color;
@@ -24,10 +20,5 @@ public class Tag implements IEntity<Tag, TagId> {
         this.name = name;
         this.color = color;
     }
-
-    //TODO complèter la fonction
-    @Override
-    public Tag deepClone(){
-        return null;
-    }
 }
+

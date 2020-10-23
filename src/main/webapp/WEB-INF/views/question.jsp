@@ -4,7 +4,7 @@
 <template:defaultLayout title="Home">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="box-content col-8">
                 <div class="question-details">
                     <h2 class="question-title">${question.title}</h2>
                     <ul class="tag-list">
@@ -51,7 +51,33 @@
                         </div>
                     </div>
                     <hr />
+                    <div class="comment-container">
+                        <div class="comment-list">
+                            <c:forEach items="${question.comments.comments}" var="comment">
+                                <div class="comment-details">
+                                    <div class="author">
+                                        <p class="author-username">${comment.user.username}</p>
+                                    </div>
+                                    <p class="comment-content">${comment.content}</p>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <label for="openQuestionComment" class="btn-open-label"><i class="far fa-comment"></i></label>
+                        <input type="checkbox" id="openQuestionComment" class="btn-open" />
+                        <div class="openable">
+                            <form action="/comment/question" method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="questionId" value="${question.id}">
+                                    <label for="commentContent-question">Comment</label>
+                                    <textarea class="form-control" id="commentContent-question" name="commentContent" rows="3" required="true"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Post</button>
+                            </form>
+                        </div>
+                    </div>
+                    <hr />
                 </div>
+                <h3>Answers</h3>
                 <div class="answer-list">
                     <c:forEach items="${question.getAnswers().getAnswers()}" var="answer">
                         <div class="answer-details">
@@ -107,6 +133,32 @@
                                         </c:choose>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="comment-container">
+                            <div class="comment-list">
+                                <c:forEach items="${answer.comments.comments}" var="comment">
+                                    <div class="comment-details">
+                                        <div class="author">
+                                            <p class="author-username">${comment.user.username}</p>
+                                        </div>
+                                        <p class="comment-content">${comment.content}</p>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            <label for="openAnswerComment-${answer.id}" class="btn-open-label"><i class="far fa-comment"></i></label>
+                            <input type="checkbox" id="openAnswerComment-${answer.id}" class="btn-open" />
+                            <div class="openable">
+                                <form action="/comment/answer" method="post">
+                                    <div class="form-group">
+                                        <input type="hidden" name="questionId" value="${question.id}">
+                                        <input type="hidden" name="answerId" value="${answer.id}">
+                                        <label for="commentContent-${answer.id}">Comment</label>
+                                        <textarea class="form-control" id="commentContent-${answer.id}" name="commentContent" rows="3" required="true"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Post</button>
+                                </form>
                             </div>
                         </div>
                         <hr />
