@@ -50,14 +50,16 @@ public class StatisticService {
     }
 
     public int getNbAnswers() {
-        return 0; // TODO
+        return answerRepository.getTotalAnswer();
     }
 
     public int getNbComments() {
-        return 0; // TODO
+        return answerCommentRepository.getTotalAnswerComment() +
+                questionCommentRepository.getTotalQuestionCommentRepository();
     }
 
     public int getNbVotes() {
-        return 0; // TODO
+        return answerVoteRepository.getTotalAnswerVoteRepository() +
+                questionVoteRepository.getTotalQuestionVoteRepository();
     }
 }

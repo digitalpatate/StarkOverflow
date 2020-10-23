@@ -115,6 +115,20 @@ public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepos
     }
 
     @Override
+    public int getTotalAnswer() {
+        int nbAnswer = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalAnswer FROM answers",null);
+            if(resultSet.next()) {
+                nbAnswer = resultSet.getInt("totalAnswer");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbAnswer;
+    }
+
+    @Override
     public Answer resultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Answer(
                 new AnswerId(resultSet.getString("answer_id")),

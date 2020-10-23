@@ -22,4 +22,9 @@ public class InMemoryQuestionVoteRepository extends InMemoryRepository<Vote,Vote
     public long getNbVotesOfQuestion(QuestionId questionId) {
         return 0;
     }
+
+    @Override
+    public int getTotalQuestionVoteRepository() {
+        return 0;
+    }
 }

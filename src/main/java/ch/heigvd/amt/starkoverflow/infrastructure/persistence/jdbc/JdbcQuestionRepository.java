@@ -195,7 +195,16 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
 
     @Override
     public int getTotalQuestion() {
-        return 0;
+        int nbQuestion = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalQuestion FROM questions",null);
+            if(resultSet.next()) {
+                nbQuestion = resultSet.getInt("totalQuestion");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbQuestion;
     }
 
     @Override

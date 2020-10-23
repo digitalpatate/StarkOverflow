@@ -51,6 +51,20 @@ public class JdbcQuestionCommentRepository extends JdbcRepository implements IQu
     }
 
     @Override
+    public int getTotalQuestionCommentRepository() {
+        int nbQuestionComment = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalQuestionComment FROM question_comments",null);
+            if(resultSet.next()) {
+                nbQuestionComment = resultSet.getInt("totalQuestionComment");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbQuestionComment;
+    }
+
+    @Override
     public Comment save(Comment entity) {
         super.insert("question_comments", Arrays.asList(
                 "comment_id",

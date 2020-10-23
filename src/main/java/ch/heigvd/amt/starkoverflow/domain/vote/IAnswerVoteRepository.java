@@ -12,4 +12,6 @@ import java.util.Collection;
 public interface IAnswerVoteRepository extends IRepository<Vote, VoteId> {
     Vote userVoteOnAnswer(UserId viewer, AnswerId answerId);
     long getNbVotesOfAnswer(AnswerId answerId);
+
+    int getTotalAnswerVoteRepository();
 }

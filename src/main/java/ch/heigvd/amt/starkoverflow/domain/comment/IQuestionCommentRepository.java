@@ -9,4 +9,6 @@ import java.util.Collection;
 public interface IQuestionCommentRepository extends IRepository<Comment, CommentId> {
     Collection<Comment> find(CommentQuery query);
     Collection<Comment> getCommentsOnQuestion(QuestionId questionId);
+
+    int getTotalQuestionCommentRepository();
 }

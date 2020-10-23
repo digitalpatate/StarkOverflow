@@ -66,6 +66,20 @@ public class JdbcAnswerCommentRepository extends JdbcRepository implements IAnsw
     }
 
     @Override
+    public int getTotalAnswerComment() {
+        int nbAnswerComment = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalAnswerComment FROM answer_comments",null);
+            if(resultSet.next()) {
+                nbAnswerComment = resultSet.getInt("totalAnswerComment");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbAnswerComment;
+    }
+
+    @Override
     public void remove(CommentId id) {
         super.remove("answer_comments", "comment_id", id);
     }
