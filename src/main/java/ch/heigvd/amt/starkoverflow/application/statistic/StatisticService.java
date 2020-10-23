@@ -1,6 +1,12 @@
 package ch.heigvd.amt.starkoverflow.application.statistic;
 
+import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
+import ch.heigvd.amt.starkoverflow.domain.comment.IAnswerCommentRepository;
+import ch.heigvd.amt.starkoverflow.domain.comment.IQuestionCommentRepository;
+import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -17,13 +23,22 @@ public class StatisticService {
     IUserRepository userRepository;
 
     @Inject @Named("JdbcQuestionRepository")
-    IUserRepository questionRepository;
+    IQuestionRepository questionRepository;
 
     @Inject @Named("JdbcAnswerRepository")
-    IUserRepository answerRepository;
+    IAnswerRepository answerRepository;
 
-    @Inject @Named("JdbcCommentRepository")
-    IUserRepository commentRepository;
+    @Inject @Named("JdbcAnswerCommentRepository")
+    IAnswerCommentRepository answerCommentRepository;
+
+    @Inject @Named("JdbcQuestionCommentRepository")
+    IQuestionCommentRepository questionCommentRepository;
+
+    @Inject @Named("JdbcAnswerVoteRepository")
+    IAnswerVoteRepository answerVoteRepository;
+
+    @Inject @Named("JdbcQuestionVoteRepository")
+    IQuestionVoteRepository questionVoteRepository;
 
 
     public int getNbUsers() {
@@ -31,7 +46,7 @@ public class StatisticService {
     }
 
     public int getNbQuestions() {
-        return 0;
+        return questionRepository.getTotalQuestion();
     }
 
     public int getNbAnswers() {

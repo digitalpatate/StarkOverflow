@@ -194,6 +194,11 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
     }
 
     @Override
+    public int getTotalQuestion() {
+        return 0;
+    }
+
+    @Override
     public Question save(Question entity) {
         super.insert("questions",
                 Arrays.asList(

@@ -83,7 +83,7 @@ public class JdbcUserRepository extends JdbcRepository implements IUserRepositor
     public int getTotalUser() {
         int nbUser = -1;
         try {
-            ResultSet resultSet = executeQuery("SELECT COUNT(*) AS totalUser FROM users").getResultSet();
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalUser FROM users",null);
             if(resultSet.next()) {
                 nbUser = resultSet.getInt("totalUser");
             }
