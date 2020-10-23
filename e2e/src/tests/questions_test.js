@@ -29,10 +29,10 @@ Scenario('Le champ contenu est obligatoire', (I, questionPage) => {
 Scenario('Il est possible de poster une question', async(I, questionPage,registerPage,loginPage) => {
     I.amOnPage("/register")
     registerPage.sendForm('test2@test.com','showman','https://contacts.heig-vd.ch/picture/87.jpg','test firstname','test lastname','1234')
-    //await new Promise(r => setTimeout(r, 5000));
+
     I.amOnPage('/login');
     await loginPage.sendForm('test2@test.com','1234');
-    //await new Promise(r => setTimeout(r, 5000));
+
     I.amOnPage('/');
 
 
