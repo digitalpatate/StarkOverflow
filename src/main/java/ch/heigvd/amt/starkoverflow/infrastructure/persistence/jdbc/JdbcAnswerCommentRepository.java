@@ -50,19 +50,18 @@ public class JdbcAnswerCommentRepository extends JdbcRepository implements IAnsw
 
     @Override
     public Collection<Comment> getCommentsOnAnswer(AnswerId answerId) {
-        PreparedStatement preparedStatement = super.selectWhere("answer_comments", "fk_answer", answerId.asString());
+        ResultSet res = super.selectWhere("answer_comments", "fk_answer", answerId.asString());
 
         Collection<Comment> commentsFound = new ArrayList<>();
 
         try {
-            ResultSet res = preparedStatement.executeQuery();
-
             while (res.next()) {
                 commentsFound.add(resultSetToEntity(res));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         return commentsFound;
     }
 

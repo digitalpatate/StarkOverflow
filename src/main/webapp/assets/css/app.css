@@ -336,6 +336,7 @@ form.dropdown-item > .btn.btn-link {
     display: flex;
     flex: 1 1;
     flex-direction: column;
+    margin-left: 20px;
 }
 
 .comment-container .btn-open, .comment-container .btn-open-label {

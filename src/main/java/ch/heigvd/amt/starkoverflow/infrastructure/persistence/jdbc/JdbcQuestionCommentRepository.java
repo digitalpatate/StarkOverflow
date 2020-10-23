@@ -36,13 +36,11 @@ public class JdbcQuestionCommentRepository extends JdbcRepository implements IQu
 
     @Override
     public Collection<Comment> getCommentsOnQuestion(QuestionId questionId) {
-        PreparedStatement preparedStatement = super.selectWhere("question_comments", "fk_question", questionId.asString());
+        ResultSet res = super.selectWhere("question_comments", "fk_question", questionId.asString());
 
         Collection<Comment> commentsFound = new ArrayList<>();
 
         try {
-            ResultSet res = preparedStatement.executeQuery();
-
             while (res.next()) {
                 commentsFound.add(resultSetToEntity(res));
             }
