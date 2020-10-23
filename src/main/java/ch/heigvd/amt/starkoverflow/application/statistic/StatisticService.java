@@ -16,7 +16,33 @@ public class StatisticService {
     @Inject @Named("JdbcUserRepository")
     IUserRepository userRepository;
 
+    @Inject @Named("JdbcQuestionRepository")
+    IUserRepository questionRepository;
+
+    @Inject @Named("JdbcAnswerRepository")
+    IUserRepository answerRepository;
+
+    @Inject @Named("JdbcCommentRepository")
+    IUserRepository commentRepository;
+
+
     public int getNbUsers() {
         return userRepository.getTotalUser();
+    }
+
+    public int getNbQuestions() {
+        return 0;
+    }
+
+    public int getNbAnswers() {
+        return 0; // TODO
+    }
+
+    public int getNbComments() {
+        return 0; // TODO
+    }
+
+    public int getNbVotes() {
+        return 0; // TODO
     }
 }
