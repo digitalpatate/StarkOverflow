@@ -3,7 +3,7 @@
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags" %>
 <template:defaultLayout title="Home">
     <div class="container">
-        <div class="row">
+        <div class="row box-content">
             <div class="col">
                 <h2>Post your question</h2>
                 <form action="/questions" method="post">

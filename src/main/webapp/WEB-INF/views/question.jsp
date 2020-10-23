@@ -4,7 +4,7 @@
 <template:defaultLayout title="Home">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="box-content col-8">
                 <div class="question-details">
                     <h2 class="question-title">${question.title}</h2>
                     <ul class="tag-list">
