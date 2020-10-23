@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,7 +32,7 @@ public class VoteService {
     @Inject @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
 
-    public Vote createAnswerVote(CreateAnswerVoteCommand command) throws NotFoundException {
+    public Vote createAnswerVote(CreateAnswerVoteCommand command) throws IllegalArgumentException {
         Vote vote = command.createEntity();
         UserId userId = new UserId(command.getUserId());
         AnswerId answerId = new AnswerId(command.getAnswerId());
