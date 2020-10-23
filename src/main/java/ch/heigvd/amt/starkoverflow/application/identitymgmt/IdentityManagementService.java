@@ -31,8 +31,7 @@ public class IdentityManagementService {
             throw new RegistrationFailedException("Username is already used!");
         }
 
-        //try{
-            User newUser = User.builder()
+        User newUser = User.builder()
                 .username(command.getUsername())
                 .email(command.email)
                 .encryptedPassword(command.clearTextPassword)
@@ -41,11 +40,7 @@ public class IdentityManagementService {
                 .profilePictureURL(command.profilePicture)
                 .build();
 
-            userRepository.save(newUser);
-        /*} catch (Exception e) {
-            System.out.println("FAIL : save failed");
-            throw new RegistrationFailedException(e.getMessage());
-        }*/
+        userRepository.save(newUser);
     }
 
     public UserDTO authenticate(AuthenticateCommand command) throws AuthenticationFailedException {
