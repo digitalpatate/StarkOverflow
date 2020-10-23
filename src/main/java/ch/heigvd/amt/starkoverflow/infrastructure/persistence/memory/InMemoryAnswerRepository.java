@@ -6,6 +6,7 @@ import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
+import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -29,6 +30,11 @@ public class InMemoryAnswerRepository extends InMemoryRepository<Answer,AnswerId
     @Override
     public void accept(AnswerId answerId) {
 
+    }
+
+    @Override
+    public Collection<Answer> getByQuestionId(QuestionId questionId) {
+        return null;
     }
 
 }

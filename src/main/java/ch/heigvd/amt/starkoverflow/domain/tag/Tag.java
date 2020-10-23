@@ -4,7 +4,7 @@ import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import lombok.Data;
 
 @Data
-public class Tag implements IEntity<Tag, TagId> {
+public class Tag implements IEntity {
     private TagId id;
     private String name;
     private String color;
@@ -20,10 +20,5 @@ public class Tag implements IEntity<Tag, TagId> {
         this.name = name;
         this.color = color;
     }
-
-    //TODO complèter la fonction
-    @Override
-    public Tag deepClone(){
-        return null;
-    }
 }
+

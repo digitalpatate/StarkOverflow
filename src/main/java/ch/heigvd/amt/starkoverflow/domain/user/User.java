@@ -16,7 +16,7 @@ import static ch.heigvd.amt.starkoverflow.infrastructure.security.argon2.Paramet
 @Setter
 @EqualsAndHashCode
 @Builder(toBuilder = true)
-public class User implements IEntity<User, UserId> {
+public class User implements IEntity {
 
 
     private UserId id;
@@ -30,11 +30,6 @@ public class User implements IEntity<User, UserId> {
     private String encryptedPassword;
 
     private Date registrationDate;
-
-    @Override
-    public User deepClone(){
-        return this.toBuilder().id(new UserId(id.asString())).build();
-    }
 
     public User(UserId id,String username, String email, String password, String profilePictureURL, String firstname, String lastname) {
         this.id = id;

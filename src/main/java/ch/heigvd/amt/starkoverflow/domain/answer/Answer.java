@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
-public class Answer implements IEntity<Answer, AnswerId>, ICommentable, IVotable {
+public class Answer implements IEntity, IVotable, ICommentable {
     private AnswerId id;
     private String content;
     private Date creationDate;
@@ -39,10 +39,4 @@ public class Answer implements IEntity<Answer, AnswerId>, ICommentable, IVotable
         this.questionId = questionId;
     }
 
-
-    //TODO complèter la fonction
-    @Override
-    public Answer deepClone(){
-        return null;
-    }
 }

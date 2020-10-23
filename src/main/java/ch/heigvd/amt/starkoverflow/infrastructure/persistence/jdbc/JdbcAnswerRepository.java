@@ -9,8 +9,10 @@ import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.user.User;
 import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc.utils.QueryBuilder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,6 +20,7 @@ import javax.inject.Named;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
@@ -82,13 +85,33 @@ public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepos
 
     @Override
     public Optional<Answer> findById(AnswerId id) {
-        return super.find("answers", "answer_id", id.asString())
-                    .map(entity -> (Answer) entity);
+        Optional<IEntity> answer =  super.find("answers", "answer_id", id.asString());
+
+        return answer.map(entity -> (Answer) entity);
+
+
     }
 
     @Override
     public Collection<Answer> findAll() {
         return null;
+    }
+
+    @SneakyThrows
+    @Override
+    public Collection<Answer> getByQuestionId(QuestionId questionId) {
+        String query = new QueryBuilder().select("*").from("answers").where("fk_question","=").build();
+
+        ResultSet res = super.safeExecuteQuery(query, Arrays.asList(questionId.asString()));
+
+        Collection<Answer> found = new ArrayList<>();
+
+        while (res.next()){
+
+            found.add(this.resultSetToEntity(res));
+        }
+
+        return found;
     }
 
     @Override

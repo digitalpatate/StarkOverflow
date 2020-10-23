@@ -14,6 +14,7 @@ import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.comment.Comment;
 import ch.heigvd.amt.starkoverflow.domain.comment.IAnswerCommentRepository;
 import ch.heigvd.amt.starkoverflow.domain.comment.IQuestionCommentRepository;
+import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
@@ -45,6 +46,9 @@ public class QuestionService {
     @Inject @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
 
+    @Inject @Named("JdbcAnswerRepository")
+    private IAnswerRepository answerRepository;
+
     @Inject @Named("JdbcUserRepository")
     private IUserRepository userRepository;
 
@@ -71,14 +75,6 @@ public class QuestionService {
 
         return question;
     }
-
-    /*public QuestionsDTO getQuestion(QuestionQuery query){
-        Collection<Question> questions = questionRepository.find(query);
-
-        List<QuestionDTO> questionsDTO = questions.stream().map(question -> QuestionDTO.builder().build()).collect(Collectors.toList());
-
-        return QuestionsDTO.builder().questions(questionsDTO).build();
-    }*/
 
     public QuestionDTO getQuestion(QuestionId id, UserId viewer) {
         Optional<Question> oQuestion = questionRepository.findById(id);
@@ -136,7 +132,7 @@ public class QuestionService {
     }
 
     public AnswersDTO getQuestionAnswers(QuestionId questionId, UserId viewer) {
-        Collection<Answer> answers = questionRepository.getQuestionAnswers(questionId);
+        Collection<Answer> answers = answerRepository.getByQuestionId(questionId);
 
         List<AnswerDTO> answersDTO = answers
                 .stream()
@@ -231,6 +227,26 @@ public class QuestionService {
 
     public QuestionsDTO getQuestionsByAuthor(String authorId) {
         Collection<Question> questions = questionRepository.findByAuthor(authorId);
+
+        List<QuestionDTO> questionsDTO = questions
+                .stream()
+                .map(question -> QuestionDTO.builder()
+                        .id(question.getId().asString())
+                        .title(question.getTitle())
+                        .content(question.getContent())
+                        .tags(getQuestionTags(question.getId()))
+                        .build())
+                .collect(Collectors.toList());
+
+        return QuestionsDTO.builder().questions(questionsDTO).build();
+    }
+
+    public QuestionsDTO getQuestionsByTag(String tag) {
+        Collection<Question> questions = questionRepository.findByTag(tag);
+
+        if (questions == null) {
+            return null;
+        }
 
         List<QuestionDTO> questionsDTO = questions
                 .stream()

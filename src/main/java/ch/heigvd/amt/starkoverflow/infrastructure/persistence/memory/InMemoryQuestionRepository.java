@@ -31,13 +31,14 @@ public class InMemoryQuestionRepository extends InMemoryRepository<Question, Que
         return null;
     }
 
+
     @Override
-    public Collection<Answer> getQuestionAnswers(QuestionId questionId) {
+    public Collection<Question> findByAuthor(String authorId) {
         return null;
     }
 
     @Override
-    public Collection<Question> findByAuthor(String authorId) {
+    public Collection<Question> findByTag(String authorId) {
         return null;
     }
 

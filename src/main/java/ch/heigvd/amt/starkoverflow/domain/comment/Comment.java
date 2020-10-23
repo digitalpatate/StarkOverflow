@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class Comment implements IEntity<Comment,CommentId> {
+public class Comment implements IEntity{
 
     private CommentId id;
     private String content;
@@ -36,11 +36,5 @@ public class Comment implements IEntity<Comment,CommentId> {
         this.author = author;
         this.id = id;
         this.commentableId = commentable.getId();
-    }
-
-    //TODO complèter la fonction
-    @Override
-    public Comment deepClone(){
-        return null;
     }
 }
