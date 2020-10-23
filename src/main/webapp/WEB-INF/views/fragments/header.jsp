@@ -44,7 +44,7 @@
         <div class="row">
             <c:choose>
                 <c:when test="${errors != null}">
-                    <div class="alert alert-danger" role="alert">
+                    <div id="notification" class="alert alert-danger" role="alert">
                             ${errors}
                     </div>
                 </c:when>
