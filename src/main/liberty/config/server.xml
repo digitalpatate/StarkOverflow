@@ -14,10 +14,10 @@
     <configuration>
         <serverStartTimeout>120</serverStartTimeout>
     </configuration>
-    <webApplication location="starkOverflow.war" contextRoot="/"/>
-    <httpEndpoint host="*"
-                  httpPort="9080"
-                  httpsPort="9443" />
+    <httpDispatcher enableWelcomePage="false" />
+
+    <webApplication name="root-context" id="root-context" location="starkOverflow.war" contextRoot="/"/>
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />
 
     <dataSource jndiName="jdbc/postgresql">
         <jdbcDriver libraryRef="postgresql-library"/>
