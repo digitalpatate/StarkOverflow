@@ -17,4 +17,6 @@ public interface IAnswerRepository extends IRepository<Answer, AnswerId> {
     void accept(AnswerId answerId);
 
     Collection<Answer> getByQuestionId(QuestionId questionId);
+
+    int getTotalAnswer();
 }

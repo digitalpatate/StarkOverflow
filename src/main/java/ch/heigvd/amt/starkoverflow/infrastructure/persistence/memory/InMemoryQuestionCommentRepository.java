@@ -24,4 +24,9 @@ public class InMemoryQuestionCommentRepository extends InMemoryRepository<Commen
     public Collection<Comment> getCommentsOnQuestion(QuestionId questionId) {
         return null;
     }
+
+    @Override
+    public int getTotalQuestionCommentRepository() {
+        return 0;
+    }
 }

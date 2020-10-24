@@ -37,4 +37,9 @@ public class InMemoryAnswerRepository extends InMemoryRepository<Answer,AnswerId
         return null;
     }
 
+    @Override
+    public int getTotalAnswer() {
+        return 0;
+    }
+
 }
