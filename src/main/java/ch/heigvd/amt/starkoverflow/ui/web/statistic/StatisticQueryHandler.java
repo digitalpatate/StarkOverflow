@@ -24,8 +24,16 @@ public class StatisticQueryHandler extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //StatisticsDTO statisticsDTO = statisticService.getStatistic(StatisticQuery.builder().build());
-        //request.setAttribute("statistics", statisticsDTO.getStatistics());
+        int nbUsers = statisticService.getNbUsers();
+        int nbQuestions = statisticService.getNbQuestions();
+        int nbAnswers = statisticService.getNbAnswers();
+        int nbComments = statisticService.getNbComments();
+        int nbVotes = statisticService.getNbVotes();
+        request.setAttribute("nbUsers", nbUsers);
+        request.setAttribute("nbQuestions", nbQuestions);
+        request.setAttribute("nbAnswers", nbAnswers);
+        request.setAttribute("nbComments", nbComments);
+        request.setAttribute("nbVotes", nbVotes);
         request.getRequestDispatcher("/WEB-INF/views/statistic.jsp").forward(request, response);
     }
 

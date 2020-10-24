@@ -26,4 +26,9 @@ public class InMemoryAnswerVoteRepository extends InMemoryRepository<Vote,VoteId
         return 0;
     }
 
+    @Override
+    public int getTotalAnswerVoteRepository() {
+        return 0;
+    }
+
 }

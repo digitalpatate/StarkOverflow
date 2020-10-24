@@ -51,4 +51,9 @@ public class InMemoryQuestionRepository extends InMemoryRepository<Question, Que
     public boolean hasAcceptedAnswer(QuestionId questionId) {
         return false;
     }
+
+    @Override
+    public int getTotalQuestion() {
+        return 0;
+    }
 }

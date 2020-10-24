@@ -102,6 +102,20 @@ public class JdbcQuestionVoteRepository extends JdbcRepository implements IQuest
     }
 
     @Override
+    public int getTotalQuestionVoteRepository() {
+        int nbQuestionVote = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalQuestionVote FROM question_votes",null);
+            if(resultSet.next()) {
+                nbQuestionVote = resultSet.getInt("totalQuestionVote");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbQuestionVote;
+    }
+
+    @Override
     public Vote resultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Vote(
                 new VoteId(resultSet.getString("vote_id")),

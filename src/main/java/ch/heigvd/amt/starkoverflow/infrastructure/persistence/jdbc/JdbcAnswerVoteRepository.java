@@ -102,6 +102,20 @@ public class JdbcAnswerVoteRepository extends JdbcRepository implements IAnswerV
     }
 
     @Override
+    public int getTotalAnswerVoteRepository() {
+        int nbAnswerVote = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalAnswerVote FROM answer_votes",null);
+            if(resultSet.next()) {
+                nbAnswerVote = resultSet.getInt("totalAnswerVote");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbAnswerVote;
+    }
+
+    @Override
     public Vote resultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Vote(
                 new VoteId(resultSet.getString("vote_id")),
