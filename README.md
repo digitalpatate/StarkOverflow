@@ -40,6 +40,14 @@ services:
      - "8080:9080"
 ```
 
+### e2e testing
+
+[See dedicated documentation ](./e2e/README.md)
+
+
+### Load testing
+
+[See dedicated documentation ](./loadTest/README.md)
 
 (!) For now there is only the _latest_ tag available for the image
 
