@@ -31,7 +31,7 @@ Scenario('Il est possible de poster une question', async(I, questionPage,registe
     registerPage.sendForm('test2@test.com','showman','https://contacts.heig-vd.ch/picture/87.jpg','test firstname','test lastname','1234')
 
     I.amOnPage('/login');
-    await loginPage.sendForm('test2@test.com','1234');
+     loginPage.sendForm('test2@test.com','1234');
 
     I.amOnPage('/');
 

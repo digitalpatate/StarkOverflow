@@ -71,7 +71,7 @@
                                     <label for="commentContent-question">Comment</label>
                                     <textarea class="form-control" id="commentContent-question" name="commentContent" rows="3" required="true"></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Post</button>
+                                <input id="submitComment" type="submit" class="btn btn-primary" value="Post">
                             </form>
                         </div>
                     </div>
@@ -157,7 +157,7 @@
                                         <label for="commentContent-${answer.id}">Comment</label>
                                         <textarea class="form-control" id="commentContent-${answer.id}" name="commentContent" rows="3" required="true"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Post</button>
+                                    <input id="submitCommentAnswer" type="submit" class="btn btn-primary" value="Post">
                                 </form>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                         <label for="answerContent">Answer</label>
                         <textarea class="form-control" id="answerContent" name="answerContent" rows="3" required="true"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Post</button>
+                    <input id="submitAnswer" type="submit" class="btn btn-primary" value="Post">
                 </form>
 
             </div>
