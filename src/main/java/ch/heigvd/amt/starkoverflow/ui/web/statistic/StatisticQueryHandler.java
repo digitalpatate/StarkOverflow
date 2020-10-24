@@ -30,10 +30,10 @@ public class StatisticQueryHandler extends HttpServlet {
         int nbComments = statisticService.getNbComments();
         int nbVotes = statisticService.getNbVotes();
         request.setAttribute("nbUsers", nbUsers);
-        request.setAttribute("nbQuestions", nbUsers); //TODO
-        request.setAttribute("nbAnswers", nbUsers); //TODO
-        request.setAttribute("nbComments", nbUsers); //TODO
-        request.setAttribute("nbVotes", nbUsers); //TODO
+        request.setAttribute("nbQuestions", nbQuestions);
+        request.setAttribute("nbAnswers", nbAnswers);
+        request.setAttribute("nbComments", nbComments);
+        request.setAttribute("nbVotes", nbVotes);
         request.getRequestDispatcher("/WEB-INF/views/statistic.jsp").forward(request, response);
     }
 
