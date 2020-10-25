@@ -22,7 +22,9 @@ exports.config = {
     registerPage: "./pages/register.js",
 
     questionPage: "./pages/question.js",
-    answerPage: "./pages/answer.js"
+    answerPage: "./pages/answer.js",
+    answer_commentPage: "./pages/answer_comment.js",
+    question_commentPage: "./pages/question_comment.js"
 
   },
   bootstrap: null,
