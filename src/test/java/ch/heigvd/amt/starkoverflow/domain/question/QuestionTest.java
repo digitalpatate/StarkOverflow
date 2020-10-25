@@ -1,7 +1,6 @@
-package ch.heigvd.amt.starkoverflow.domain.user;
+package ch.heigvd.amt.starkoverflow.domain.question;
 
-import ch.heigvd.amt.starkoverflow.domain.question.Question;
-import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

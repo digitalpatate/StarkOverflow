@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.domain.user;
+package ch.heigvd.amt.starkoverflow.domain;
 
 import ch.heigvd.amt.starkoverflow.domain.Id;
 

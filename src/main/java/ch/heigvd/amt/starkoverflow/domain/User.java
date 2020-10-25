@@ -1,12 +1,8 @@
-package ch.heigvd.amt.starkoverflow.domain.user;
-
-import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import javax.validation.constraints.*;
+package ch.heigvd.amt.starkoverflow.domain;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import lombok.*;
-import org.apache.commons.validator.Arg;
 
 import java.util.Date;
 

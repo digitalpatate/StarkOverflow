@@ -2,7 +2,7 @@ package ch.heigvd.amt.starkoverflow.domain.comment;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.Id;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import lombok.Data;
 
 import java.util.Date;

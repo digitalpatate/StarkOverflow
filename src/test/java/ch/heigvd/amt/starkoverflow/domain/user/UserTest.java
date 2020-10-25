@@ -1,5 +1,6 @@
 package ch.heigvd.amt.starkoverflow.domain.user;
 
+import ch.heigvd.amt.starkoverflow.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,9 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserTest {
-    private User alice;
-    private User.UserBuilder userBuilder;
-
     private final String
             username = "Alice",
             email = "alice@wonderland.com",
@@ -19,6 +17,10 @@ public class UserTest {
             firstname = "Alice",
             lastname = "Wonderland",
             EMPTY = "";
+
+    private User alice;
+    private User.UserBuilder userBuilder;
+
 
 
     @BeforeEach
