@@ -48,6 +48,30 @@ public class QueryBuilder {
         return this;
 
     }
+
+    public QueryBuilder update(String tableName){
+        query.append("UPDATE ").append(tableName).append(" ");
+        return this;
+    }
+
+    public QueryBuilder set(String field, String value){
+        query.append("SET ").append(field).append("=").append(value).append(" ");
+        return this;
+    }
+
+    public QueryBuilder count(String... fields){
+        query.append("COUNT").append("(");
+        for (String field : fields){
+            query.append(field).append(", ");
+        }
+        strikeNChar(2);
+        query.append(") ");
+        return this;
+    }
+    public QueryBuilder as(String alias){
+        query.append("AS ").append(alias).append(" ");
+        return this;
+    }
     public String build(){
         Logger.getAnonymousLogger().info(query.toString());
         return query.toString();
