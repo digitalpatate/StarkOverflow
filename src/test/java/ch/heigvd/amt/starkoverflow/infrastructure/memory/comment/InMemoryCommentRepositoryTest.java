@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.comment;
+package ch.heigvd.amt.starkoverflow.infrastructure.memory.comment;
 
 import ch.heigvd.amt.starkoverflow.domain.comment.ICommentable;
 import ch.heigvd.amt.starkoverflow.domain.comment.Comment;

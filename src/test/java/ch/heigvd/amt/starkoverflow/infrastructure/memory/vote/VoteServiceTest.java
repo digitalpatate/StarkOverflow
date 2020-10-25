@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.vote;
+package ch.heigvd.amt.starkoverflow.infrastructure.memory.vote;
 
 import ch.heigvd.amt.starkoverflow.application.Vote.CreateAnswerVoteCommand;
 import ch.heigvd.amt.starkoverflow.application.Vote.VoteService;

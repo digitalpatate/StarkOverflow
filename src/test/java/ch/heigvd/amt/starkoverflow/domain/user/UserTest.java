@@ -1,6 +1,4 @@
-package ch.heigvd.amt.starkoverflow.user;
-
-import ch.heigvd.amt.starkoverflow.domain.user.User;
+package ch.heigvd.amt.starkoverflow.domain.user;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.answer;
+package ch.heigvd.amt.starkoverflow.infrastructure.memory.answer;
 
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;

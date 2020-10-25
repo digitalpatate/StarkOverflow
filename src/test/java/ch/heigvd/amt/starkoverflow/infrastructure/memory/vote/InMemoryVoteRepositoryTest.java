@@ -1,4 +1,4 @@
-package ch.heigvd.amt.starkoverflow.vote;
+package ch.heigvd.amt.starkoverflow.infrastructure.memory.vote;
 
 import ch.heigvd.amt.starkoverflow.domain.vote.IVotable;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
