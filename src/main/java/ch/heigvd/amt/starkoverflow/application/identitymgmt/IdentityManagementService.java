@@ -48,7 +48,7 @@ public class IdentityManagementService {
                 .orElseThrow(() -> new NotFoundException("Cannot find user with this email"));
 
 
-        boolean success = user.toBuilder().verifyPassword(command.getClearTextPassword(), user.getEncryptedPassword());  //user.toBuilder().verifyPassword(command.getClearTextPassword(), user.getEncryptedPassword());
+        boolean success = user.toBuilder().verifyPassword(command.getClearTextPassword());  //user.toBuilder().verifyPassword(command.getClearTextPassword(), user.getEncryptedPassword());
         if(!success){
             throw new AuthenticationFailedException("Verification of credentials failed!");
         }
