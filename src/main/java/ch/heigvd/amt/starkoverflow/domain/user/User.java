@@ -48,9 +48,7 @@ public class User implements IEntity {
         private Argon2 argon2;
         public UserBuilder hashPassword(String plainPassword){
 
-            if(plainPassword == null || plainPassword.isEmpty()){
-                throw new java.lang.IllegalArgumentException("mot de passe vide");
-            }
+            assertNotNull(plainPassword, "Password");
 
             argon2 = Argon2Factory.create(
                     Argon2Factory.Argon2Types.ARGON2id,
@@ -81,8 +79,22 @@ public class User implements IEntity {
                 id = new UserId();
             }
             hashPassword(encryptedPassword);
-            User newUser = new User(id,username ,email, encryptedPassword, profilePictureURL, firstname, lastname);
+            User newUser = new User(
+                    id,
+                    assertNotNull(username,"username"),
+                    assertNotNull(email,"email"),
+                    encryptedPassword,
+                    assertNotNull(profilePictureURL,"profile Picture URL"),
+                    assertNotNull(firstname,"firstname"),
+                    assertNotNull(lastname,"lastname"));
             return newUser;
+        }
+
+        private String assertNotNull(String param, String msg){
+            if(param == null || param.isEmpty()){
+                throw new java.lang.IllegalArgumentException(msg + " is empty !");
+            }
+            return param;
         }
     }
 }
