@@ -1,6 +1,6 @@
 package ch.heigvd.amt.starkoverflow.application.User;
 
-import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 

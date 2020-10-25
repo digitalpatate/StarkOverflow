@@ -2,7 +2,7 @@ package ch.heigvd.amt.starkoverflow.application.question;
 
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import lombok.Builder;
 import lombok.Getter;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory;
 
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
 import ch.heigvd.amt.starkoverflow.domain.vote.VoteId;

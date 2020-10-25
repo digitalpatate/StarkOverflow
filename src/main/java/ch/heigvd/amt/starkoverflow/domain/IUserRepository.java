@@ -1,12 +1,7 @@
-package ch.heigvd.amt.starkoverflow.domain.user;
+package ch.heigvd.amt.starkoverflow.domain;
 
 import ch.heigvd.amt.starkoverflow.application.User.UserQuery;
-import ch.heigvd.amt.starkoverflow.domain.IRepository;
-import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
-import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
-import ch.heigvd.amt.starkoverflow.domain.vote.VoteId;
 
-import javax.ejb.Stateless;
 import java.util.Collection;
 import java.util.Optional;
 

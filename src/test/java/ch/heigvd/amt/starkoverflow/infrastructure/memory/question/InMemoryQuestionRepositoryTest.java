@@ -1,10 +1,8 @@
-package ch.heigvd.amt.starkoverflow.question;
+package ch.heigvd.amt.starkoverflow.infrastructure.memory.question;
 
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryQuestionRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

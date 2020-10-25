@@ -4,7 +4,7 @@ import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;

@@ -4,7 +4,7 @@ import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.comment.IAnswerCommentRepository;
 import ch.heigvd.amt.starkoverflow.domain.comment.IQuestionCommentRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
-import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
+import ch.heigvd.amt.starkoverflow.domain.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import lombok.AllArgsConstructor;
