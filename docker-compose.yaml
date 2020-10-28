@@ -27,3 +27,13 @@ services:
     links:
       - "db:pgsql-server"
 
+
+  web:
+    image: ghcr.io/digitalpatate/starkoverflow:latest
+    container_name: starkoverflow
+    ports:
+      - "9080:9080"
+    volumes:
+      - ./src/main/liberty/config/server.env:/config/server.env
+    depends_on:
+      - db
