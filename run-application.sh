@@ -2,6 +2,6 @@
 set -e
 
 docker-compose pull
-docker-compose up -d
+docker-compose up
 
 docker image prune -a -f
