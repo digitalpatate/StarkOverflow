@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      TZ: 'Europe/Zurich'
+      PGTZ: 'Europe/Zurich'
+    volumes:
+      - ./scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
