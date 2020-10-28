@@ -73,20 +73,20 @@ services:
     networks:
       - backend
 
-# Uncomment to start pgadmin along the database and the webapp
-#  pgadmin:
-#    image: dpage/pgadmin4:latest
-#    restart: always
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: dev@starkoverflow.ch
-#      PGADMIN_DEFAULT_PASSWORD: secret
-#      PGADMIN_LISTEN_PORT: 80
-#    ports:
-#      - "8081:80"
-#    links:
-#      - "db:pgsql-server"
-#    networks:
-#      - backend
+# comment to avoid starting pgadmin along the database and the webapp
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dev@starkoverflow.ch
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8081:80"
+    links:
+      - "db:pgsql-server"
+    networks:
+      - backend
 
 
   web:
@@ -106,6 +106,7 @@ services:
 networks:
   backend:
     external: false
+
 ```
 
 The two images of `Postgres` and `PGAdmin` are located on the Docker Hub whereas the image of the `webapp` is provided by the GitHub Container Registry.  This custom image is automatically built by the Github actions when someone push code on the master branch.
@@ -175,7 +176,7 @@ With this configuration, the variables can be override with environment variable
 
 ### Load testing
 
-[See dedicated documentation ](./loadTest/README.md)
+[See dedicated documentation ](./loadTests/README.md)
 
 (!) For now there is only the _latest_ tag available for the image
 
