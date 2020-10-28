@@ -1,57 +1,133 @@
-# StarkOverflow
 
-> September 2020
+
+<img src="pictures/Readme_gh.png" style="zoom:50%;" />
+
+# **StarkOverflow**
+
+> September - November 2020
+
+Table of contents
+=================
+
+   * [Table of contents](#table-of-contents)
+   * [Introduction](#Introduction)
+   * [Requirements](#Requirements)
+   * [Quick-start](#Quick-start)
+   * [Docker](#Docker)
+* [Launch the project manually](#Launch the project manually)
+     * [Environment variables](#Environment variables)
+   * [Tests](#tests)
+         * [E2E - testing](#E2E - testing)
+         * [Load testing](Load testing)
+   *  [Concept Diagrams](Concept Diagrams)
+     * [Site Map](#Site Map)
+     * [Model](#Model)
+   * [Contributors](#Contributors)
 
 ## Introduction
 
 The purpose of this project is to learn about multi tiered application by creating a simplified version of _Stackoverflow_.
 
-## Quickstart
 
-### Build and run locally
 
-<u>Requirements</u> : 
+## Requirements
 
 - Maven: 3.6.3
 - OpenJDK: 11
+- docker-compose
 
-We just need to run the `build-image.sh` and `run-image.sh` script :
+
+
+## Quick-start
+
+
+
+To run the project, just launch the script.
 
 ```bash
-./build-image.sh && ./run-image.sh
+$ ./run-application.sh
 ```
 
-### Run with docker
+The script will automatically manage the life-cycle of the web application and the database containers.
 
-We can run the application just by executing the latest build:
+## Docker
 
-```bash
-docker run -d -p 8080:9080 ghcr.io/digitalpatate/starkoverflow:latest
-```
-
-Or docker-compose : 
+ All services used in this project have been containerized. They are described by the docker-compose `yaml` file below :
 
 ```yaml
-version: '3'
+version: "3.7"
 services:
-  backend:
-    image: ghcr.io/digitalpatate/starkoverflow
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      TZ: 'Europe/Zurich'
+      PGTZ: 'Europe/Zurich'
+    volumes:
+      - ./docker/database/scripts:/docker-entrypoint-initdb.d
     ports:
-     - "8080:9080"
+      - "5432:5432"
+    networks:
+      - backend
+
+# Uncomment to start pgadmin along the database and the webapp
+#  pgadmin:
+#    image: dpage/pgadmin4:latest
+#    restart: always
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: dev@starkoverflow.ch
+#      PGADMIN_DEFAULT_PASSWORD: secret
+#      PGADMIN_LISTEN_PORT: 80
+#    ports:
+#      - "8081:80"
+#    links:
+#      - "db:pgsql-server"
+#    networks:
+#      - backend
+
+
+  web:
+    image: ghcr.io/digitalpatate/starkoverflow:latest
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: stark_db
+      DB_USER: admin
+      DB_PASSWORD: secret
+    depends_on:
+      - db
+    ports:
+      - "9080:9080"
+    networks:
+      - backend
+networks:
+  backend:
+    external: false
 ```
 
-### e2e testing
+The two images of `Postgres` and `PGAdmin` are located on the Docker Hub whereas the image of the `webapp` is provided by the GitHub Container Registry.  This custom image is automatically built by the Github actions when someone push code on the master branch.
 
-[See dedicated documentation ](./e2e/README.md)
+## Launch the project manually 
 
+First of all make sure to have a database up and ready with the correct configuration. To do so, run the following commands :
 
-### Load testing
+```bash
+$ cd docker/database
+$ docker-compose up -d
+```
 
-[See dedicated documentation ](./loadTest/README.md)
+The related docker-compose file contains only database service and is the very same as previously.
 
-(!) For now there is only the _latest_ tag available for the image
+Then launch liberty server by triggering the goal :
 
-## Environment variables
+```bash
+mvn liberty:dev
+```
+
+### Environment variables
 
 For local dev, we use the openliberty maven plugin and use the default variable name in the server.xml file to setup the database configuration
 
@@ -92,11 +168,28 @@ With this configuration, the variables can be override with environment variable
 
 
 
-## Site Map
+### E2E - testing
+
+[See dedicated documentation ](./e2e/README.md)
+
+
+### Load testing
+
+[See dedicated documentation ](./loadTest/README.md)
+
+(!) For now there is only the _latest_ tag available for the image
+
+
+
+
+
+## Concept Diagrams
+
+### Site Map
 
 ![Site Map](pictures/StarkOverFlow_sitemap.png)
 
- ##  Model
+ ###  Model
 
 ![Domain model](./pictures/domaine-model.png)
 
