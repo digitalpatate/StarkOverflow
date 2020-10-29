@@ -3,12 +3,10 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
-import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
 import ch.heigvd.amt.starkoverflow.domain.vote.VoteId;
-import ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc.utils.QueryBuilder;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import javax.enterprise.context.ApplicationScoped;
@@ -99,6 +97,20 @@ public class JdbcAnswerVoteRepository extends JdbcRepository implements IAnswerV
         }
 
         return nbVotes;
+    }
+
+    @Override
+    public int getTotalAnswerVoteRepository() {
+        int nbAnswerVote = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalAnswerVote FROM answer_votes",null);
+            if(resultSet.next()) {
+                nbAnswerVote = resultSet.getInt("totalAnswerVote");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbAnswerVote;
     }
 
     @Override

@@ -2,6 +2,7 @@ version: '3'
 services:
   db:
     image: postgres:latest
+    container_name: e2e_test_db
     restart: always
     environment:
       POSTGRES_DB: postgres
@@ -13,6 +14,7 @@ services:
       - ./scripts:/docker-entrypoint-initdb.d
   backend:
     image: ghcr.io/digitalpatate/starkoverflow:latest
+    container_name: e2e_test_backend
     environment:
       DB_HOST: db
       DB_PORT: 5432

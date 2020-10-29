@@ -1,12 +1,10 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory;
 
 import ch.heigvd.amt.starkoverflow.application.User.UserQuery;
-import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
-import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.IUserRepository;
+import ch.heigvd.amt.starkoverflow.domain.User;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import java.util.Collection;
@@ -49,6 +47,11 @@ public class InMemoryUserRepository extends InMemoryRepository<User,UserId> impl
     @Override
     public Optional<User> findByUsername(String username) {
         return Optional.empty();
+    }
+
+    @Override
+    public int getTotalUser() {
+        return 0;
     }
 
     @Override

@@ -5,8 +5,8 @@ import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.Authent
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.authenticate.AuthenticationFailedException;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegisterCommand;
 import ch.heigvd.amt.starkoverflow.application.identitymgmt.login.RegistrationFailedException;
-import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
+import ch.heigvd.amt.starkoverflow.domain.IUserRepository;
+import ch.heigvd.amt.starkoverflow.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -48,7 +48,7 @@ public class IdentityManagementService {
                 .orElseThrow(() -> new NotFoundException("Cannot find user with this email"));
 
 
-        boolean success = user.toBuilder().verifyPassword(command.getClearTextPassword(), user.getEncryptedPassword());  //user.toBuilder().verifyPassword(command.getClearTextPassword(), user.getEncryptedPassword());
+        boolean success = user.toBuilder().verifyPassword(command.getClearTextPassword());  //user.toBuilder().verifyPassword(command.getClearTextPassword(), user.getEncryptedPassword());
         if(!success){
             throw new AuthenticationFailedException("Verification of credentials failed!");
         }

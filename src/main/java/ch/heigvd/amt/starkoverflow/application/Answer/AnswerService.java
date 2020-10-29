@@ -2,14 +2,12 @@ package ch.heigvd.amt.starkoverflow.application.Answer;
 
 import ch.heigvd.amt.starkoverflow.application.Answer.dto.AnswerDTO;
 import ch.heigvd.amt.starkoverflow.application.Answer.dto.AnswersDTO;
-import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +17,6 @@ import javax.inject.Named;
 import javax.ws.rs.NotFoundException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor

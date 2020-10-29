@@ -7,10 +7,8 @@ import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc.utils.QueryBuilder;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
@@ -112,6 +110,20 @@ public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepos
         }
 
         return found;
+    }
+
+    @Override
+    public int getTotalAnswer() {
+        int nbAnswer = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalAnswer FROM answers",null);
+            if(resultSet.next()) {
+                nbAnswer = resultSet.getInt("totalAnswer");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbAnswer;
     }
 
     @Override

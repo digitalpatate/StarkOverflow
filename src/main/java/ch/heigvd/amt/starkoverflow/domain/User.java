@@ -1,12 +1,8 @@
-package ch.heigvd.amt.starkoverflow.domain.user;
-
-import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import javax.validation.constraints.*;
+package ch.heigvd.amt.starkoverflow.domain;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import lombok.*;
-import org.apache.commons.validator.Arg;
 
 import java.util.Date;
 
@@ -45,19 +41,10 @@ public class User implements IEntity {
 
 
     public static class UserBuilder {
-        private String hash;
         private Argon2 argon2;
         public UserBuilder hashPassword(String plainPassword){
 
-            if(plainPassword == null || plainPassword.isEmpty()){
-                throw new java.lang.IllegalArgumentException("mot de passe vide");
-            }
-
-            /*
-             * Argon2Types.ARGON2id
-             * salt 32 bytes
-             * Hash length 64 bytes
-             */
+            assertNotNull(plainPassword, "Password");
 
             argon2 = Argon2Factory.create(
                     Argon2Factory.Argon2Types.ARGON2id,
@@ -67,25 +54,20 @@ public class User implements IEntity {
             char[] password = plainPassword.toCharArray();
             try {
 
-                /*
-                 * iterations = 10
-                 * memory = 64m
-                 * parallelism = 1
-                 */
-                hash = argon2.hash(ITERATIONS, MEMORY, PARALLELISM, password);
+                encryptedPassword = argon2.hash(ITERATIONS, MEMORY, PARALLELISM, password);
 
             } finally {
-                // Wipe confidential data
                 argon2.wipeArray(password);
             }
             return this;
         }
-        public boolean verifyPassword(String plainPassword, String hash){
+
+        public boolean verifyPassword(String plainPassword){
             argon2 = Argon2Factory.create(
                     Argon2Factory.Argon2Types.ARGON2id,
                     SALT_LENGTH,
                     HASH_LENGTH);
-            return argon2.verify(hash, plainPassword.toCharArray());
+            return argon2.verify(encryptedPassword, plainPassword.toCharArray());
         }
 
         public User build(){
@@ -93,8 +75,22 @@ public class User implements IEntity {
                 id = new UserId();
             }
             hashPassword(encryptedPassword);
-            User newUser = new User(id,username ,email, hash, profilePictureURL, firstname, lastname);
+            User newUser = new User(
+                    id,
+                    assertNotNull(username,"username"),
+                    assertNotNull(email,"email"),
+                    encryptedPassword,
+                    assertNotNull(profilePictureURL,"profile Picture URL"),
+                    assertNotNull(firstname,"firstname"),
+                    assertNotNull(lastname,"lastname"));
             return newUser;
+        }
+
+        private String assertNotNull(String param, String msg){
+            if(param == null || param.isEmpty()){
+                throw new java.lang.IllegalArgumentException(msg + " is empty !");
+            }
+            return param;
         }
     }
 }

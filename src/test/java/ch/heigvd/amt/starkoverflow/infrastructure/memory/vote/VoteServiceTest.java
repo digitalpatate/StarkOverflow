@@ -1,12 +1,12 @@
-package ch.heigvd.amt.starkoverflow.vote;
+package ch.heigvd.amt.starkoverflow.infrastructure.memory.vote;
 
 import ch.heigvd.amt.starkoverflow.application.Vote.CreateAnswerVoteCommand;
 import ch.heigvd.amt.starkoverflow.application.Vote.VoteService;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
-import ch.heigvd.amt.starkoverflow.domain.user.IUserRepository;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.IUserRepository;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import org.junit.jupiter.api.BeforeEach;

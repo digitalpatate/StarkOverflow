@@ -1,9 +1,9 @@
-package ch.heigvd.amt.starkoverflow.vote;
+package ch.heigvd.amt.starkoverflow.infrastructure.memory.vote;
 
 import ch.heigvd.amt.starkoverflow.domain.vote.IVotable;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.User;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
 import ch.heigvd.amt.starkoverflow.infrastructure.persistence.memory.InMemoryAnswerVoteRepository;
 import org.junit.jupiter.api.BeforeEach;

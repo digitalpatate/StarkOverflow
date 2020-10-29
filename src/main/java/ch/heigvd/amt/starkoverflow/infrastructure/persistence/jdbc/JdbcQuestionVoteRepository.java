@@ -1,11 +1,9 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
-import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
 import ch.heigvd.amt.starkoverflow.domain.vote.VoteId;
@@ -99,6 +97,20 @@ public class JdbcQuestionVoteRepository extends JdbcRepository implements IQuest
         }
 
         return nbVotes;
+    }
+
+    @Override
+    public int getTotalQuestionVoteRepository() {
+        int nbQuestionVote = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalQuestionVote FROM question_votes",null);
+            if(resultSet.next()) {
+                nbQuestionVote = resultSet.getInt("totalQuestionVote");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbQuestionVote;
     }
 
     @Override

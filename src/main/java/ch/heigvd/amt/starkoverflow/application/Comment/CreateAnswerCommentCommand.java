@@ -3,12 +3,7 @@ package ch.heigvd.amt.starkoverflow.application.Comment;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.comment.Comment;
-import ch.heigvd.amt.starkoverflow.domain.comment.CommentId;
-import ch.heigvd.amt.starkoverflow.domain.comment.ICommentable;
-import ch.heigvd.amt.starkoverflow.domain.question.Question;
-import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
-import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import lombok.Builder;
 
 @Builder(toBuilder = true)

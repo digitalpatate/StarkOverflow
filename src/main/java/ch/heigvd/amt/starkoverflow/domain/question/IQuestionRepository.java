@@ -23,4 +23,6 @@ public interface IQuestionRepository extends IRepository<Question,QuestionId> {
     Optional<Answer> getAcceptedAnswer(QuestionId questionId);
 
     boolean hasAcceptedAnswer(QuestionId questionId);
+
+    int getTotalQuestion();
 }
