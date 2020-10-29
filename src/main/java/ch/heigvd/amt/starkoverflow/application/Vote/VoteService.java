@@ -1,5 +1,6 @@
 package ch.heigvd.amt.starkoverflow.application.Vote;
 
+import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
 import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
@@ -8,13 +9,14 @@ import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
-import ch.heigvd.amt.starkoverflow.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,7 +33,7 @@ public class VoteService {
     @Inject @Named("JdbcQuestionRepository")
     private IQuestionRepository questionRepository;
 
-    public Vote createAnswerVote(CreateAnswerVoteCommand command) throws NotFoundException {
+    public Vote createAnswerVote(CreateAnswerVoteCommand command) throws IllegalArgumentException {
         Vote vote = command.createEntity();
         UserId userId = new UserId(command.getUserId());
         AnswerId answerId = new AnswerId(command.getAnswerId());
@@ -41,7 +43,7 @@ public class VoteService {
             // delete his vote
             answerVoteRepository.remove(userVote.getId());
             return null;
-        } else if (answerRepository.findById(answerId).map(answer -> answer.getUserId() == userId).orElse(false)) {
+        } else if (answerRepository.findById(answerId).map(answer -> answer.getUserId().asString().equals(userId.asString())).orElse(false)) {
             throw new IllegalArgumentException("User can't vote on his own answer");
         } else {
             // insert his vote
@@ -59,7 +61,7 @@ public class VoteService {
             // delete his vote
             questionVoteRepository.remove(userVote.getId());
             return null;
-        } else if (questionRepository.findById(questionId).map(question -> question.getAuthor() == userId).orElse(false)) {
+        } else if (questionRepository.findById(questionId).map(question -> question.getAuthor().asString().equals(userId.asString())).orElse(false)) {
             throw new IllegalArgumentException("User can't vote on his own question");
         } else {
             // insert his vote
