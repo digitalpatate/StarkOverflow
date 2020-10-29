@@ -8,7 +8,7 @@ module.exports = {
     },
     submitButton: 'input[type=submit,value=Login]',
 
-    async sendForm(email, password) {
+    sendForm(email, password) {
         I.fillField(this.fields.email, email);
         I.fillField(this.fields.password, password);
         I.click('Login');

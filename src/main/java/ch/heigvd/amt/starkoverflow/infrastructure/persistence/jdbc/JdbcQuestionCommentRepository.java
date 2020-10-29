@@ -2,20 +2,16 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 
 import ch.heigvd.amt.starkoverflow.application.Comment.CommentQuery;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
-import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
-import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.comment.Comment;
 import ch.heigvd.amt.starkoverflow.domain.comment.CommentId;
-import ch.heigvd.amt.starkoverflow.domain.comment.IAnswerCommentRepository;
 import ch.heigvd.amt.starkoverflow.domain.comment.IQuestionCommentRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import lombok.AllArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,6 +44,20 @@ public class JdbcQuestionCommentRepository extends JdbcRepository implements IQu
             throwables.printStackTrace();
         }
         return commentsFound;
+    }
+
+    @Override
+    public int getTotalQuestionCommentRepository() {
+        int nbQuestionComment = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalQuestionComment FROM question_comments",null);
+            if(resultSet.next()) {
+                nbQuestionComment = resultSet.getInt("totalQuestionComment");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbQuestionComment;
     }
 
     @Override

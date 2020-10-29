@@ -4,7 +4,7 @@ import ch.heigvd.amt.starkoverflow.domain.comment.ICommentable;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.vote.IVotable;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -6,10 +6,8 @@ import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagsDTO;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.CreateQuestionCommand;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
-import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 @WebServlet(name="QuestionsCommandHandler", urlPatterns = "/questions")
 public class QuestionsCommandHandler extends HttpServlet {

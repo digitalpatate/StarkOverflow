@@ -3,16 +3,13 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.jdbc;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionQuery;
 import ch.heigvd.amt.starkoverflow.domain.IEntity;
 import ch.heigvd.amt.starkoverflow.domain.answer.Answer;
-import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
-import ch.heigvd.amt.starkoverflow.domain.answer.IAnswerRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import ch.heigvd.amt.starkoverflow.domain.question.Question;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.tag.ITagRepository;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.domain.tag.TagId;
-import ch.heigvd.amt.starkoverflow.domain.user.User;
-import ch.heigvd.amt.starkoverflow.domain.user.UserId;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
@@ -189,6 +186,20 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
         }
 
         return hasAcceptedAnswer;
+    }
+
+    @Override
+    public int getTotalQuestion() {
+        int nbQuestion = -1;
+        try {
+            ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalQuestion FROM questions",null);
+            if(resultSet.next()) {
+                nbQuestion = resultSet.getInt("totalQuestion");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return nbQuestion;
     }
 
     @Override

@@ -62,7 +62,7 @@
                                 </div>
                             </c:forEach>
                         </div>
-                        <label for="openQuestionComment" class="btn-open-label"><i class="far fa-comment"></i></label>
+                        <label for="openQuestionComment" class="btn-open-label"><i id="btnQuestionComment" class="far fa-comment"></i></label>
                         <input type="checkbox" id="openQuestionComment" class="btn-open" />
                         <div class="openable">
                             <form action="/comment/question" method="post">
@@ -71,7 +71,7 @@
                                     <label for="commentContent-question">Comment</label>
                                     <textarea class="form-control" id="commentContent-question" name="commentContent" rows="3" required="true"></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Post</button>
+                                <input id="submitComment" type="submit" class="btn btn-primary" value="Post">
                             </form>
                         </div>
                     </div>
@@ -147,17 +147,17 @@
                                     </div>
                                 </c:forEach>
                             </div>
-                            <label for="openAnswerComment-${answer.id}" class="btn-open-label"><i class="far fa-comment"></i></label>
-                            <input type="checkbox" id="openAnswerComment-${answer.id}" class="btn-open" />
+                            <label for="openAnswerComment" class="btn-open-label"><i id="btnAnswerComment" class="far fa-comment"></i></label>
+                            <input type="checkbox" id="openAnswerComment" class="btn-open" />
                             <div class="openable">
                                 <form action="/comment/answer" method="post">
                                     <div class="form-group">
                                         <input type="hidden" name="questionId" value="${question.id}">
                                         <input type="hidden" name="answerId" value="${answer.id}">
-                                        <label for="commentContent-${answer.id}">Comment</label>
-                                        <textarea class="form-control" id="commentContent-${answer.id}" name="commentContent" rows="3" required="true"></textarea>
+                                        <label for="commentContent-answer">Comment</label>
+                                        <textarea class="form-control" id="commentContent-answer" name="commentContent" rows="3" required="true"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Post</button>
+                                    <input id="submitCommentAnswer" type="submit" class="btn btn-primary" value="Post">
                                 </form>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                         <label for="answerContent">Answer</label>
                         <textarea class="form-control" id="answerContent" name="answerContent" rows="3" required="true"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Post</button>
+                    <input id="submitAnswer" type="submit" class="btn btn-primary" value="Post">
                 </form>
 
             </div>
