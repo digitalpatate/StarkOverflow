@@ -1,10 +1,28 @@
 # How to run load tests
 
-1) first make sure that the application server is started. you can run it with Maven with : ```mvn liberty:stop liberty:clean liberty:dev ```
-2) now that the server is up, make sure the database is up and empty by executing 
-```docker-compose down --v && docker-compose  up``` in ```/docker/database```
-3) you must now have StarkOverflow up and running at ```localhost:9080``` with an empty database.
-4) you can now open and run tests ```/loadTests/[testFileName].jmx``` with JMeter
+## Requirements
+
+- Maven: 3.6.3
+- OpenJDK: 11
+- docker-compose 1.25.0
+- JMeter 5.3
+
+## Load testing setup
+
+1) Make sure the database is up and empty by executing in ```/docker/database``` the command : 
+
+```bash
+$ docker-compose down --v && docker-compose  up
+```
+
+2)  Then make sure that the application server is started. you can run it with Maven issuing the command at the root of the folder :
+
+```bash
+$ mvn liberty:stop liberty:clean liberty:dev
+```
+
+3) You should have now StarkOverflow up and running at ```localhost:9080``` with an empty database.
+4) you can now open and run tests ```/loadTests/[testFileName].jmx``` with *JMeter*
 
 ## Tests
 
@@ -26,5 +44,5 @@ It does that in a loop for 10 iterations.
 
 Lastly, the tearDown thread group extract the number of vote of the question and assert that the value is 200 (20 units * 10 iterations).
 
-### Results
+## Results
 Our results show that question votes are taken in account even under high load.

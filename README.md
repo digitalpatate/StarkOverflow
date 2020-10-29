@@ -109,7 +109,7 @@ networks:
 
 ```
 
-The two images of `Postgres` and `PGAdmin` are located on the Docker Hub whereas the image of the `webapp` is provided by the GitHub Container Registry.  This custom image is automatically built by the Github actions when someone push code on the master branch.
+The two images of `Postgres` and `PGAdmin` are located on the Docker Hub whereas the image of the `webapp` is provided by the GitHub Container Registry ; for now there is only the _latest_ tag available for the image.  This custom image is automatically built by the Github actions when someone push code on the master branch.
 
 ## Launch the project manually 
 
@@ -177,10 +177,6 @@ With this configuration, the variables can be override with environment variable
 ### Load testing
 
 [See dedicated documentation ](./loadTests/README.md)
-
-(!) For now there is only the _latest_ tag available for the image
-
-
 
 
 
