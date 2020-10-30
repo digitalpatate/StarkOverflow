@@ -23,6 +23,7 @@ import ch.heigvd.amt.starkoverflow.domain.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.vote.IAnswerVoteRepository;
 import ch.heigvd.amt.starkoverflow.domain.vote.IQuestionVoteRepository;
+import ch.heigvd.amt.starkoverflow.domain.vote.Vote;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -99,6 +100,15 @@ public class QuestionService {
                 .map(answer -> answer.getId().asString())
                 .orElse("");
 
+        Vote userVoteOnThisQuestion = null;
+        long nbVotes = 0;
+
+        if(viewer != null) {
+            userVoteOnThisQuestion = questionVoteRepository.userVoteOnQuestion(viewer, question.getId());
+        }
+
+        nbVotes = questionVoteRepository.getNbVotesOfQuestion(question.getId());
+
         QuestionDTO questionDTO = QuestionDTO.builder()
                 .id(question.getId().asString())
                 .title(question.getTitle())
@@ -109,8 +119,8 @@ public class QuestionService {
                 .acceptedAnswerId(acceptedAnswerId)
                 .user(userDTO)
                 .comments(comments)
-                .nbVotes(questionVoteRepository.getNbVotesOfQuestion(question.getId()))
-                .voted(viewer != null && questionVoteRepository.userVoteOnQuestion(viewer, question.getId()) != null)
+                .nbVotes(nbVotes)
+                .voted(userVoteOnThisQuestion != null)
                 .build();
 
         return questionDTO;
@@ -135,24 +145,38 @@ public class QuestionService {
 
         List<AnswerDTO> answersDTO = answers
                 .stream()
-                .map(answer -> AnswerDTO.builder()
-                        .id(answer.getId().asString())
-                        .content(answer.getContent())
-                        .voted(viewer != null && answerVoteRepository.userVoteOnAnswer(viewer, answer.getId()) != null)
-                        .nbVotes(answerVoteRepository.getNbVotesOfAnswer(answer.getId()))
-                        .user(userRepository.findById(answer.getUserId())
-                                .map(user -> UserDTO.builder()
-                                        .username(user.getUsername())
-                                        .email(user.getEmail())
-                                        .lastname(user.getLastname())
-                                        .firstname(user.getLastname())
-                                        .profilePicture(user.getProfilePictureURL())
-                                        .id(user.getId().asString())
-                                        .build()
-                                ).orElseThrow(() -> new NotFoundException("Answer user " + answer.getUserId().asString() + " not found!"))
-                        )
-                        .comments(getAnswerComments(answer.getId()))
-                        .build())
+                .map(answer -> {
+                    Vote userVoteOnThisAnswer = null;
+                    long nbVotes = 0;
+
+                    if(viewer != null) {
+                        userVoteOnThisAnswer = answerVoteRepository.userVoteOnAnswer(viewer, answer.getId());
+                    }
+
+                    nbVotes = answerVoteRepository.getNbVotesOfAnswer(answer.getId());
+
+
+                    AnswerDTO dto = AnswerDTO.builder()
+                            .id(answer.getId().asString())
+                            .content(answer.getContent())
+                            .voted(userVoteOnThisAnswer != null)
+                            .nbVotes(nbVotes)
+                            .user(userRepository.findById(answer.getUserId())
+                                    .map(user -> UserDTO.builder()
+                                            .username(user.getUsername())
+                                            .email(user.getEmail())
+                                            .lastname(user.getLastname())
+                                            .firstname(user.getLastname())
+                                            .profilePicture(user.getProfilePictureURL())
+                                            .id(user.getId().asString())
+                                            .build()
+                                    ).orElseThrow(() -> new NotFoundException("Answer user " + answer.getUserId().asString() + " not found!"))
+                            )
+                            .comments(getAnswerComments(answer.getId()))
+                            .build();
+                    return dto;
+                })
+
                 .collect(Collectors.toList());
 
         return AnswersDTO.builder().answers(answersDTO).build();

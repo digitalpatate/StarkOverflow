@@ -27,7 +27,7 @@ import java.util.Optional;
 public class JdbcQuestionVoteRepository extends JdbcRepository implements IQuestionVoteRepository {
 
     @Override
-    public Vote save(Vote entity) {
+    public synchronized Vote save(Vote entity) {
         super.insert("question_votes", Arrays.asList(
                 "vote_id",
                 "fk_author",
@@ -42,23 +42,23 @@ public class JdbcQuestionVoteRepository extends JdbcRepository implements IQuest
     }
 
     @Override
-    public void remove(VoteId id) {
+    public synchronized void remove(VoteId id) {
         super.remove("question_votes", "vote_id", id);
     }
 
     @Override
-    public Optional<Vote> findById(VoteId id) {
+    public synchronized Optional<Vote> findById(VoteId id) {
         Optional<IEntity> vote = super.find("question_votes", "vote_id", id.asString());
         return vote.map(entity -> (Vote) entity);
     }
 
     @Override
-    public Collection<Vote> findAll() {
+    public synchronized Collection<Vote> findAll() {
         return (Collection) super.findAll("question_votes");
     }
 
     @Override
-    public Vote userVoteOnQuestion(UserId viewer, QuestionId questionId) {
+    public synchronized Vote userVoteOnQuestion(UserId viewer, QuestionId questionId) {
         Vote vote = null;
 
         try {
@@ -80,7 +80,7 @@ public class JdbcQuestionVoteRepository extends JdbcRepository implements IQuest
     }
 
     @Override
-    public long getNbVotesOfQuestion(QuestionId questionId) {
+    public synchronized long getNbVotesOfQuestion(QuestionId questionId) {
         long nbVotes = 0;
 
         try {
@@ -100,7 +100,7 @@ public class JdbcQuestionVoteRepository extends JdbcRepository implements IQuest
     }
 
     @Override
-    public int getTotalQuestionVoteRepository() {
+    public synchronized int getTotalQuestionVoteRepository() {
         int nbQuestionVote = -1;
         try {
             ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalQuestionVote FROM question_votes",null);
