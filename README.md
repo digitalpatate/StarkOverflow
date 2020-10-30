@@ -34,7 +34,7 @@ The purpose of this project is to learn about multi tiered application by creati
 
 - Maven: 3.6.3
 - OpenJDK: 11
-- docker-compose
+- docker-compose: 1.25
 
 
 
@@ -49,6 +49,14 @@ $ ./run-application.sh
 ```
 
 The script will automatically manage the life-cycle of the web application and the database containers.
+
+To stop the project
+
+```bash
+$ ./stop-application.sh
+```
+
+The application is now accessible on : http://localhost:9080
 
 ## Docker
 
@@ -116,7 +124,7 @@ The two images of `Postgres` and `PGAdmin` are located on the Docker Hub whereas
 First of all make sure to have a database up and ready with the correct configuration. To do so, run the following commands :
 
 ```bash
-$ cd docker/database
+$ cd docker/environment/dev
 $ docker-compose up -d
 ```
 
@@ -127,6 +135,8 @@ Then launch liberty server by triggering the goal :
 ```bash
 mvn liberty:dev
 ```
+
+The application is now accessible on : http://localhost:9080
 
 ### Environment variables
 
@@ -216,7 +226,7 @@ With this configuration, the variables can be override with environment variable
 ### Tag
 
 - Name 
-- Color
+- Colors
 
 ### Vote
 
