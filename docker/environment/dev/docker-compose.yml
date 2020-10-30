@@ -3,6 +3,7 @@ services:
   db:
     image: postgres:latest
     restart: always
+    container_name: starkoverflow_dev_db
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: admin
@@ -10,6 +11,6 @@ services:
       TZ: 'Europe/Zurich'
       PGTZ: 'Europe/Zurich'
     volumes:
-      - ./scripts:/docker-entrypoint-initdb.d
+      - ../../database/scripts:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
