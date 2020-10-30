@@ -60,7 +60,6 @@ jobs:
         run: |
           echo ${{ secrets.REGISTRY_TOKEN }} | docker login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
           cd docker/environment/e2e
-          docker-compsoe pull
           docker-compose up -d
           cd ../../../e2e/
           ./run-test.sh
