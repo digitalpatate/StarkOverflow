@@ -58,7 +58,11 @@
                                 <h2 class="question-title">${question.title}</h2>
                                 <ul class="tag-list">
                                     <c:forEach items="${question.getTags().getTags()}" var="tag">
-                                        <li class="tag" style="background-color: ${tag.getColor()};"><a href="?tag=${tag.getName()}">${tag.getName()}</a></li>
+                                        <li class="tag" style="background-color: ${tag.getColor()};">
+                                            <a href="?tag=${tag.getName()}" style="color: white">
+                                                    ${tag.getName()}
+                                            </a>
+                                        </li>
                                     </c:forEach>
                                 </ul>
                             </div>

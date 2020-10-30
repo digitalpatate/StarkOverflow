@@ -115,7 +115,6 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
                             "WHERE tags.name LIKE ?");
 
             preparedStatement.setString(1, tag);
-
             ResultSet res = preparedStatement.executeQuery();
 
             while (res.next()) {
@@ -126,7 +125,6 @@ public class JdbcQuestionRepository extends JdbcRepository implements IQuestionR
         }
 
         return questions;
-
     }
 
     @Override
