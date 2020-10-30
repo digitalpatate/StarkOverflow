@@ -14,3 +14,22 @@ services:
       - ../../database/scripts:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    container_name: starkoverflow_dev_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dev@starkoverflow.ch
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8081:80"
+    links:
+      - "db:pgsql-server"
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: false      

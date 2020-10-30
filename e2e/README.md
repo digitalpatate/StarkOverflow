@@ -3,7 +3,7 @@
 1. Up a clean topology
 
    ```shell
-   cd topology
+   cd ../docker/environment/e2e
    #Make sure you have the latest version of the image
    docker-compose pull
    #Make sure you have an empty database
