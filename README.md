@@ -19,6 +19,7 @@ Table of contents
 * [Tests](#tests)
   * [E2E - testing](#E2E---testing)
   * [Load testing](Load-testing)
+  * [Integration testing](#Integration-testing)
 *  [Concept Diagrams](Concept-Diagrams)
   * [Site Map](#Site-Map)
   * [Model](#Model)
@@ -188,7 +189,28 @@ With this configuration, the variables can be override with environment variable
 
 [See dedicated documentation ](./loadTests/README.md)
 
+### Integration testing
 
+A try to set arquillian integration tests up was made in the feature branch *fb-arquillian*. Unfortunately it did not work and we ran out of time in order to write new integration tests. 
+
+By running the script `run-arquillian-integration-tests.sh` we get the following error
+
+```
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running ArquillianTest
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.064 s <<< FAILURE! - in ArquillianTest
+[ERROR] initializationError  Time elapsed: 0.039 s  <<< ERROR!
+java.lang.Exception: No runnable methods
+
+[INFO] Running ch.heigvd.amt.starkoverflow.infrastructure.memory.comment.InMemoryCommentRepositoryTest
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.002 s <<< FAILURE! - in ch.heigvd.amt.starkoverflow.infrastructure.memory.comment.InMemoryCommentRepositoryTest
+[ERROR] ch.heigvd.amt.starkoverflow.infrastructure.memory.comment.InMemoryCommentRepositoryTest  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.NoClassDefFoundError: org/junit/platform/commons/util/ClassNamePatternFilterUtils
+Caused by: java.lang.ClassNotFoundException: org.junit.platform.commons.util.ClassNamePatternFilterUtils
+
+...
+```
 
 ## Concept Diagrams
 
