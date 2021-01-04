@@ -262,7 +262,7 @@ To earn points or badges, one should do :
 | Rule                  | Condition(s) to trigger             | Point(s) awarded | Badge(s)   | Point scale(s) |
 |-----------------------|-------------------------------------|------------------|------------|----------------|
 | createaquestion       | create a question                   | 2                | -          | learning       |
-| answerataggedquestion | answer a tagged question            | 5                | -          | <tag>          |
+| answerataggedquestion | answer a tagged question            | 5                | -          | \<tag\>        |
 | commentaquestion      | comment a question                  | 1                | -          | commentator    |
 | validanswer           | get approval for one of your answer | 0                | liechti    |                |
 | cookies               | vote for an answer                  | 1                | cookie     | cookies        |
