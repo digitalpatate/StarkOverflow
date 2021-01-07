@@ -8,6 +8,10 @@ import ch.heigvd.amt.starkoverflow.application.question.CreateQuestionCommand;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
+import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.GamificatorService;
+import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.RestService;
+import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.command.EventCommand;
+import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,7 +21,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @WebServlet(name="QuestionsCommandHandler", urlPatterns = "/questions")
 public class QuestionsCommandHandler extends HttpServlet {
@@ -27,6 +33,9 @@ public class QuestionsCommandHandler extends HttpServlet {
 
     @Inject @Named("TagService")
     private TagService tagService;
+
+    @Inject @Named("GamificatorService")
+    private GamificatorService gamificatorService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -47,6 +56,11 @@ public class QuestionsCommandHandler extends HttpServlet {
             req.setAttribute("tag", tag);
         }
 
+        req.setAttribute("data", gamificatorService.getAllBadges());
+
+        //Att
+        EventCommand event = new EventCommand(UUID.randomUUID(), OffsetDateTime.now(),"PATATE");
+        gamificatorService.sendEvent(event);
         req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req,res);
     }
 
@@ -66,7 +80,7 @@ public class QuestionsCommandHandler extends HttpServlet {
                 tags.add(tagService.findOrCreateTag(createTagCommand));
             }
         }
-        
+
         CreateQuestionCommand createQuestionCommand = CreateQuestionCommand.builder()
                 .content(req.getParameter("questionContent"))
                 .title(req.getParameter("questionTitle"))
