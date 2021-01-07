@@ -5,6 +5,7 @@
     <div class="container">
         <div class="row box-content">
             <div class="col">
+                <p class="question-content">${data}</p>
                 <h2>Post your question</h2>
                 <form action="/questions" method="post">
                     <div class="form-group">
