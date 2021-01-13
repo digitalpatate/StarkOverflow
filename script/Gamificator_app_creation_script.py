@@ -80,11 +80,11 @@ creatPointScale("Reward you for commenting", "commentator", app_key, app_secret)
 creatPointScale("Reward you for voting", "cookies", app_key, app_secret)
 
 #Badge : liechti
-creatBadge("", "liechti", app_key, app_secret)
+creatBadge("https://avatars2.githubusercontent.com/u/1152779?s=460&v=4", "liechti", app_key, app_secret)
 #Badge : cookie
-creatBadge("", "cookie", app_key, app_secret)
+creatBadge("https://i-reg.unimedias.fr/sites/art-de-vivre/files/styles/recipe/public/cookie-chocolat-gaetan-fiard_dr.jpg?auto=compress%2Cformat&crop=faces%2Cedges&cs=srgb&fit=crop&h=500&w=393", "cookie", app_key, app_secret)
 #Badge : heart
-creatBadge("", "heart", app_key, app_secret)
+creatBadge("https://previews.123rf.com/images/azzardo/azzardo1801/azzardo180100008/93515266-key-with-heart-design.jpg", "heart", app_key, app_secret)
 
 #Rule : createaquestion
 creatRule("create a question", "", "learning", 2, app_key, app_secret)
@@ -100,7 +100,7 @@ creatRule("but where is the key ?", "heart", "", 0, app_key, app_secret)
 
 
 #Update docker-compose
-f = open("docker-compose-test.yml", "r")
+f = open("../docker/environment/prod/unmodified/docker-compose.yml", "r")
 contents = f.readlines()
 f.close()
 
@@ -108,7 +108,7 @@ contents.insert(32, '      APP_ID: '+app_id+'\n')
 contents.insert(32, '      APP_KEY: '+app_key+'\n')
 contents.insert(32, '      APP_SECRET: '+app_secret+'\n')
 
-f = open("docker-compose-test.yml", "w")
+f = open("../docker/environment/prod/docker-compose.yml", "w")
 contents = "".join(contents)
 f.write(contents)
 f.close()

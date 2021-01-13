@@ -30,12 +30,6 @@ services:
     image: ghcr.io/digitalpatate/starkoverflow:latest
     container_name: starkoverflow_prod_backend
     environment:
-      APP_SECRET: 8TOXCtwtPY
-      APP_KEY: 48c13498-c3a2-490f-99b3-0b057257bc81
-      APP_ID: 1
-      APP_SECRET: AR5QFqTkb7
-      APP_KEY: f90aa02c-1a52-4aed-a47a-9f1d7da4c820
-      APP_ID: 23
       DB_HOST: db
       DB_PORT: 5432
       DB_NAME: stark_db
