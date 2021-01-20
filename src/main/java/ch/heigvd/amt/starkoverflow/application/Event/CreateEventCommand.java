@@ -18,6 +18,6 @@ public class CreateEventCommand {
     private String type;
 
     public Event createEntity() {
-        return new Event(new UserId(userId), OffsetDateTime.parse(timestamp), type);
+        return new Event(new UserId(userId), type);
     }
 }

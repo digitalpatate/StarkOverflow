@@ -2,7 +2,11 @@ package ch.heigvd.amt.starkoverflow.ui.web.answer;
 
 import ch.heigvd.amt.starkoverflow.application.Answer.AcceptAnswerCommand;
 import ch.heigvd.amt.starkoverflow.application.Answer.AnswerService;
+import ch.heigvd.amt.starkoverflow.application.Event.EventService;
+import ch.heigvd.amt.starkoverflow.application.Event.EventTypes;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
+import ch.heigvd.amt.starkoverflow.domain.event.Event;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,6 +23,10 @@ public class AcceptAnswerCommandHandler extends HttpServlet {
     @Named("AnswerService")
     AnswerService answerService;
 
+    @Inject
+    @Named("EventService")
+    EventService eventService;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         UserDTO userDTO = (UserDTO) req.getSession().getAttribute("currentUser");
@@ -29,6 +37,13 @@ public class AcceptAnswerCommandHandler extends HttpServlet {
                 .build();
 
         answerService.acceptAnswer(command);
+
+        Event event = new Event(
+                new UserId(userDTO.getId()),
+                EventTypes.VALID_ANSWER.toString()
+        );
+
+        eventService.triggerEvent(event);
 
         resp.sendRedirect("/question/" + req.getParameter("questionId"));
     }

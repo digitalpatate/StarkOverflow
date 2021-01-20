@@ -1,9 +1,14 @@
 package ch.heigvd.amt.starkoverflow.application.Event;
 
 public enum EventTypes {
-    QUESTION_CREATION("questionCreation");
+    CREATE_A_QUESTION("createaquestion"),
+    ANSWER_A_TAGGED_QUESTION("answerataggedquestion"),
+    COMMENT_A_QUESTION("commentaquestion"),
+    VALID_ANSWER("validanswer"),
+    VOTE_FOR_ANSWER("cookies"),
+    FIND_THE_KEY("findthekey");
 
-    private final String name;
+    private String name;
 
     EventTypes(String name) {
         this.name = name;

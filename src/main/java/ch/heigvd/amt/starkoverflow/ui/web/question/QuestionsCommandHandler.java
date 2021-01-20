@@ -81,6 +81,13 @@ public class QuestionsCommandHandler extends HttpServlet {
                         .build();
 
                 tags.add(tagService.findOrCreateTag(createTagCommand));
+
+                Event event = new Event(
+                    new UserId(userDTO.getId()),
+                        EventTypes.ANSWER_A_TAGGED_QUESTION + "_" + tagName
+                );
+
+                eventService.triggerEvent(event);
             }
         }
 
@@ -93,8 +100,11 @@ public class QuestionsCommandHandler extends HttpServlet {
 
         questionService.createQuestion(createQuestionCommand);
 
-        UserDTO viewer = (UserDTO) req.getSession().getAttribute("currentUser");
-        Event event = new Event(new UserId(viewer.getId()), OffsetDateTime.now(), EventTypes.QUESTION_CREATION.toString());
+        Event event = new Event(
+                new UserId(userDTO.getId()),
+                EventTypes.CREATE_A_QUESTION.toString()
+        );
+
         eventService.triggerEvent(event);
 
         res.sendRedirect("/");

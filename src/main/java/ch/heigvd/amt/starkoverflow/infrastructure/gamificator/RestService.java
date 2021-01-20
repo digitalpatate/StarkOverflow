@@ -22,8 +22,8 @@ import java.util.Base64;
 @Log
 @NoArgsConstructor
 public class RestService {
-    private String key = "c34e6f84-2cab-4bf5-ba4d-9492cae466c0";
-    private String secret = "xuFBhzf7Qi";
+    private String key = "a4e537e9-7d9f-43f4-aca4-13fbbc9d2912";
+    private String secret = "BnR477sqxd";
     private String baseUrl = "http://localhost:8080";
 
     public Object get(String path, Class<?> type){

@@ -2,7 +2,11 @@ package ch.heigvd.amt.starkoverflow.ui.web.answer;
 
 import ch.heigvd.amt.starkoverflow.application.Answer.AnswerService;
 import ch.heigvd.amt.starkoverflow.application.Answer.CreateAnswerCommand;
+import ch.heigvd.amt.starkoverflow.application.Event.EventService;
+import ch.heigvd.amt.starkoverflow.application.Event.EventTypes;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
+import ch.heigvd.amt.starkoverflow.domain.event.Event;
 
 import javax.inject.Inject;
 import javax.inject.Named;
