@@ -1,5 +1,6 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.gamificator;
 
+import ch.heigvd.amt.starkoverflow.application.Event.CreateEventCommand;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -14,10 +15,11 @@ public class GamificatorService {
     @Inject @Named("RestService")
     private RestService restService;
 
-    public Object getAllBadges(){
+    public Object getAllBadges() {
         return restService.get("/badges",String.class);
     }
-    public void sendEvent(Object event){
-        restService.post("/events",event);
+
+    public void sendEvent(CreateEventCommand createEventCommand){
+        restService.post("/events", createEventCommand);
     }
 }

@@ -1,5 +1,8 @@
 package ch.heigvd.amt.starkoverflow.ui.web.question;
 
+import ch.heigvd.amt.starkoverflow.application.Event.CreateEventCommand;
+import ch.heigvd.amt.starkoverflow.application.Event.EventService;
+import ch.heigvd.amt.starkoverflow.application.Event.EventTypes;
 import ch.heigvd.amt.starkoverflow.application.Tag.CreateTagCommand;
 import ch.heigvd.amt.starkoverflow.application.Tag.TagService;
 import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagsDTO;
@@ -7,11 +10,10 @@ import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.CreateQuestionCommand;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
+import ch.heigvd.amt.starkoverflow.domain.event.Event;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.GamificatorService;
-import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.RestService;
-import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.command.EventCommand;
-import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,6 +35,10 @@ public class QuestionsCommandHandler extends HttpServlet {
 
     @Inject @Named("TagService")
     private TagService tagService;
+
+    @Inject @Named("EventService")
+    private EventService eventService;
+
 
     @Inject @Named("GamificatorService")
     private GamificatorService gamificatorService;
@@ -56,11 +62,8 @@ public class QuestionsCommandHandler extends HttpServlet {
             req.setAttribute("tag", tag);
         }
 
-        req.setAttribute("data", gamificatorService.getAllBadges());
+        // req.setAttribute("data", gamificatorService.getAllBadges());
 
-        //Att
-        EventCommand event = new EventCommand(UUID.randomUUID(), OffsetDateTime.now(),"PATATE");
-        gamificatorService.sendEvent(event);
         req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req,res);
     }
 
@@ -89,6 +92,11 @@ public class QuestionsCommandHandler extends HttpServlet {
                 .build();
 
         questionService.createQuestion(createQuestionCommand);
+
+        UserDTO viewer = (UserDTO) req.getSession().getAttribute("currentUser");
+        Event event = new Event(new UserId(viewer.getId()), OffsetDateTime.now(), EventTypes.QUESTION_CREATION.toString());
+        eventService.triggerEvent(event);
+
         res.sendRedirect("/");
     }
 }
