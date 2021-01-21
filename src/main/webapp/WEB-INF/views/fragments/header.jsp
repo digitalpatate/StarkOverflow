@@ -45,6 +45,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/users">users</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/pointScales">PointScales</a>
+                </li>
             </ul>
         </div>
     </nav>
