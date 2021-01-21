@@ -23,9 +23,9 @@ import java.util.Base64;
 @NoArgsConstructor
 public class RestService {
 
-    private String key = "44145b78-fbe9-4a95-9f7d-fa9e4210d8af";
+    private String key = "7ea615d9-22eb-4ae4-a4da-76f00b0a06b0";
 
-    private String secret = "Nq0VdK6K4P";
+    private String secret = "cwnf2RtEpX";
 
     private String baseUrl = "http://localhost:8080";
 
@@ -36,7 +36,6 @@ public class RestService {
         String url = baseUrl+path;
         HttpEntity<String> req = new HttpEntity<>(constructHeader(createSignature(url)));
         ResponseEntity<?> res =  restTemplate.exchange(url,HttpMethod.GET,req,type);
-
         return res.getBody();
     }
     private String createSignature(String url){
@@ -64,7 +63,7 @@ public class RestService {
 
         String url = baseUrl+path;
         HttpEntity req = new HttpEntity<>(body,constructHeader(createSignature(url)));
-       restTemplate.exchange(url,HttpMethod.POST,req,Object.class);
+        restTemplate.exchange(url,HttpMethod.POST,req,Object.class);
 
     }
 }

@@ -1,5 +1,7 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.gamificator;
 
+import ch.heigvd.amt.starkoverflow.application.Reputation.ReputationDTO;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,5 +21,9 @@ public class GamificatorService {
     }
     public void sendEvent(Object event){
         restService.post("/events",event);
+    }
+
+    public ReputationDTO getReputation(UserId userId){
+        return  (ReputationDTO) restService.get("/reputations/" + userId.asString(), ReputationDTO.class);
     }
 }

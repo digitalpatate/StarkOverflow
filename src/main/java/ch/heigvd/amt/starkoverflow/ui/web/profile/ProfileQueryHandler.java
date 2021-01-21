@@ -1,6 +1,8 @@
 package ch.heigvd.amt.starkoverflow.ui.web.profile;
 
-import ch.heigvd.amt.starkoverflow.application.User.UserService;
+import ch.heigvd.amt.starkoverflow.application.Reputation.ReputationDTO;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
+import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.GamificatorService;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
@@ -18,14 +20,21 @@ import java.io.IOException;
 public class ProfileQueryHandler extends HttpServlet {
     @Inject @Named("QuestionService")
     private QuestionService questionService;
+    @Inject @Named("GamificatorService")
+    private GamificatorService gamificatorService;
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         UserDTO userDTO = (UserDTO) request.getSession().getAttribute("currentUser");
+        ReputationDTO reputationDTO = gamificatorService.getReputation(new UserId(userDTO.getId()));
         QuestionsDTO questionsDTO = questionService.getQuestionsByAuthor(userDTO.getId());
+
         request.setAttribute("questions",questionsDTO);
         request.setAttribute("user",userDTO);
-
+        request.setAttribute("badges", reputationDTO.getBadgesReward());
+        request.setAttribute("pointRewards", reputationDTO.getPointsReward());
         request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request,response);
     }
 }
