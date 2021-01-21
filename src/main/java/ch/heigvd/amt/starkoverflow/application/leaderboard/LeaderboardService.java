@@ -5,6 +5,7 @@ import ch.heigvd.amt.starkoverflow.domain.IUserRepository;
 import ch.heigvd.amt.starkoverflow.domain.User;
 import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.leaderboard.ILeaderboardRepository;
+import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.dto.LeaderBoardDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class LeaderboardService {
 
     public PagableLeaderboardDTO getLeaderBoardFromPointScaleName(String pointScaleName) throws RuntimeException{
 
-        LeaderBoardDTO_game leaderBoardDTOGame = leaderboardRepository.findByPointScaleName(pointScaleName).orElseThrow(() -> new RuntimeException("Leaderboard not found"));
+        LeaderBoardDTO leaderBoardDTOGame = leaderboardRepository.findByPointScaleName(pointScaleName).orElseThrow(() -> new RuntimeException("Leaderboard not found"));
         LeaderboardDTO leaderboardDTO = new LeaderboardDTO();
 
         for (UserScoreDTO userScoreDTO : leaderBoardDTOGame.getLeaderboard()){

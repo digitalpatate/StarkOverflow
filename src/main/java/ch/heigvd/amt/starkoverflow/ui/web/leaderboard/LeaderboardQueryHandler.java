@@ -1,7 +1,6 @@
 package ch.heigvd.amt.starkoverflow.ui.web.leaderboard;
 
 import ch.heigvd.amt.starkoverflow.application.leaderboard.LeaderboardService;
-import ch.heigvd.amt.starkoverflow.application.leaderboard.dto.LeaderBoardDTO_game;
 import ch.heigvd.amt.starkoverflow.application.leaderboard.dto.PagableLeaderboardDTO;
 
 import javax.inject.Inject;
