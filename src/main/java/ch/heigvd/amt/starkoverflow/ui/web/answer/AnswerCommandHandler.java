@@ -11,7 +11,6 @@ import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.event.Event;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.annotation.WebServlet;
@@ -48,7 +47,7 @@ public class AnswerCommandHandler extends HttpServlet {
 
         // Trigger tags events
         for(TagDTO tagDTO : tagsDTO.getTags()) {
-            String conditionType = EventTypes.ANSWER_A_TAGGED_QUESTION + ": " + tagDTO.getName();
+            String conditionType = EventTypes.ANSWER_A_TAGGED_QUESTION + "_" + tagDTO.getName();
 
             Event event = new Event(
                     new UserId(userDTO.getId()), conditionType

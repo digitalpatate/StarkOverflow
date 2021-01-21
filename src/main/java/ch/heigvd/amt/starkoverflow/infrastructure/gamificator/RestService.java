@@ -22,8 +22,8 @@ import java.util.Base64;
 @Log
 @NoArgsConstructor
 public class RestService {
-    private String key = "c10e7561-098c-4e97-8b7b-66357881e11f";
-    private String secret = "lQv6uNskbc";
+    private String key = "22a26ddf-a399-481c-a867-d615c347c83b";
+    private String secret = "aUadmwy75O";
     private String baseUrl = "http://localhost:8080";
 
     public Object get(String path, Class<?> type){
@@ -64,6 +64,5 @@ public class RestService {
         String url = baseUrl + path;
         HttpEntity req = new HttpEntity<>(body,constructHeader(createSignature(url)));
         restTemplate.exchange(url,HttpMethod.POST, req, Object.class);
-
     }
 }

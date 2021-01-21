@@ -2,7 +2,6 @@ package ch.heigvd.amt.starkoverflow.ui.web.question;
 
 import ch.heigvd.amt.starkoverflow.application.Event.EventService;
 import ch.heigvd.amt.starkoverflow.application.Event.EventTypes;
-import ch.heigvd.amt.starkoverflow.application.PointScale.CreatePointScaleCommand;
 import ch.heigvd.amt.starkoverflow.application.PointScale.PointScaleService;
 import ch.heigvd.amt.starkoverflow.application.Rule.*;
 import ch.heigvd.amt.starkoverflow.application.Tag.CreateTagCommand;
@@ -18,6 +17,7 @@ import ch.heigvd.amt.starkoverflow.domain.event.Event;
 import ch.heigvd.amt.starkoverflow.domain.pointScale.PointScale;
 import ch.heigvd.amt.starkoverflow.domain.rule.Rule;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
+import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.GamificatorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,6 +46,9 @@ public class QuestionsCommandHandler extends HttpServlet {
 
     @Inject @Named("PointScaleService")
     private PointScaleService pointScaleService;
+
+    @Inject @Named("GamificatorService")
+    private GamificatorService gamificatorService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -80,7 +83,7 @@ public class QuestionsCommandHandler extends HttpServlet {
             for (String tagName : reqTags) {
                 Optional<TagDTO> optionalTagDTO = tagService.findTag(tagName);
                 TagDTO tagDTO;
-                String conditionType = EventTypes.ANSWER_A_TAGGED_QUESTION + ": " + tagName;
+                String conditionType = EventTypes.ANSWER_A_TAGGED_QUESTION + "_" + tagName;
 
                 if(optionalTagDTO.isEmpty()) {
                     CreateTagCommand createTagCommand = CreateTagCommand.builder()
