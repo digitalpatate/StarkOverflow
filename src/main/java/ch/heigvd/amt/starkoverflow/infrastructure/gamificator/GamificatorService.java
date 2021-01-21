@@ -1,6 +1,8 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.gamificator;
 
 import ch.heigvd.amt.starkoverflow.application.Event.CreateEventCommand;
+import ch.heigvd.amt.starkoverflow.application.PointScale.CreatePointScaleCommand;
+import ch.heigvd.amt.starkoverflow.application.Rule.CreateRuleCommand;
 import ch.heigvd.amt.starkoverflow.application.leaderboard.dto.LeaderBoardDTO_game;
 import ch.heigvd.amt.starkoverflow.exception.NotFoundException;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,13 @@ public class GamificatorService {
     }
 
     public LeaderBoardDTO_game getLeaderboardByPointScaleName(String pointScaleName) throws NotFoundException {
-        return (LeaderBoardDTO_game) restService.get("/leaderboard/"+pointScaleName, LeaderBoardDTO_game.class);
+        return (LeaderBoardDTO_game) restService.get("/leaderboard/" + pointScaleName, LeaderBoardDTO_game.class);
+    }
+    public void sendRule(CreateRuleCommand createRuleCommand) {
+        restService.post("/rules", createRuleCommand);
+    }
+
+    public void sendPointScale(CreatePointScaleCommand createPointScaleCommand) {
+        restService.post("/pointScales", createPointScaleCommand);
     }
 }

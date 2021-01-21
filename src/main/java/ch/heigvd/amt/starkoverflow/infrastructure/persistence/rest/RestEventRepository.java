@@ -27,8 +27,6 @@ public class RestEventRepository implements IEventRepository {
                 .type(event.getType())
                 .build();
 
-        System.out.println("createEventCommand: " + createEventCommand);
-
         gamificatorService.sendEvent(createEventCommand);
     }
 }

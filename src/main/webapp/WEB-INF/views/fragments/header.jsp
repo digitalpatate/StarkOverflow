@@ -2,6 +2,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <header id="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <c:choose>
+            <c:when test="${currentUser != null}">
+                <a class="chocolate" href="/key"><img width="25" height="25" src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/key-icon.png" /></a>
+            </c:when>
+            <c:otherwise>
+                <a class="chocolate" href="/login"><img width="25" height="25" src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/512/key-icon.png" /></a>
+            </c:otherwise>
+        </c:choose>
         <a class="navbar-brand" href="/"><h1 class="logo">StarkØverflØw</h1></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">

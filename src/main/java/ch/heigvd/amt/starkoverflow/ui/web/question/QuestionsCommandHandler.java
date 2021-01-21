@@ -1,10 +1,12 @@
 package ch.heigvd.amt.starkoverflow.ui.web.question;
 
-import ch.heigvd.amt.starkoverflow.application.Event.CreateEventCommand;
 import ch.heigvd.amt.starkoverflow.application.Event.EventService;
 import ch.heigvd.amt.starkoverflow.application.Event.EventTypes;
+import ch.heigvd.amt.starkoverflow.application.PointScale.PointScaleService;
+import ch.heigvd.amt.starkoverflow.application.Rule.*;
 import ch.heigvd.amt.starkoverflow.application.Tag.CreateTagCommand;
 import ch.heigvd.amt.starkoverflow.application.Tag.TagService;
+import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagDTO;
 import ch.heigvd.amt.starkoverflow.application.Tag.dto.TagsDTO;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.application.question.CreateQuestionCommand;
@@ -12,6 +14,8 @@ import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionsDTO;
 import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.domain.event.Event;
+import ch.heigvd.amt.starkoverflow.domain.pointScale.PointScale;
+import ch.heigvd.amt.starkoverflow.domain.rule.Rule;
 import ch.heigvd.amt.starkoverflow.domain.tag.Tag;
 import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.GamificatorService;
 
@@ -23,9 +27,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 
 @WebServlet(name="QuestionsCommandHandler", urlPatterns = "/questions")
 public class QuestionsCommandHandler extends HttpServlet {
@@ -39,6 +41,11 @@ public class QuestionsCommandHandler extends HttpServlet {
     @Inject @Named("EventService")
     private EventService eventService;
 
+    @Inject @Named("RuleService")
+    private RuleService ruleService;
+
+    @Inject @Named("PointScaleService")
+    private PointScaleService pointScaleService;
 
     @Inject @Named("GamificatorService")
     private GamificatorService gamificatorService;
@@ -62,8 +69,6 @@ public class QuestionsCommandHandler extends HttpServlet {
             req.setAttribute("tag", tag);
         }
 
-        // req.setAttribute("data", gamificatorService.getAllBadges());
-
         req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req,res);
     }
 
@@ -76,18 +81,29 @@ public class QuestionsCommandHandler extends HttpServlet {
 
         if(reqTags != null) {
             for (String tagName : reqTags) {
-                CreateTagCommand createTagCommand = CreateTagCommand.builder()
-                        .name(tagName)
-                        .build();
+                Optional<TagDTO> optionalTagDTO = tagService.findTag(tagName);
+                TagDTO tagDTO;
+                String conditionType = EventTypes.ANSWER_A_TAGGED_QUESTION + "_" + tagName;
 
-                tags.add(tagService.findOrCreateTag(createTagCommand));
+                if(optionalTagDTO.isEmpty()) {
+                    CreateTagCommand createTagCommand = CreateTagCommand.builder()
+                            .name(tagName)
+                            .build();
 
-                Event event = new Event(
-                    new UserId(userDTO.getId()),
-                        EventTypes.ANSWER_A_TAGGED_QUESTION + "_" + tagName
-                );
+                    tagDTO = tagService.createTag(createTagCommand);
+                    tags.add(tagDTO.createEntity());
 
-                eventService.triggerEvent(event);
+                    // Create pointScale
+                    PointScale pointScale = new PointScale(tagName, "Expertise in " + tagName);
+                    pointScaleService.createPointScale(pointScale);
+
+                    // Create rule
+                    LinkedList<AwardPointDTO> awardPointDTOS = new LinkedList<>();
+                    awardPointDTOS.add(new AwardPointDTO(tagName, 5));
+
+                    Rule rule = new Rule(new LinkedList<>(), awardPointDTOS, conditionType);
+                    ruleService.createRule(rule);
+                }
             }
         }
 

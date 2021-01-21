@@ -6,6 +6,7 @@ import ch.heigvd.amt.starkoverflow.application.Event.EventService;
 import ch.heigvd.amt.starkoverflow.application.Event.EventTypes;
 import ch.heigvd.amt.starkoverflow.application.User.dto.UserDTO;
 import ch.heigvd.amt.starkoverflow.domain.UserId;
+import ch.heigvd.amt.starkoverflow.domain.answer.AnswerId;
 import ch.heigvd.amt.starkoverflow.domain.event.Event;
 
 import javax.inject.Inject;
@@ -38,9 +39,11 @@ public class AcceptAnswerCommandHandler extends HttpServlet {
 
         answerService.acceptAnswer(command);
 
+        UserId answerUser = answerService.getAnswerUser(new AnswerId(req.getParameter("answerId")));
+
         Event event = new Event(
-                new UserId(userDTO.getId()),
-                EventTypes.VALID_ANSWER.toString()
+            answerUser,
+            EventTypes.VALID_ANSWER.toString()
         );
 
         eventService.triggerEvent(event);

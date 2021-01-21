@@ -31,7 +31,7 @@ public class RestService {
     public Object get(String path, Class<?> type) throws NotFoundException {
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = baseUrl+path;
+        String url = baseUrl + path;
         HttpEntity<String> req = new HttpEntity<>(constructHeader(createSignature(url)));
         try {
             ResponseEntity<?> res =  restTemplate.exchange(url,HttpMethod.GET,req,type);
@@ -69,7 +69,6 @@ public class RestService {
 
         String url = baseUrl + path;
         HttpEntity req = new HttpEntity<>(body,constructHeader(createSignature(url)));
-        restTemplate.exchange(url,HttpMethod.POST,req,Object.class);
-
+        restTemplate.exchange(url,HttpMethod.POST, req, Object.class);
     }
 }
