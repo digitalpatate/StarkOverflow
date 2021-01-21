@@ -1,5 +1,6 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.gamificator;
 
+import ch.heigvd.amt.starkoverflow.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,19 +24,23 @@ import java.util.Base64;
 @Log
 @NoArgsConstructor
 public class RestService {
-    private String key = "22a26ddf-a399-481c-a867-d615c347c83b";
-    private String secret = "aUadmwy75O";
+    private String key = "e947b73b-2b0f-4c68-ac3d-fd8bcb2e5f94";
+    private String secret = "JnlAlJJjut";
     private String baseUrl = "http://localhost:8080";
 
-    public Object get(String path, Class<?> type){
+    public Object get(String path, Class<?> type) throws NotFoundException {
         RestTemplate restTemplate = new RestTemplate();
-        System.out.println(path);
 
         String url = baseUrl + path;
         HttpEntity<String> req = new HttpEntity<>(constructHeader(createSignature(url)));
-        ResponseEntity<?> res =  restTemplate.exchange(url,HttpMethod.GET,req,type);
-
-        return res.getBody();
+        try {
+            ResponseEntity<?> res =  restTemplate.exchange(url,HttpMethod.GET,req,type);
+            System.out.println(res.getBody());
+            return res.getBody();
+        }catch (RestClientException e){
+            System.out.println("Got an error in RestService"+ e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        }
     }
 
     private String createSignature(String url){

@@ -382,6 +382,14 @@ form.dropdown-item > .btn.btn-link {
     word-break: break-word;
 }
 
+.l-error h2{
+    width: 100%;
+    text-align: center;
+}
+.l-error p {
+    width: 100%;
+    text-align: center;
+}
 .chocolate img {
     visibility: hidden;
 }
