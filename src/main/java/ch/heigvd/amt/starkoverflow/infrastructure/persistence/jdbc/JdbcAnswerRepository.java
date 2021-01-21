@@ -86,8 +86,6 @@ public class JdbcAnswerRepository extends JdbcRepository implements IAnswerRepos
         Optional<IEntity> answer =  super.find("answers", "answer_id", id.asString());
 
         return answer.map(entity -> (Answer) entity);
-
-
     }
 
     @Override
