@@ -22,15 +22,15 @@ import java.util.Base64;
 @Log
 @NoArgsConstructor
 public class RestService {
-    private String key = "feb48ef6-868e-4362-8885-1deb993ba4ab";
-    private String secret = "JluPfa7BHU";
+    private String key = "22a26ddf-a399-481c-a867-d615c347c83b";
+    private String secret = "aUadmwy75O";
     private String baseUrl = "http://localhost:8080";
 
     public Object get(String path, Class<?> type){
         RestTemplate restTemplate = new RestTemplate();
         System.out.println(path);
 
-        String url = baseUrl+path;
+        String url = baseUrl + path;
         HttpEntity<String> req = new HttpEntity<>(constructHeader(createSignature(url)));
         ResponseEntity<?> res =  restTemplate.exchange(url,HttpMethod.GET,req,type);
 
@@ -63,7 +63,6 @@ public class RestService {
 
         String url = baseUrl + path;
         HttpEntity req = new HttpEntity<>(body,constructHeader(createSignature(url)));
-        restTemplate.exchange(url,HttpMethod.POST,req,Object.class);
-
+        restTemplate.exchange(url,HttpMethod.POST, req, Object.class);
     }
 }

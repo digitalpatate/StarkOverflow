@@ -87,15 +87,15 @@ creatBadge("https://i-reg.unimedias.fr/sites/art-de-vivre/files/styles/recipe/pu
 creatBadge("https://previews.123rf.com/images/azzardo/azzardo1801/azzardo180100008/93515266-key-with-heart-design.jpg", "heart", app_key, app_secret)
 
 #Rule : createaquestion
-creatRule("create a question", "", "learning", 2, app_key, app_secret)
+creatRule("createaquestion", "", "learning", 2, app_key, app_secret)
 #Rule : commentaquestion
-creatRule("comment a question", "", "commentator", 1, app_key, app_secret)
+creatRule("commentaquestion", "", "commentator", 1, app_key, app_secret)
 #Rule : validanswer
-creatRule("get approval for one of your answer", "liechti", "", 0, app_key, app_secret)
+creatRule("validanswer", "liechti", "", 0, app_key, app_secret)
 #Rule : cookies
-creatRule("vote for an answer", "cookie", "cookies", 1, app_key, app_secret)
+creatRule("cookies", "cookie", "cookies", 1, app_key, app_secret)
 #Rule : findthekey
-creatRule("but where is the key ?", "heart", "", 0, app_key, app_secret)
+creatRule("findthekey", "heart", "", 0, app_key, app_secret)
 
 
 
