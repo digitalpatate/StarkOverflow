@@ -381,3 +381,12 @@ form.dropdown-item > .btn.btn-link {
     font-size: 0.8rem;
     word-break: break-word;
 }
+
+.l-error h2{
+    width: 100%;
+    text-align: center;
+}
+.l-error p{
+    width: 100%;
+    text-align: center;
+}

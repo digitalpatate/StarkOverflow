@@ -27,13 +27,16 @@ public class LeaderboardQueryHandler extends HttpServlet {
 
         String pointScaleName = urlParts[1];
 
-        PagableLeaderboardDTO leaderboardDTO = leaderboardService.getLeaderBoardFromPointScaleName(pointScaleName);
+        try {
+            PagableLeaderboardDTO leaderboardDTO = leaderboardService.getLeaderBoardFromPointScaleName(pointScaleName);
+            req.setAttribute("pointScaleName", pointScaleName);
+            req.setAttribute("leaderboard", leaderboardDTO);
+            req.getRequestDispatcher("/WEB-INF/views/leaderboard.jsp").forward(req,res);
+        }catch (RuntimeException e){
 
-        System.out.println(leaderboardDTO);
-        req.setAttribute("pointScaleName", pointScaleName);
-        req.setAttribute("leaderboard", leaderboardDTO);
-
-        req.getRequestDispatcher("/WEB-INF/views/leaderboard.jsp").forward(req,res);
-
+            req.setAttribute("message", String.format("Le pointScale %s n'existe pas", pointScaleName));
+            req.setAttribute("statusCode",404);
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req,res);
+        }
     }
 }

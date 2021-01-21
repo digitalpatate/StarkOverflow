@@ -2,6 +2,7 @@ package ch.heigvd.amt.starkoverflow.infrastructure.persistence.rest.leaderboard;
 
 import ch.heigvd.amt.starkoverflow.application.leaderboard.dto.LeaderBoardDTO_game;
 import ch.heigvd.amt.starkoverflow.domain.leaderboard.ILeaderboardRepository;
+import ch.heigvd.amt.starkoverflow.exception.NotFoundException;
 import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.GamificatorService;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +25,8 @@ public class RestLeaderboardRepository implements ILeaderboardRepository {
         try {
             LeaderBoardDTO_game leaderBoardDTOGame = gamificatorService.getLeaderboardByPointScaleName(pointScaleName);
             return Optional.of(leaderBoardDTOGame);
-        }catch (RuntimeException e){
+        }catch (NotFoundException e){
+
             return Optional.empty();
         }
     }

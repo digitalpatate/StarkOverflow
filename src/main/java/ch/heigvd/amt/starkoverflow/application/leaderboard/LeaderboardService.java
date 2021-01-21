@@ -23,10 +23,9 @@ public class LeaderboardService {
     private IUserRepository userRepository;
 
 
-    public PagableLeaderboardDTO getLeaderBoardFromPointScaleName(String pointScaleName){
+    public PagableLeaderboardDTO getLeaderBoardFromPointScaleName(String pointScaleName) throws RuntimeException{
 
         LeaderBoardDTO_game leaderBoardDTOGame = leaderboardRepository.findByPointScaleName(pointScaleName).orElseThrow(() -> new RuntimeException("Leaderboard not found"));
-        System.out.println(leaderBoardDTOGame);
         LeaderboardDTO leaderboardDTO = new LeaderboardDTO();
 
         for (UserScoreDTO userScoreDTO : leaderBoardDTOGame.getLeaderboard()){
