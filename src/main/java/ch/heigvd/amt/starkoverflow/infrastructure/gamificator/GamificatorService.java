@@ -1,6 +1,7 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.gamificator;
 
 import ch.heigvd.amt.starkoverflow.application.Event.CreateEventCommand;
+import ch.heigvd.amt.starkoverflow.application.leaderboard.dto.LeaderBoardDTO_game;
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -21,5 +22,9 @@ public class GamificatorService {
 
     public void sendEvent(CreateEventCommand createEventCommand){
         restService.post("/events", createEventCommand);
+    }
+
+    public LeaderBoardDTO_game getLeaderboardByPointScaleName(String pointScaleName){
+        return (LeaderBoardDTO_game) restService.get("/leaderboard/"+pointScaleName, LeaderBoardDTO_game.class);
     }
 }
