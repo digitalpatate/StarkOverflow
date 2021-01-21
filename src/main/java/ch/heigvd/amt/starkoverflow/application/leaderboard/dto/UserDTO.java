@@ -1,0 +1,17 @@
+package ch.heigvd.amt.starkoverflow.application.leaderboard.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class UserDTO {
+    private UUID uuid;
+
+    private Long applicationId;
+
+}

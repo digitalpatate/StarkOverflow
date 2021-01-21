@@ -1,5 +1,6 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.gamificator;
 
+import ch.heigvd.amt.starkoverflow.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -23,21 +25,28 @@ import java.util.Base64;
 @NoArgsConstructor
 public class RestService {
 
-    private String key = "7ea615d9-22eb-4ae4-a4da-76f00b0a06b0";
+    private String key = "b911018e-da71-4000-82b5-388e4b8fb5c5";
 
-    private String secret = "cwnf2RtEpX";
+    private String secret = "YnZdXMdUkP";
 
     private String baseUrl = "http://localhost:8080";
 
-    public Object get(String path, Class<?> type){
+    public Object get(String path, Class<?> type) throws NotFoundException {
         RestTemplate restTemplate = new RestTemplate();
-        System.out.println(path);
 
-        String url = baseUrl+path;
+        String url = baseUrl + path;
         HttpEntity<String> req = new HttpEntity<>(constructHeader(createSignature(url)));
-        ResponseEntity<?> res =  restTemplate.exchange(url,HttpMethod.GET,req,type);
-        return res.getBody();
+
+        try {
+            ResponseEntity<?> res =  restTemplate.exchange(url,HttpMethod.GET,req,type);
+            System.out.println(res.getBody());
+            return res.getBody();
+        }catch (RestClientException e){
+            System.out.println("Got an error in RestService"+ e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        }
     }
+
     private String createSignature(String url){
         //Remove querystring
         url = url.split("\\?")[0];
@@ -48,6 +57,7 @@ public class RestService {
 
         return signature;
     }
+
     private HttpHeaders constructHeader(String signature){
         HttpHeaders headers = new HttpHeaders();
         headers.add("x-api-key",key);
@@ -61,9 +71,9 @@ public class RestService {
         RestTemplate restTemplate = new RestTemplate();
         System.out.println(path);
 
-        String url = baseUrl+path;
+        String url = baseUrl + path;
         HttpEntity req = new HttpEntity<>(body,constructHeader(createSignature(url)));
-        restTemplate.exchange(url,HttpMethod.POST,req,Object.class);
+        restTemplate.exchange(url,HttpMethod.POST, req, Object.class);
 
     }
 }

@@ -3,7 +3,6 @@ package ch.heigvd.amt.starkoverflow.application.Comment;
 import ch.heigvd.amt.starkoverflow.domain.comment.Comment;
 import ch.heigvd.amt.starkoverflow.domain.comment.IAnswerCommentRepository;
 import ch.heigvd.amt.starkoverflow.domain.comment.IQuestionCommentRepository;
-import ch.heigvd.amt.starkoverflow.domain.question.IQuestionRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 

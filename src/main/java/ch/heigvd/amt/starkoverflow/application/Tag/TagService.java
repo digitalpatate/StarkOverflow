@@ -27,9 +27,15 @@ public class TagService {
     @Named("JdbcTagRepository")
     private ITagRepository tagRepository;
 
-    public void createTag(CreateTagCommand command){
+    public TagDTO createTag(CreateTagCommand command){
         Tag tag = command.createEntity();
-        tagRepository.save(tag);
+        tag = tagRepository.save(tag);
+        TagDTO tagDTO = TagDTO.builder()
+                              .id(tag.getId())
+                              .name(tag.getName())
+                              .color(tag.getColor())
+                              .build();
+        return tagDTO;
     }
 
     public TagsDTO getTags() {
@@ -54,19 +60,19 @@ public class TagService {
         return TagsDTO.builder().tags(tagsDTO).build();
     }
 
-    public Tag findOrCreateTag(CreateTagCommand createTagCommand) {
-        String tagName = createTagCommand.getName();
-        Optional<Tag> tagIfExists = tagRepository.findByName(tagName);
+    public Optional<TagDTO> findTag(String tagName) {
+        Optional<Tag> optionalTag = tagRepository.findByName(tagName);
+        Optional<TagDTO> optionalTagDTO = Optional.empty();
 
-        Tag tag = null;
-
-        if(tagIfExists.isPresent()) {
-            tag = tagIfExists.get();
-        } else {
-            tag = createTagCommand.createEntity();
-            tag = tagRepository.save(tag);
+        if(optionalTag.isPresent()) {
+            Tag tag = optionalTag.get();
+            TagDTO tagDTO = TagDTO.builder()
+                    .color(tag.getColor())
+                    .name(tag.getName())
+                    .build();
+            optionalTagDTO = Optional.of(tagDTO);
         }
 
-        return tag;
+        return optionalTagDTO;
     }
 }

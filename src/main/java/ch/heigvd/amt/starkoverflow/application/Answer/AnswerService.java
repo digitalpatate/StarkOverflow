@@ -44,6 +44,11 @@ public class AnswerService {
         return AnswersDTO.builder().answers(answersDTO).build();
     }
 
+    public UserId getAnswerUser(AnswerId answerId)  {
+        Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new NotFoundException("Answer not found!"));
+        return answer.getUserId();
+    }
+
     public void acceptAnswer(AcceptAnswerCommand command) {
         Question question = answerRepository.getAnswerQuestion(new AnswerId(command.getAnswerId()))
                 .map(q -> (Question) q)

@@ -30,6 +30,7 @@ public class AuthorizationFilter implements Filter {
         this.publicRoutes.add(new Route("/logout","POST"));
         this.publicRoutes.add(new Route("/assets","GET"));
         this.publicRoutes.add(new Route("/users","GET"));
+        this.publicRoutes.add(new Route("/leaderboard","GET"));
     }
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
