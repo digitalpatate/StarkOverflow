@@ -35,14 +35,14 @@ def creatBadge(imageUrl, name, app_key, app_secret):
 
 
 #Create a Rule
-def creatRule(condition, badge, pointScaleName, points, app_key, app_secret):
+def creatRule(condition, badges, pointScaleName, points, app_key, app_secret):
 	url = urlMain + '/rules'
 	obj = {
 	  "condition": {
 		"type": condition
 	  },
 	  "then": {
-		"awardBadges": [badge],
+		"awardBadges": badges,
 		"awardPoints": [
 		  {
 			"pointScaleName": pointScaleName,
@@ -69,8 +69,6 @@ app_id = str(response['id'])
 app_key = response['key']
 app_secret = response['secret']
 
-
-
 ##########Generation##########
 #Point Scale : learning
 creatPointScale("Reward you for learning somthing", "learning", app_key, app_secret)
@@ -87,17 +85,15 @@ creatBadge("https://i-reg.unimedias.fr/sites/art-de-vivre/files/styles/recipe/pu
 creatBadge("https://previews.123rf.com/images/azzardo/azzardo1801/azzardo180100008/93515266-key-with-heart-design.jpg", "heart", app_key, app_secret)
 
 #Rule : createaquestion
-creatRule("createaquestion", "", "learning", 2, app_key, app_secret)
+creatRule("createaquestion", [], "learning", 2, app_key, app_secret)
 #Rule : commentaquestion
-creatRule("commentaquestion", "", "commentator", 1, app_key, app_secret)
+creatRule("commentaquestion", [], "commentator", 1, app_key, app_secret)
 #Rule : validanswer
-creatRule("validanswer", "liechti", "", 0, app_key, app_secret)
+creatRule("validanswer", ["liechti"], "", 0, app_key, app_secret)
 #Rule : cookies
-creatRule("cookies", "cookie", "cookies", 1, app_key, app_secret)
+creatRule("cookies", ["cookie"], "cookies", 1, app_key, app_secret)
 #Rule : findthekey
-creatRule("findthekey", "heart", "", 0, app_key, app_secret)
-
-
+creatRule("findthekey", ["heart", "key"], "", 0, app_key, app_secret)
 
 #Update docker-compose
 f = open("../docker/environment/prod/unmodified/docker-compose.yml", "r")

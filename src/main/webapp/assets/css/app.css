@@ -397,3 +397,6 @@ form.dropdown-item > .btn.btn-link {
 .chocolate:hover img {
     visibility: visible;
 }
+.ps-title{
+    width: 100%;
+}
