@@ -19,6 +19,7 @@ Table of contents
 * [Tests](#tests)
   * [E2E - testing](#E2E---testing)
   * [Load testing](Load-testing)
+  * [Integration testing](#Integration-testing)
 *  [Concept Diagrams](Concept-Diagrams)
   * [Site Map](#Site-Map)
   * [Model](#Model)
@@ -34,7 +35,7 @@ The purpose of this project is to learn about multi tiered application by creati
 
 - Maven: 3.6.3
 - OpenJDK: 11
-- docker-compose
+- docker-compose: 1.25
 
 
 
@@ -49,6 +50,14 @@ $ ./run-application.sh
 ```
 
 The script will automatically manage the life-cycle of the web application and the database containers.
+
+To stop the project
+
+```bash
+$ ./stop-application.sh
+```
+
+The application is now accessible on : http://localhost:9080
 
 ## Docker
 
@@ -116,7 +125,7 @@ The two images of `Postgres` and `PGAdmin` are located on the Docker Hub whereas
 First of all make sure to have a database up and ready with the correct configuration. To do so, run the following commands :
 
 ```bash
-$ cd docker/database
+$ cd docker/environment/dev
 $ docker-compose up -d
 ```
 
@@ -127,6 +136,8 @@ Then launch liberty server by triggering the goal :
 ```bash
 mvn liberty:dev
 ```
+
+The application is now accessible on : http://localhost:9080
 
 ### Environment variables
 
@@ -178,7 +189,28 @@ With this configuration, the variables can be override with environment variable
 
 [See dedicated documentation ](./loadTests/README.md)
 
+### Integration testing
 
+A try to set arquillian integration tests up was made in the feature branch *fb-arquillian*. Unfortunately it did not work and we ran out of time in order to write new integration tests. 
+
+By running the script `run-arquillian-integration-tests.sh` we get the following error
+
+```
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running ArquillianTest
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.064 s <<< FAILURE! - in ArquillianTest
+[ERROR] initializationError  Time elapsed: 0.039 s  <<< ERROR!
+java.lang.Exception: No runnable methods
+
+[INFO] Running ch.heigvd.amt.starkoverflow.infrastructure.memory.comment.InMemoryCommentRepositoryTest
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.002 s <<< FAILURE! - in ch.heigvd.amt.starkoverflow.infrastructure.memory.comment.InMemoryCommentRepositoryTest
+[ERROR] ch.heigvd.amt.starkoverflow.infrastructure.memory.comment.InMemoryCommentRepositoryTest  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.NoClassDefFoundError: org/junit/platform/commons/util/ClassNamePatternFilterUtils
+Caused by: java.lang.ClassNotFoundException: org.junit.platform.commons.util.ClassNamePatternFilterUtils
+
+...
+```
 
 ## Concept Diagrams
 
@@ -216,12 +248,25 @@ With this configuration, the variables can be override with environment variable
 ### Tag
 
 - Name 
-- Color
+- Colors
 
 ### Vote
 
 - Pointer on question or answer
 - Pointer on user
+
+## Rules
+
+To earn points or badges, one should do :
+
+| Rule                  | Condition(s) to trigger             | Point(s) awarded | Badge(s)   | Point scale(s) |
+|-----------------------|-------------------------------------|------------------|------------|----------------|
+| createaquestion       | create a question                   | 2                | -          | learning       |
+| answerataggedquestion | answer a tagged question            | 5                | -          | \<tag\>        |
+| commentaquestion      | comment a question                  | 1                | -          | commentator    |
+| validanswer           | get approval for one of your answer | 0                | liechti    |                |
+| cookies               | vote for an answer                  | 1                | cookie     | cookies        |
+| findthekey            | but where is the key ?              | 0                | heart, key |                |
 
 ## Contributors
 

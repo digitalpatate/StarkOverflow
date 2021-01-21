@@ -1,0 +1,46 @@
+version: '3'
+services:
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    container_name: starkoverflow_prod_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dev@starkoverflow.ch
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8081:80"
+    links:
+      - "db:pgsql-server"
+    networks:
+      - backend
+  db:
+    image: postgres:latest
+    container_name: starkoverflow_prod_db
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+    networks:
+      - backend
+    volumes:
+      - ../../database/scripts:/docker-entrypoint-initdb.d
+  backend:
+    image: ghcr.io/digitalpatate/starkoverflow:latest
+    container_name: starkoverflow_prod_backend
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: stark_db
+      DB_USER: admin
+      DB_PASSWORD: secret
+    depends_on:
+      - db
+    ports:
+     - "9080:9080"
+    networks:
+      - backend
+networks:
+  backend:
+    external: false

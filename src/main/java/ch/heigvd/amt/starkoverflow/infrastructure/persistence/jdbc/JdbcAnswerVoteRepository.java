@@ -26,7 +26,7 @@ import java.util.Optional;
 public class JdbcAnswerVoteRepository extends JdbcRepository implements IAnswerVoteRepository {
 
     @Override
-    public Vote save(Vote entity) {
+    public synchronized Vote save(Vote entity) {
         super.insert("answer_votes", Arrays.asList(
                 "vote_id",
                 "fk_author",
@@ -41,24 +41,24 @@ public class JdbcAnswerVoteRepository extends JdbcRepository implements IAnswerV
     }
 
     @Override
-    public void remove(VoteId id) {
+    public synchronized void remove(VoteId id) {
         super.remove("answer_votes", "vote_id", id);
     }
 
     @Override
-    public Optional<Vote> findById(VoteId id) {
+    public synchronized Optional<Vote> findById(VoteId id) {
         Optional<IEntity> vote =  super.find("answer_votes", "vote_id", id.asString());
 
         return vote.map(entity -> (Vote) entity);
     }
 
     @Override
-    public Collection<Vote> findAll() {
+    public synchronized Collection<Vote> findAll() {
         return (Collection) super.findAll("answer_votes");
     }
 
     @Override
-    public Vote userVoteOnAnswer(UserId viewer, AnswerId answerId) {
+    public synchronized Vote userVoteOnAnswer(UserId viewer, AnswerId answerId) {
         Vote vote = null;
 
         try {
@@ -80,7 +80,7 @@ public class JdbcAnswerVoteRepository extends JdbcRepository implements IAnswerV
     }
 
     @Override
-    public long getNbVotesOfAnswer(AnswerId answerId) {
+    public synchronized long getNbVotesOfAnswer(AnswerId answerId) {
         long nbVotes = 0;
 
         try {
@@ -100,7 +100,7 @@ public class JdbcAnswerVoteRepository extends JdbcRepository implements IAnswerV
     }
 
     @Override
-    public int getTotalAnswerVoteRepository() {
+    public synchronized int getTotalAnswerVoteRepository() {
         int nbAnswerVote = -1;
         try {
             ResultSet resultSet = safeExecuteQuery("SELECT COUNT(*) AS totalAnswerVote FROM answer_votes",null);

@@ -1,25 +1,9 @@
-version: "3.7"
+version: '3'
 services:
-  db:
-    image: postgres:latest
-    restart: always
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: secret
-      TZ: 'Europe/Zurich'
-      PGTZ: 'Europe/Zurich'
-    volumes:
-      - ./docker/database/scripts:/docker-entrypoint-initdb.d
-    ports:
-      - "5432:5432"
-    networks:
-      - backend
-
-# comment to avoid starting pgadmin along the database and the webapp
   pgadmin:
     image: dpage/pgadmin4:latest
     restart: always
+    container_name: starkoverflow_prod_pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: dev@starkoverflow.ch
       PGADMIN_DEFAULT_PASSWORD: secret
@@ -30,10 +14,21 @@ services:
       - "db:pgsql-server"
     networks:
       - backend
-
-
-  web:
+  db:
+    image: postgres:latest
+    container_name: starkoverflow_prod_db
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+    networks:
+      - backend
+    volumes:
+      - ../../database/scripts:/docker-entrypoint-initdb.d
+  backend:
     image: ghcr.io/digitalpatate/starkoverflow:latest
+    container_name: starkoverflow_prod_backend
     environment:
       DB_HOST: db
       DB_PORT: 5432
@@ -43,7 +38,7 @@ services:
     depends_on:
       - db
     ports:
-      - "9080:9080"
+     - "9080:9080"
     networks:
       - backend
 networks:

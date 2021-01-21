@@ -5,6 +5,7 @@ import ch.heigvd.amt.starkoverflow.application.question.QuestionService;
 import ch.heigvd.amt.starkoverflow.application.question.dto.QuestionDTO;
 import ch.heigvd.amt.starkoverflow.domain.question.QuestionId;
 import ch.heigvd.amt.starkoverflow.domain.UserId;
+import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.RestService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,4 +45,6 @@ public class QuestionQueryHandler extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/views/question.jsp").forward(req,res);
         }
     }
+
+
 }
