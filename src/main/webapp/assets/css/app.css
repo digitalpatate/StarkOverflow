@@ -381,3 +381,11 @@ form.dropdown-item > .btn.btn-link {
     font-size: 0.8rem;
     word-break: break-word;
 }
+
+.chocolate img {
+    visibility: hidden;
+}
+
+.chocolate:hover img {
+    visibility: visible;
+}
