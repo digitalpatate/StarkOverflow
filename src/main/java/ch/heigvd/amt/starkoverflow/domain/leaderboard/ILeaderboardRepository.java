@@ -5,5 +5,5 @@ import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.dto.LeaderBoardDTO
 import java.util.Optional;
 
 public interface ILeaderboardRepository {
-    Optional<LeaderBoardDTO> findByPointScaleName(String pointScaleName);
+    Optional<LeaderBoardDTO> findByPointScaleName(String pointScaleName, int pageNumber);
 }

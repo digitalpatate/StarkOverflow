@@ -24,9 +24,9 @@ public class LeaderboardService {
     private IUserRepository userRepository;
 
 
-    public PagableLeaderboardDTO getLeaderBoardFromPointScaleName(String pointScaleName) throws RuntimeException{
+    public PagableLeaderboardDTO getLeaderBoardFromPointScaleName(String pointScaleName, int pageNumber) throws RuntimeException{
 
-        LeaderBoardDTO leaderBoardDTOGame = leaderboardRepository.findByPointScaleName(pointScaleName).orElseThrow(() -> new RuntimeException("Leaderboard not found"));
+        LeaderBoardDTO leaderBoardDTOGame = leaderboardRepository.findByPointScaleName(pointScaleName,pageNumber).orElseThrow(() -> new RuntimeException("Leaderboard not found"));
         LeaderboardDTO leaderboardDTO = new LeaderboardDTO();
 
         for (UserScoreDTO userScoreDTO : leaderBoardDTOGame.getLeaderboard()){
@@ -40,7 +40,7 @@ public class LeaderboardService {
             ScoreDTO scoreDTO = new ScoreDTO(username,userScoreDTO.getScore());
             leaderboardDTO.getScores().add(scoreDTO);
         }
-
+        System.out.println(leaderBoardDTOGame);
         return new PagableLeaderboardDTO(
                 leaderBoardDTOGame.getTotal(),
                 leaderBoardDTOGame.getNextPage(),

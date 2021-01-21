@@ -22,5 +22,17 @@
                 </tbody>
             </table>
         </div>
+        <c:choose>
+            <c:when test="${leaderboard.numberOfPage > 1}">
+                <div class="row justify-content-center">
+
+                    <div class="pagination">
+                        <c:forEach var="counter" begin="1" end="${leaderboard.numberOfPage}">
+                            <a href="/leaderboard/${pointScaleName}/page/${counter}">${counter}</a>
+                        </c:forEach>
+                    </div>
+                </div>
+            </c:when>
+        </c:choose>
     </div>
 </template:defaultLayout>
