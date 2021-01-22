@@ -21,9 +21,9 @@ public class RestLeaderboardRepository implements ILeaderboardRepository {
     private GamificatorService gamificatorService;
 
     @Override
-    public Optional<LeaderBoardDTO> findByPointScaleName(String pointScaleName) {
+    public Optional<LeaderBoardDTO> findByPointScaleName(String pointScaleName, int pageNumber) {
         try {
-            LeaderBoardDTO leaderBoardDTOGame = gamificatorService.getLeaderboardByPointScaleName(pointScaleName);
+            LeaderBoardDTO leaderBoardDTOGame = gamificatorService.getLeaderboardByPointScaleName(pointScaleName, pageNumber);
             return Optional.of(leaderBoardDTOGame);
         }catch (NotFoundException e){
 

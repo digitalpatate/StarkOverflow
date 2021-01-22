@@ -23,11 +23,15 @@ public class LeaderboardQueryHandler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String[] urlParts = req.getPathInfo().split("/");
-
+        int pageNumber = 0;
+        if(req.getPathInfo().contains("page")){
+            System.out.println(urlParts[3]);
+            pageNumber = Integer.parseInt(urlParts[3]);
+        }
         String pointScaleName = urlParts[1];
 
         try {
-            PagableLeaderboardDTO leaderboardDTO = leaderboardService.getLeaderBoardFromPointScaleName(pointScaleName);
+            PagableLeaderboardDTO leaderboardDTO = leaderboardService.getLeaderBoardFromPointScaleName(pointScaleName,pageNumber);
             req.setAttribute("pointScaleName", pointScaleName);
             req.setAttribute("leaderboard", leaderboardDTO);
             req.getRequestDispatcher("/WEB-INF/views/leaderboard.jsp").forward(req,res);

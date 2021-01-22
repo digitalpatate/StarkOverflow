@@ -33,12 +33,13 @@ public class RestService {
 
     public Object get(String path, Class<?> type) throws NotFoundException {
         RestTemplate restTemplate = new RestTemplate();
-
         String url = baseUrl + path;
+        System.out.println(url);
         HttpEntity<String> req = new HttpEntity<>(constructHeader(createSignature(url)));
 
         try {
             ResponseEntity<?> res =  restTemplate.exchange(url,HttpMethod.GET,req,type);
+            System.out.println(res.getBody());
             return res.getBody();
         }catch (RestClientException e){
             System.out.println("Got an error in RestService"+ e.getMessage());
