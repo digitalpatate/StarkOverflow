@@ -211,7 +211,6 @@ Caused by: java.lang.ClassNotFoundException: org.junit.platform.commons.util.Cla
 
 ...
 ```
-
 ## Implementation choice
 
 ### Gamification engine
@@ -243,6 +242,14 @@ By issuing requests on the corresponding Gamificator endpoints the Starkoverflow
 The progression of the current user is available through his profile page. A progression example looks like the figure below.
 
 ![User Progression](pictures/user_progression.jpg)
+=======
+### Known problems
+
+### Environment variables
+
+For now the _key_ and the _secret_ and _url_ used to connect to _gamificator_ has been hard codded in the `RestService` file. 
+
+It works until you want to run _StarkOverflow_ in a docker container aside the _Gamificator_ app. Because you'll need to configure the url with the container name.
 
 ## Concept Diagrams
 
