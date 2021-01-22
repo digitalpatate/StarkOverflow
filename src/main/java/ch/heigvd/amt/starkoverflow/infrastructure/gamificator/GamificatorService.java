@@ -1,11 +1,15 @@
 package ch.heigvd.amt.starkoverflow.infrastructure.gamificator;
 
+
+import ch.heigvd.amt.starkoverflow.application.Reputation.ReputationDTO;
+import ch.heigvd.amt.starkoverflow.domain.UserId;
 import ch.heigvd.amt.starkoverflow.application.Event.CreateEventCommand;
 import ch.heigvd.amt.starkoverflow.application.PointScale.CreatePointScaleCommand;
 import ch.heigvd.amt.starkoverflow.application.PointScale.dto.PointScaleDTO;
 import ch.heigvd.amt.starkoverflow.application.Rule.CreateRuleCommand;
 import ch.heigvd.amt.starkoverflow.exception.NotFoundException;
 import ch.heigvd.amt.starkoverflow.infrastructure.gamificator.dto.LeaderBoardDTO;
+
 import lombok.NoArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -42,7 +46,12 @@ public class GamificatorService {
         restService.post("/pointScales", createPointScaleCommand);
     }
 
-    public List<PointScaleDTO> getAllPointScales() throws NotFoundException {
+    public ReputationDTO getReputation(UserId userId) throws NotFoundException {
+        return (ReputationDTO) restService.get("/reputations/" + userId.asString(), ReputationDTO.class);
+    }
+
+
+        public List<PointScaleDTO> getAllPointScales() throws NotFoundException {
         PointScaleDTO[] result = (PointScaleDTO[]) restService.get("/pointScales",PointScaleDTO[].class);
 
         List<PointScaleDTO> pointScaleDTOS = new LinkedList<>();
