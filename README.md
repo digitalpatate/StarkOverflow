@@ -27,7 +27,7 @@ Table of contents
 
 ## Introduction
 
-The purpose of this project is to learn about multi tiered application by creating a simplified version of _Stackoverflow_.
+The purpose of this project is to learn about multi tiered application by creating a simplified version of [_Stackoverflow_](https://stackoverflow.com).
 
 
 
@@ -141,6 +141,8 @@ The application is now accessible on : http://localhost:9080
 
 ### Environment variables
 
+#### Openliberty
+
 For local dev, we use the openliberty maven plugin and use the default variable name in the server.xml file to setup the database configuration
 
 ```xml
@@ -178,8 +180,6 @@ With this configuration, the variables can be override with environment variable
       - backend
 ```
 
-
-
 ### E2E - testing
 
 [See dedicated documentation ](./e2e/README.md)
@@ -211,6 +211,38 @@ Caused by: java.lang.ClassNotFoundException: org.junit.platform.commons.util.Cla
 
 ...
 ```
+
+## Implementation choice
+
+### Gamification engine
+
+This project includes gamification principles thanks to the gamification engine called [Gamificator](https://github.com/digitalpatate/Gamificator). This allows the user to be motivated by earning points or badges, and to highlight the importance of his or her position through rankings.
+
+#### REST API 
+
+When a user perform actions such as asking or answering question, requests are performed on the corresponding endpoints to update and retrieve the gamification data related to the user.
+
+##### Application
+
+The Gamificator is able to manage several applications and so the Starkoverflow project use one application created beforehand. This is done by authenticating to the gamification engine with an API-KEY and an API-SECRET.
+
+```java
+// example of API-KEY and an API-SECRET
+private String key = "b911018e-da71-4000-82b5-388e4b8fb5c5";
+private String secret = "YnZdXMdUkP";
+```
+
+When using these credentials the Starkoverflow application with its designated application.
+
+##### Gamificator endpoints
+
+By issuing requests on the corresponding Gamificator endpoints the Starkoverflow application update the user progression. This progression can be retrieve on the endpoint */reputations/{UUID}*, where the UUID represent the user. It is given as list of badges and  list of point scales.
+
+##### Progression
+
+The progression of the current user is available through his profile page. A progression example looks like the figure below.
+
+![User Progression](pictures/user_progression.jpg)
 
 ## Concept Diagrams
 
