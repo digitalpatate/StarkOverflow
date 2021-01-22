@@ -24,17 +24,18 @@ import java.util.Base64;
 @Log
 @NoArgsConstructor
 public class RestService {
-    private String key = "e947b73b-2b0f-4c68-ac3d-fd8bcb2e5f94";
-    private String secret = "JnlAlJJjut";
+    private String key = "aa5ed931-55b7-4a4d-add3-5067c5fbbb95";
+    private String secret = "cL5Frtd4qG";
     private String baseUrl = "http://localhost:8080";
 
     public Object get(String path, Class<?> type) throws NotFoundException {
         RestTemplate restTemplate = new RestTemplate();
-
         String url = baseUrl + path;
+        System.out.println(url);
         HttpEntity<String> req = new HttpEntity<>(constructHeader(createSignature(url)));
         try {
             ResponseEntity<?> res =  restTemplate.exchange(url,HttpMethod.GET,req,type);
+            System.out.println(res.getBody());
             return res.getBody();
         }catch (RestClientException e){
             System.out.println("Got an error in RestService"+ e.getMessage());

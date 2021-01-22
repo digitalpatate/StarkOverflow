@@ -31,8 +31,8 @@ public class GamificatorService {
         restService.post("/events", createEventCommand);
     }
 
-    public LeaderBoardDTO getLeaderboardByPointScaleName(String pointScaleName) throws NotFoundException {
-        return (LeaderBoardDTO) restService.get("/leaderboard/" + pointScaleName, LeaderBoardDTO.class);
+    public LeaderBoardDTO getLeaderboardByPointScaleName(String pointScaleName, int pageNumber) throws NotFoundException {
+        return (LeaderBoardDTO) restService.get("/leaderboard/" + pointScaleName+"?page="+pageNumber, LeaderBoardDTO.class);
     }
     public void sendRule(CreateRuleCommand createRuleCommand) {
         restService.post("/rules", createRuleCommand);
