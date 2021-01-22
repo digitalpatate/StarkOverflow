@@ -29,10 +29,10 @@ services:
       - "8081:80"
     networks:
       - starkoverflow
-  gameificator-db:
+  gamificator-db:
     image: mysql
     restart: always
-    container_name: gameificator-db
+    container_name: gamificator-db
     environment:
       - MYSQL_ROOT_PASSWORD=secret
       - MYSQL_DATABASE=gamificator_db
@@ -45,37 +45,37 @@ services:
     cap_add:
       - SYS_NICE  # CAP_SYS_NICE
     networks:
-      - gameificator
+      - gamificator
 
-  gameificator-adminer:
+  gamificator-adminer:
     image: adminer
-    container_name: gameificator-adminer
+    container_name: gamificator-adminer
     restart: always
     ports:
       - 8888:8080
     depends_on:
-      - gameificator-db
+      - gamificator-db
     networks:
-      - gameificator
+      - gamificator
 
-  gameificator-app:
+  gamificator-app:
     image: ghcr.io/digitalpatate/gamificator:latest
-    container_name: gameificator-app
+    container_name: gamificator-app
     restart: on-failure
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://gameificator-db:3306/gamificator_db
+      - SPRING_DATASOURCE_URL=jdbc:mysql://gamificator-db:3306/gamificator_db
       - SPRING_DATASOURCE_USERNAME=springuser
       - SPRING_DATASOURCE_PASSWORD=secret
     depends_on:
-      - gameificator-db
+      - gamificator-db
     ports:
       - 8080:8080
     networks:
-      - gameificator
+      - gamificator
 
 
 networks:
   starkoverflow:
     external: false
-  gameificator:
+  gamificator:
     external: false
