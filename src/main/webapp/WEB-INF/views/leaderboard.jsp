@@ -27,7 +27,7 @@
                 <div class="row justify-content-center">
 
                     <div class="pagination">
-                        <c:forEach var="counter" begin="1" end="${leaderboard.numberOfPage}">
+                        <c:forEach var="counter" begin="0" end="${leaderboard.numberOfPage-1}">
                             <a href="/leaderboard/${pointScaleName}/page/${counter}">${counter}</a>
                         </c:forEach>
                     </div>

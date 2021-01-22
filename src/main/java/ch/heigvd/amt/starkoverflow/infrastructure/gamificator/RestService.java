@@ -24,8 +24,8 @@ import java.util.Base64;
 @Log
 @NoArgsConstructor
 public class RestService {
-    private String key = "bfdf593d-4649-490a-92a3-7616101e45aa";
-    private String secret = "8vKcua1rPB";
+    private String key = "aa5ed931-55b7-4a4d-add3-5067c5fbbb95";
+    private String secret = "cL5Frtd4qG";
     private String baseUrl = "http://localhost:8080";
 
     public Object get(String path, Class<?> type) throws NotFoundException {

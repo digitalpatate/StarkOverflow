@@ -23,7 +23,7 @@ public class LeaderboardQueryHandler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String[] urlParts = req.getPathInfo().split("/");
-        int pageNumber = 1;
+        int pageNumber = 0;
         if(req.getPathInfo().contains("page")){
             System.out.println(urlParts[3]);
             pageNumber = Integer.parseInt(urlParts[3]);
